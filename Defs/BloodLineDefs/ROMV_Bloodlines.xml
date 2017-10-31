@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <Vampire.BloodlineDef>
+    <defName>ROMV_Caine</defName>
+    <label>First Vampire</label>
+    <description>None yet</description>
+    <bloodlineHediff/>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <fangsHediff>ROMV_Fangs</fangsHediff>
+    <embraceWorker>Vampire.EmbraceWorker</embraceWorker>
+  </Vampire.BloodlineDef>
+
+  <Vampire.BloodlineDef>
+    <defName>ROMV_TheThree</defName>
+    <label>Children of Caine</label>
+    <description>None yet</description>
+    <bloodlineHediff/>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <fangsHediff>ROMV_Fangs</fangsHediff>
+    <embraceWorker>Vampire.EmbraceWorker</embraceWorker>
+  </Vampire.BloodlineDef>
+
+  <Vampire.BloodlineDef>
+    <defName>ROMV_ClanTzimize</defName>
+    <label>Tzimisce</label>
+    <description>None yet</description>
+    <fangsHediff>ROMV_Fangs</fangsHediff>
+    <bloodlineHediff/>
+    <embraceWorker>Vampire.EmbraceWorker</embraceWorker>
+    <disciplines>
+      <li>ROMV_Vicissitude</li>
+      <li>ROMV_Animalism</li>
+      <li>ROMV_Auspex</li>
+    </disciplines>
+  </Vampire.BloodlineDef>
+
+  <Vampire.BloodlineDef>
+    <defName>ROMV_ClanTremere</defName>
+    <label>Tremere</label>
+    <description>None yet</description>
+    <fangsHediff>ROMV_Fangs</fangsHediff>
+    <bloodlineHediff/>
+    <embraceWorker>Vampire.EmbraceWorker</embraceWorker>
+    <disciplines>
+      <li>ROMV_Thaumaturgy</li>
+      <li>ROMV_Dominate</li>
+      <li>ROMV_Auspex</li>
+    </disciplines>
+  </Vampire.BloodlineDef>
+
+  <Vampire.BloodlineDef>
+    <defName>ROMV_ClanLasombra</defName>
+    <label>Lasombra</label>
+    <description>None yet</description>
+    <fangsHediff>ROMV_Fangs</fangsHediff>
+    <bloodlineHediff/>
+    <embraceWorker>Vampire.EmbraceWorker</embraceWorker>
+    <disciplines>
+      <li>ROMV_Obtenebration</li>
+      <li>ROMV_Dominate</li>
+      <li>ROMV_Potence</li>
+    </disciplines>
+  </Vampire.BloodlineDef>
+
+  <Vampire.BloodlineDef>
+    <defName>ROMV_ClanPijavica</defName>
+    <label>Pijavica</label>
+    <description>None yet</description>
+    <fangsHediff>ROMV_Fangs</fangsHediff>
+    <bloodlineHediff/>
+    <embraceWorker>Vampire.EmbraceWorker</embraceWorker>
+    <disciplines>
+      <li>ROMV_BloodDiscipline</li>
+      <li>ROMV_Protean</li>
+      <li>ROMV_Fortitude</li>
+    </disciplines>
+  </Vampire.BloodlineDef>
+
+  <Vampire.BloodlineDef>
+    <defName>ROMV_ClanGargoyle</defName>
+    <label>Gargoyle</label>
+    <description>None yet</description>
+    <fangsHediff>ROMV_Fangs</fangsHediff>
+    <bloodlineHediff/>
+    <allowsHair>False</allowsHair>
+    <embraceWorker>Vampire.EmbraceWorker</embraceWorker>
+    <disciplines>
+      <li>ROMV_Flight</li>
+      <li>ROMV_Protean</li>
+      <li>ROMV_Fortitude</li>
+    </disciplines>
+    <nakedBodyGraphicsPath>Things/Pawn/Gargoyles/Bodies/</nakedBodyGraphicsPath>
+    <headGraphicsPath>Things/Pawn/Gargoyles/Heads/</headGraphicsPath>
+    <!-- custom skincolors for bloodlines must always have 6 -->
+    <skinColors>
+      <li>(0.66,0.66,0.66)</li>
+      <li>(0.53,0.53,0.53)</li>
+      <li>(0.63,0.53,0.53)</li>
+      <li>(0.53,0.63,0.53)</li>
+      <li>(0.53,0.53,0.63)</li>
+      <li>(0.5,0.5,0.5)</li>
+    </skinColors>
+  </Vampire.BloodlineDef>
+
+</Defs>
