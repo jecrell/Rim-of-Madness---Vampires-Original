@@ -340,6 +340,7 @@ namespace Vampire
             Scribe_Defs.Look<BloodlineDef>(ref this.bloodline, "bloodline");
             Scribe_Values.Look<int>(ref this.generation, "generation");
             Scribe_Values.Look<int>(ref this.level, "level", 0);
+            Scribe_Values.Look<int>(ref this.xp, "xp", 0);
             Scribe_Values.Look<int>(ref this.abilityPoints, "abilityPoints", 0);
             Scribe_References.Look<Pawn>(ref this.sire, "sire");
             Scribe_Collections.Look<Pawn>(ref this.souls, "souls", LookMode.Reference);

@@ -144,6 +144,67 @@ namespace Vampire
 
             harmony.Patch(AccessTools.Method(typeof(ForbidUtility), "IsForbidden", new Type[] { typeof(IntVec3), typeof(Pawn) }), null, new HarmonyMethod(typeof(HarmonyPatches).GetMethod("Vamp_IsForbidden")));
 
+            #region DubsBadHygiene
+            {
+                try
+                {
+                    ((Action)(() =>
+                    {
+                        if (AccessTools.Method(typeof(DubsBadHygiene.Need_Bladder), nameof(DubsBadHygiene.Need_Bladder.crapPants)) != null)
+                        {
+                            //harmony.Patch(AccessTools.Method(typeof(DubsBadHygiene.Need_Bladder), nameof(DubsBadHygiene.dubUtils.IsRobot)), 
+                            //    null, new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_StopThePoopStorm)));
+                            harmony.Patch(AccessTools.Method(typeof(Pawn_NeedsTracker), "ShouldHaveNeed"),
+                                new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_NoBladderNeed)), null);
+                        }
+                    })).Invoke();
+                }
+                catch (TypeLoadException ex) { /*Log.Message(ex.ToString());*/ }
+            }
+            #endregion
+
+        }
+
+        // RimWorld.Pawn_NeedsTracker
+        private static void Vamp_FullBladder(Pawn_NeedsTracker __instance, ref float __result)
+        {
+            Pawn pawn = (Pawn)AccessTools.Field(typeof(Pawn_NeedsTracker), "pawn").GetValue(__instance);
+            if (pawn.IsVampire())
+            {
+                __result = 1.0f;
+            }
+        }
+
+        // RimWorld.Pawn_NeedsTracker
+        private static bool Vamp_NoBladderNeed(Pawn_NeedsTracker __instance, NeedDef nd, ref bool __result)
+        {
+            Pawn pawn = (Pawn)AccessTools.Field(typeof(Pawn_NeedsTracker), "pawn").GetValue(__instance);
+            if (pawn.IsVampire())
+            {
+                if (nd.defName == "Bladder")
+                {
+                    __result = false;
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
+        // DubsBadHygiene.dubUtils
+        public static void Vamp_StopThePoopStorm(Pawn pawn, ref bool __result)
+        {
+            if (pawn.IsVampire())
+            {
+                __result = true;
+            }
+        }
+
+        // RimWorld.ForbidUtility
+        public static void Vamp_StopThePoopStorm(IntVec3 c, Pawn pawn, ref bool __result)
+        {
+            if (pawn.IsVampire() && VampireUtility.IsDaylight(pawn) && !c.Roofed(pawn.Map))
+                __result = true;
         }
 
         // RimWorld.ForbidUtility
