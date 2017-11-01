@@ -27,15 +27,16 @@ namespace Vampire
         {
             if (idealGenerationOfChilde == -1)
             {
-                idealGenerationOfChilde = (childe?.VampComp()?.Generation == -1)? 13 : childe.VampComp().Generation;
+                idealGenerationOfChilde = (childe?.VampComp()?.Generation == -1)? Rand.Range(10,13) : childe?.VampComp()?.Generation ?? Rand.Range(10, 13);
             }
 
-            if (activeVampires.FindAll(x => x.VampComp() is CompVampire v &&
+            if (!ActiveVampires.NullOrEmpty() && ActiveVampires?.FindAll(x => x.VampComp() is CompVampire v &&
             !x.Spawned && v.Bloodline == bloodline && v.Generation == idealGenerationOfChilde - 1) is List<Pawn> vamps && !vamps.NullOrEmpty())
             {
                 return vamps.RandomElement();
             }
-            return TryGeneratingBloodline(childe, bloodline).FirstOrDefault(x => x?.VampComp()?.Generation == idealGenerationOfChilde - 1);
+            List<Pawn> vampsGen = TryGeneratingBloodline(childe, bloodline);
+            return vampsGen.FirstOrDefault(x => x?.VampComp()?.Generation == idealGenerationOfChilde - 1);
         }
 
         public List<Pawn> TryGeneratingBloodline(Pawn childe, BloodlineDef bloodline)
@@ -54,7 +55,6 @@ namespace Vampire
             {
                 Pawn newVamp = VampireGen.GenerateVampire(curGen, bloodline, curSire, null, false);
                 futureGenerations.Add(newVamp);
-                //Find.WorldPawns.PassToWorld(newVamp, PawnDiscardDecideMode.KeepForever);
                 curSire = newVamp;
             }
             activeVampires.AddRange(futureGenerations);
@@ -153,9 +153,9 @@ namespace Vampire
                     dormantVampires.Add(Caine);
                     //Log.Message("5b");
 
-                    dormantVampires.AddRange((generationTwo).
-                        Concat(generationThree).
-                        Concat(generationFour));//.
+                    dormantVampires.AddRange(generationTwo);
+                    dormantVampires.AddRange(generationThree);
+                    dormantVampires.AddRange(generationFour);//.
                     //    Concat(generationFive));
                     //Log.Message("5c");
 
@@ -173,33 +173,33 @@ namespace Vampire
         public override void WorldComponentTick()
         {
             base.WorldComponentTick();
-            if (debugPrinted == false)
-            {
-                debugPrinted = true;
-                PrintVampires();
-            }
+            //if (debugPrinted == false)
+            //{
+            //    debugPrinted = true;
+            //    PrintVampires();
+            //}
         }
 
         public void PrintVampires()
         {
             int count = 0;
-            //Log.Message("Dormant Vampires");
+            Log.Message("Dormant Vampires");
             List<Pawn> tempDormantVampires = new List<Pawn>(DormantVampires);
-            //StringBuilder s = new StringBuilder();
+            StringBuilder s = new StringBuilder();
             foreach (Pawn vamp in tempDormantVampires)
             {
                 count++;
-                //s.AppendLine(vamp.VampComp().Generation + " | " + vamp.VampComp().Bloodline.LabelCap + " | " + vamp.LabelShort);
+                s.AppendLine(vamp.VampComp().Generation + " | " + vamp.VampComp().Bloodline.LabelCap + " | " + vamp.LabelShort);
             }
-            //Log.Message("Active Vampires");
+            Log.Message("Active Vampires");
             List<Pawn> tempActiveVampires = new List<Pawn>(ActiveVampires);
             foreach (Pawn vamp in tempActiveVampires)
             {
                 count++;
-                //s.AppendLine(vamp.VampComp().Generation + " | " + vamp.VampComp().Bloodline.LabelCap + " | " + vamp.LabelShort);
+                s.AppendLine(vamp.VampComp().Generation + " | " + vamp.VampComp().Bloodline.LabelCap + " | " + vamp.LabelShort);
             }
-            //s.AppendLine("Total Vampires: " + count);
-            //Log.Message(s.ToString());
+            s.AppendLine("Total Vampires: " + count);
+            Log.Message(s.ToString());
         }
 
         public override void ExposeData()

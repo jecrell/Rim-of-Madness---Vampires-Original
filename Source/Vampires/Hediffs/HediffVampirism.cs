@@ -15,7 +15,6 @@ namespace Vampire
         public CompVampire sire = null;
         public BloodlineDef bloodline = null;
 
-
         public override void PostTick()
         {
             base.PostTick();
@@ -25,8 +24,10 @@ namespace Vampire
                 if (!initialized)
                 {
                     initialized = true;
+
                     if (!firstVampire)
                     {
+
                         if (sire == null)
                             sire = VampireRelationUtility.FindSireFor(this.pawn, this.bloodline, this.generation).VampComp();
                         if (generation < 0)
@@ -34,6 +35,7 @@ namespace Vampire
                         if (bloodline == null)
                             bloodline = sire.Bloodline;
                     }
+
 
                     if (v.IsVampire && v.Sire == null)
                     {

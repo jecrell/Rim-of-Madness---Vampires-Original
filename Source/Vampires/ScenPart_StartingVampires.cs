@@ -164,7 +164,7 @@ namespace Vampire
         {
             if (Find.VisibleMap == null)
             {
-                curVampires = Find.GameInitData.startingPawns.FindAll(x => x?.health?.hediffSet?.HasHediff(VampDefOf.ROM_Vampirism) ?? false)?.Count() ?? 0;
+                curVampires = Find.GameInitData.startingPawns.FindAll(x => x?.health?.hediffSet?.hediffs.FirstOrDefault(y => y is HediffVampirism) != null)?.Count() ?? 0;
                 BloodlineDef def = (randomBloodline) ? PossibleBloodlines().RandomElement() : bloodline;
                 if (pawn.RaceProps.Humanlike && context == PawnGenerationContext.PlayerStarter)
                 {

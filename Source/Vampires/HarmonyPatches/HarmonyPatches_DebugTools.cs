@@ -77,6 +77,19 @@ namespace Vampire
                         MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, "-1 Blood", -1f);
                 }
             })});
+
+
+            AccessTools.Method(typeof(Dialog_DebugActionsMenu), "DebugToolMap").Invoke(__instance, new object[] {
+                "Add XP (100)", new Action(()=>
+            {
+                Pawn pawn = Find.VisibleMap.thingGrid.ThingsAt(UI.MouseCell()).Where((Thing t) => t is Pawn).Cast<Pawn>().FirstOrDefault<Pawn>();
+                if (pawn != null && pawn?.VampComp() is CompVampire v)
+                {
+                        v.XP += 100;
+                        pawn.Drawer.Notify_DebugAffected();
+                        MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, "+100 XP", -1f);
+                }
+            })});
         }
 
         // Verse.DebugTools_Health

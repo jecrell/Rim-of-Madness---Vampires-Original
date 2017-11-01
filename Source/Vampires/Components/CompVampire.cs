@@ -53,7 +53,14 @@ namespace Vampire
                 level = value;
             }
         }
-        public int XP { get => xp; set => xp = value; }
+        public int XP { get => xp;
+            set
+            {
+                xp = value;
+                if (xp > XPTillNextLevel)
+                    Notify_LevelUp(true);
+            }
+        }
 
         public float XPLastLevel
         {
@@ -316,7 +323,7 @@ namespace Vampire
         //    //if should kill, and not decapitation or massive body squish, start Torpor state
         //    absorbed = true;
         //}
-
+        
         public override bool AllowStackWith(Thing other)
         {
             return base.AllowStackWith(other);

@@ -152,8 +152,6 @@ namespace Vampire
                     {
                         if (AccessTools.Method(typeof(DubsBadHygiene.Need_Bladder), nameof(DubsBadHygiene.Need_Bladder.crapPants)) != null)
                         {
-                            //harmony.Patch(AccessTools.Method(typeof(DubsBadHygiene.Need_Bladder), nameof(DubsBadHygiene.dubUtils.IsRobot)), 
-                            //    null, new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_StopThePoopStorm)));
                             harmony.Patch(AccessTools.Method(typeof(Pawn_NeedsTracker), "ShouldHaveNeed"),
                                 new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_NoBladderNeed)), null);
                         }
@@ -162,6 +160,8 @@ namespace Vampire
                 catch (TypeLoadException ex) { /*Log.Message(ex.ToString());*/ }
             }
             #endregion
+
+
 
         }
 

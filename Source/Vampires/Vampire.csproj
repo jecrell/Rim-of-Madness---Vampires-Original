@@ -122,6 +122,12 @@
     <Compile Include="Hediffs\HediffComp_AnimalForm.cs" />
     <Compile Include="Disciplines\Verb_UseAbilityPawnEffect.cs" />
     <Compile Include="HarmonyPatches\HarmonyPatches_PathFixes.cs" />
+    <Compile Include="Hediffs\HediffVampirism_Gargoyle.cs" />
+    <Compile Include="Hediffs\HediffVampirism_VampGiver.cs" />
+    <Compile Include="Hediffs\HediffVampirism_Lasombre.cs" />
+    <Compile Include="Hediffs\HediffVampirism_Pijavica.cs" />
+    <Compile Include="Hediffs\HediffVampirism_Tremere.cs" />
+    <Compile Include="Hediffs\HediffVampirism_Tzimisce.cs" />
     <Compile Include="UI\Alert_VampireInSunlight.cs" />
     <Compile Include="UI\Alert_VampireStarving.cs" />
     <Compile Include="Utilities\BloodFeedModeUtility.cs" />

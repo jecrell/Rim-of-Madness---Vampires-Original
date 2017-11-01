@@ -14,6 +14,7 @@ namespace Vampire
         {
             //Log.Message(pawn.LabelCap + " " + idealGeneration.ToString());
             Pawn result = null;
+            Log.Message((bloodline == null) ? "No Bloodline" : bloodline.LabelCap);
             result = Find.World.GetComponent<WorldComponent_VampireTracker>().GetLaterGenerationVampire(pawn, bloodline, idealGeneration);
             return result;
         }
@@ -24,17 +25,29 @@ namespace Vampire
 
             if (sireComp == null)
             {
-                Log.Warning("Vampires must have a sire. Choosing one.");
-                BloodlineDef bloodlineToApply = thisChilde.VampComp().Bloodline;
-                if (bloodlineToApply == null)
+                if (thisChilde.relations.GetFirstDirectRelationPawn(VampDefOf.ROMV_Sire) is Pawn discoveredSire)
                 {
-                    Log.Warning("Vampires must have a blood line. Choosing one.");
-                    bloodlineToApply = VampireUtility.RandBloodline;
-                    thisChilde.VampComp().Bloodline = bloodlineToApply;
+                    thisChilde.VampComp().Sire = discoveredSire;
+                    if (sireComp?.Childer is List<Pawn> childer && !childer.NullOrEmpty() && !childer.Contains(thisChilde))
+                    {
+                        childer.Add(thisChilde);
+                    }
+                    return;
                 }
-                Pawn sire = FindSireFor(thisChilde, bloodlineToApply, optionalGeneration); //Find.World.GetComponent<WorldComponent_VampireTracker>().GetLaterGenerationVampire(thisChilde, bloodlineToApply, optionalGeneration);
-                sireComp = sire.VampComp();
-                thisChilde.VampComp().Sire = sire;
+                else
+                {
+                    //Log.Warning("Vampires must have a sire. Choosing one.");
+                    BloodlineDef bloodlineToApply = thisChilde.VampComp().Bloodline;
+                    if (bloodlineToApply == null)
+                    {
+                        Log.Warning("Vampires must have a blood line. Choosing one.");
+                        bloodlineToApply = VampireUtility.RandBloodline;
+                        thisChilde.VampComp().Bloodline = bloodlineToApply;
+                    }
+                    Pawn sire = FindSireFor(thisChilde, bloodlineToApply, optionalGeneration); //Find.World.GetComponent<WorldComponent_VampireTracker>().GetLaterGenerationVampire(thisChilde, bloodlineToApply, optionalGeneration);
+                    sireComp = sire.VampComp();
+                    thisChilde.VampComp().Sire = sire;
+                }
             }
             CompVampire childeComp = thisChilde.GetComp<CompVampire>();
             sireComp.AbilityUser.relations.AddDirectRelation(VampDefOf.ROMV_Childe, thisChilde);
