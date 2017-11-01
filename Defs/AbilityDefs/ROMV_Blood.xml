@@ -16,6 +16,7 @@
   <Vampire.VitaeAbilityDef ParentName="BaseVampAbility">
     <defName>ROMV_Blood_Hunger</defName>
     <label>hunger</label>
+    <bloodCost>1</bloodCost>
     <uiIconPath>UI/Icons/Commands/Blood_Hunger</uiIconPath>
     <description>Allows the vampire to consume blood from the nearby ground.</description>
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
@@ -50,6 +51,7 @@
   <Vampire.VitaeAbilityDef ParentName="BaseVampAbility">
     <defName>ROMV_Blood_Purge</defName>
     <label>purge</label>
+    <bloodCost>1</bloodCost>
     <uiIconPath>UI/Icons/Commands/Blood_Purge</uiIconPath>
     <description>Forces the target to vomit some of their blood on the ground.</description>
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
@@ -83,6 +85,7 @@
   <Vampire.VitaeAbilityDef ParentName="BaseVampAbility">
     <defName>ROMV_Blood_StemTheTide</defName>
     <label>stem the tide</label>
+    <bloodCost>2</bloodCost>
     <uiIconPath>UI/Icons/Commands/Blood_StemTheTide</uiIconPath>
     <description>Stops all blood loss.</description>
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
@@ -116,6 +119,7 @@
   <Vampire.VitaeAbilityDef ParentName="BaseVampAbility">
     <defName>ROMV_Blood_UnstoppableTide</defName>
     <label>unstoppable tide</label>
+    <bloodCost>3</bloodCost>
     <uiIconPath>UI/Icons/Commands/Blood_UnstoppableTide</uiIconPath>
     <description>Breaks off some of the caster's body to become a floating mass of blood that goes to consume the target's blood, skin, and bones, and return the result to the caster.</description>
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
