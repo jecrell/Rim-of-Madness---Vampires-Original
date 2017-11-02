@@ -182,24 +182,24 @@ namespace Vampire
 
         public void PrintVampires()
         {
-            int count = 0;
-            Log.Message("Dormant Vampires");
-            List<Pawn> tempDormantVampires = new List<Pawn>(DormantVampires);
-            StringBuilder s = new StringBuilder();
-            foreach (Pawn vamp in tempDormantVampires)
-            {
-                count++;
-                s.AppendLine(vamp.VampComp().Generation + " | " + vamp.VampComp().Bloodline.LabelCap + " | " + vamp.LabelShort);
-            }
-            Log.Message("Active Vampires");
-            List<Pawn> tempActiveVampires = new List<Pawn>(ActiveVampires);
-            foreach (Pawn vamp in tempActiveVampires)
-            {
-                count++;
-                s.AppendLine(vamp.VampComp().Generation + " | " + vamp.VampComp().Bloodline.LabelCap + " | " + vamp.LabelShort);
-            }
-            s.AppendLine("Total Vampires: " + count);
-            Log.Message(s.ToString());
+            //int count = 0;
+            //Log.Message("Dormant Vampires");
+            //List<Pawn> tempDormantVampires = new List<Pawn>(DormantVampires);
+            //StringBuilder s = new StringBuilder();
+            //foreach (Pawn vamp in tempDormantVampires)
+            //{
+            //    count++;
+            //    s.AppendLine(vamp.VampComp().Generation + " | " + vamp.VampComp().Bloodline.LabelCap + " | " + vamp.LabelShort);
+            //}
+            //Log.Message("Active Vampires");
+            //List<Pawn> tempActiveVampires = new List<Pawn>(ActiveVampires);
+            //foreach (Pawn vamp in tempActiveVampires)
+            //{
+            //    count++;
+            //    s.AppendLine(vamp.VampComp().Generation + " | " + vamp.VampComp().Bloodline.LabelCap + " | " + vamp.LabelShort);
+            //}
+            //s.AppendLine("Total Vampires: " + count);
+            //Log.Message(s.ToString());
         }
 
         public override void ExposeData()

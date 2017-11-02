@@ -39,8 +39,8 @@ namespace Vampire
                 new HarmonyMethod(typeof(HarmonyPatches), (nameof(FindGroundSleepSpotFor_Vampire))), null);
             harmony.Patch(AccessTools.Method(typeof(JobGiver_TakeCombatEnhancingDrug), "TryGiveJob"),
                 new HarmonyMethod(typeof(HarmonyPatches), (nameof(TryGiveJob_DrugGiver_Vampire))), null);
-            //harmony.Patch(AccessTools.Method(typeof(ReachabilityUtility), "CanReach", new Type[] { typeof(Pawn), typeof(LocalTargetInfo), typeof(PathEndMode), typeof(Danger), typeof(bool), typeof(TraverseMode) }), null,
-                //new HarmonyMethod(typeof(HarmonyPatches), (nameof(CanReach_Vampire))), null);
+            harmony.Patch(AccessTools.Method(typeof(ReachabilityUtility), "CanReach", new Type[] { typeof(Pawn), typeof(LocalTargetInfo), typeof(PathEndMode), typeof(Danger), typeof(bool), typeof(TraverseMode) }), null,
+                new HarmonyMethod(typeof(HarmonyPatches), (nameof(CanReach_Vampire))), null);
 
             //The Doctor alert will no longer check a vampire to see if it's fed.
             harmony.Patch(AccessTools.Method(typeof(Alert_NeedDoctor), "get_Patients"),
@@ -144,6 +144,15 @@ namespace Vampire
 
             harmony.Patch(AccessTools.Method(typeof(ForbidUtility), "IsForbidden", new Type[] { typeof(IntVec3), typeof(Pawn) }), null, new HarmonyMethod(typeof(HarmonyPatches).GetMethod("Vamp_IsForbidden")));
 
+            //Patches so that wardens do not try to feed vampires
+            harmony.Patch(AccessTools.Method(typeof(Pawn_GuestTracker), "get_CanBeBroughtFood"), null, 
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_WardensDontFeedVamps)));
+
+
+            //Patches to remove vampires from daylight raids.
+            harmony.Patch(AccessTools.Method(typeof(Scenario), "Notify_PawnGenerated"), null,
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_DontGenerateVampsInDaylight)));
+
             #region DubsBadHygiene
             {
                 try
@@ -160,10 +169,30 @@ namespace Vampire
                 catch (TypeLoadException ex) { /*Log.Message(ex.ToString());*/ }
             }
             #endregion
-
-
-
+            
         }
+
+        // RimWorld.Scenario
+        public static void Vamp_DontGenerateVampsInDaylight(Scenario __instance, Pawn pawn, PawnGenerationContext context)
+        {
+            if (pawn.IsVampire() && VampireUtility.IsDaylight(pawn) && pawn.Faction != Faction.OfPlayerSilentFail &&
+                pawn?.health?.hediffSet?.hediffs is List<Hediff> hdiffs)
+            {
+                hdiffs.RemoveAll(x => x.def == VampDefOf.ROM_Vampirism);
+            }
+        }
+
+
+        // RimWorld.Pawn_GuestTracker
+        public static void Vamp_WardensDontFeedVamps(Pawn_GuestTracker __instance, ref bool __result)
+        {
+            Pawn pawn = (Pawn)AccessTools.Field(typeof(Pawn_GuestTracker), "pawn").GetValue(__instance);
+            if (pawn.IsVampire())
+            {
+                __result = false;
+            }
+        }
+
 
         // RimWorld.Pawn_NeedsTracker
         private static void Vamp_FullBladder(Pawn_NeedsTracker __instance, ref float __result)

@@ -14,7 +14,7 @@ namespace Vampire
         // Verse.ReachabilityUtility
         public static void CanReach_Vampire(ref bool __result, Pawn pawn, LocalTargetInfo dest, PathEndMode peMode, Danger maxDanger, bool canBash = false, TraverseMode mode = TraverseMode.ByPawn)
         {
-            if (__result && pawn.IsVampire() && VampireUtility.IsDaylight(pawn))
+            if (__result && pawn.IsVampire() && VampireUtility.IsDaylight(pawn) && (pawn.Faction == Faction.OfPlayerSilentFail && !pawn.Drafted))
             {
                 if (!dest.Cell.Roofed(pawn.MapHeld)) __result = false;
             }

@@ -46,7 +46,7 @@ namespace Vampire
                 this.Pawn.VampComp().CurrentForm = this.Props.animalToChangeInto;
                 this.Pawn.VampComp().CurFormGraphic = null;
 
-                Log.Message("CurrentForm set to " + this.Props.animalToChangeInto.label);
+                //Log.Message("CurrentForm set to " + this.Props.animalToChangeInto.label);
             }
             if (CompShouldRemove)
             {

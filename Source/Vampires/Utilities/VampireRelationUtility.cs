@@ -12,9 +12,7 @@ namespace Vampire
 
         public static Pawn FindSireFor(Pawn pawn, BloodlineDef bloodline = null, int idealGeneration = -1)
         {
-            //Log.Message(pawn.LabelCap + " " + idealGeneration.ToString());
             Pawn result = null;
-            Log.Message((bloodline == null) ? "No Bloodline" : bloodline.LabelCap);
             result = Find.World.GetComponent<WorldComponent_VampireTracker>().GetLaterGenerationVampire(pawn, bloodline, idealGeneration);
             return result;
         }

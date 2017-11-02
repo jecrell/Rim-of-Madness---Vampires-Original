@@ -28,6 +28,12 @@ namespace Vampire
         public static HediffDef ROMV_PerfectFormHediff;
         public static HediffDef ROMV_ZuloFormHediff;
         public static HediffDef ROMV_WarFormHediff;
+        public static HediffDef ROM_VampirismRandom;
+        public static HediffDef ROM_VampirismGargoyle;
+        public static HediffDef ROM_VampirismLasombra;
+        public static HediffDef ROM_VampirismTzimisce;
+        public static HediffDef ROM_VampirismTremere;
+        public static HediffDef ROM_VampirismPijavica;
 
         public static HediffDef ROMV_CorruptFormHediff_Sight;
         public static HediffDef ROMV_CorruptFormHediff_Legs;
