@@ -251,7 +251,7 @@ namespace Vampire
             Job embraceJob = new Job(VampDefOf.ROMV_Embrace, newChilde);
             this.AbilityUser.jobs.TryTakeOrderedJob(embraceJob, JobTag.Misc);
         }
-        
+
         public void InitializeVampirism(Pawn newSire, BloodlineDef newBloodline = null, int newGeneration = -1, bool firstVampire = false)
         {
             VampireGen.TryGiveVampirismHediff(this.AbilityUser, newGeneration, newBloodline, newSire, firstVampire);

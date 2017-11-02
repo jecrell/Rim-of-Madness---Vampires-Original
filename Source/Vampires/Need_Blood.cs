@@ -196,21 +196,27 @@ namespace Vampire
             {
                 this.lastNonStarvingTick = Find.TickManager.TicksGame;
             }
+
             if (!base.IsFrozen)
             {
-                if (Find.TickManager.TicksGame < this.nextBloodChangeTick)
+                if (Find.TickManager.TicksGame > this.nextBloodChangeTick)
                 {
-                    nextBloodChangeTick += GenDate.TicksPerDay;
+                    nextBloodChangeTick = (Find.TickManager.TicksGame) + GenDate.TicksPerDay;
                     AdjustBlood(BloodChangePerDay);
                 }
+
                 if (this.Starving)
                 {
+
                     if (CompVampire != null && CompVampire.IsVampire)
                     {
+
                         CompVampire.Notify_Starving(lastNonStarvingTick);
                     }
                     else if (!this.pawn.Dead)
                     {
+                        Log.Message("2baa");
+
                         HealthUtility.AdjustSeverity(this.pawn, HediffDefOf.BloodLoss, 1f);
                         this.pawn.Kill(null);
                     }
