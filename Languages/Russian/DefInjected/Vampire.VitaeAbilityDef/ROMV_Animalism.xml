@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LanguageData>
+
+  <ROMV_Animalism_Beckoning.Label>Приманивание</ROMV_Animalism_Beckoning.Label>
+  <ROMV_Animalism_Beckoning.Description>Призывает стаю диких животных в свою колонию.</ROMV_Animalism_Beckoning.Description>
+
+  <ROMV_Animalism_NightwispRavens.Label>Ночные вороны</ROMV_Animalism_NightwispRavens.Label>
+  <ROMV_Animalism_NightwispRavens.Description>Вороны выводят из строя жертву на короткое время. Любые действия, предпринятые против жертвы, разгонят группу и преждевременно прекратят эффект.</ROMV_Animalism_NightwispRavens.Description>
+
+  <ROMV_Animalism_SpectralWolf.Label>Спектральный волк</ROMV_Animalism_SpectralWolf.Label>
+  <ROMV_Animalism_SpectralWolf.Description>Спектральный волк материализуется, атакует цель и затем возвращается в эфир.</ROMV_Animalism_SpectralWolf.Description>
+
+  <ROMV_Animalism_Communion.Label>Общность</ROMV_Animalism_Communion.Label>
+  <ROMV_Animalism_Communion.Description>Три призрачных летучих мыши ищут цели, истощают их кровь, а затем доставляют кровь своему хозяину.</ROMV_Animalism_Communion.Description>
+
+</LanguageData>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LanguageData>
+
+  <ROMV_Flight_LightWeight.Label>Легкий вес</ROMV_Flight_LightWeight.Label>
+  <ROMV_Flight_LightWeight.Description>Пассивно повышает грузоподъемность и снижает вес заклинателя, позволяя летать.</ROMV_Flight_LightWeight.Description>
+
+  <ROMV_Flight_WingBuffet.Label>Удар крылом</ROMV_Flight_WingBuffet.Label>
+  <ROMV_Flight_WingBuffet.Description>Попытаться временно сразить (оглушить) цель, используя крыло с полной силой взмахнув в цель.</ROMV_Flight_WingBuffet.Description>
+
+  <ROMV_Flight_ShortFlight.Label>Короткий полет</ROMV_Flight_ShortFlight.Label>
+  <ROMV_Flight_ShortFlight.Description>Позволяет вашему персонажу пролететь по карте, в выбранный пункт назначения.</ROMV_Flight_ShortFlight.Description>
+
+  <ROMV_Flight_SkyFall.Label>Небесное падение</ROMV_Flight_SkyFall.Label>
+  <ROMV_Flight_SkyFall.Description>Поднимает и несет персонажа высоко в небо, и бросает его на землю для нанесения массивного количества тупого урона.</ROMV_Flight_SkyFall.Description>
+
+</LanguageData>

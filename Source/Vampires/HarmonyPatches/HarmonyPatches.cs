@@ -373,6 +373,7 @@ namespace Vampire
                 int delay = 132;
                 if (__instance.def == SkillDefOf.Intellectual || __instance.def == SkillDefOf.Growing) delay += 52;
                 compVamp.ticksToLearnXP = Find.TickManager.TicksGame + delay;
+                //Log.Message("XP");
                 compVamp.XP++;
             }
         }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LanguageData>
+
+  <ROMV_FlyingObject.Label>Летающий объект</ROMV_FlyingObject.Label>
+
+  <ROMV_DominateProjectile.Label>Псионический взрыв</ROMV_DominateProjectile.Label>
+
+  <ROMV_BloodProjectile_BloodBoil.Label>Снаряд кипящей крови</ROMV_BloodProjectile_BloodBoil.Label>
+
+  <ROMV_BloodProjectile.Label>Снаряд крови</ROMV_BloodProjectile.Label>
+
+  <ROMV_BloodProjectile_Returner.Label>Снаряд крови</ROMV_BloodProjectile_Returner.Label>
+
+</LanguageData>

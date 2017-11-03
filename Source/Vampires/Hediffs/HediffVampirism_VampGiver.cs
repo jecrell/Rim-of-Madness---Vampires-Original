@@ -26,6 +26,7 @@ namespace Vampire
         }
 
         public bool setup = false;
+
         public override void PostTick()
         {
             if (!setup)

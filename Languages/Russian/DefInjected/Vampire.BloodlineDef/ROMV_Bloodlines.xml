@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LanguageData>
+
+  <ROMV_Caine.Label>Первый вампир</ROMV_Caine.Label>
+  <ROMV_Caine.Description>Еще нет</ROMV_Caine.Description>
+
+  <ROMV_TheThree.Label>Дети Каина</ROMV_TheThree.Label>
+  <ROMV_TheThree.Description>Еще нет</ROMV_TheThree.Description>
+
+  <ROMV_ClanTzimize.Label>Цимисхи</ROMV_ClanTzimize.Label>
+  <ROMV_ClanTzimize.Description>Еще нет</ROMV_ClanTzimize.Description>
+
+  <ROMV_ClanTremere.Label>Тремер</ROMV_ClanTremere.Label>
+  <ROMV_ClanTremere.Description>Еще нет</ROMV_ClanTremere.Description>
+
+  <ROMV_ClanLasombra.Label>Ласомбра</ROMV_ClanLasombra.Label>
+  <ROMV_ClanLasombra.Description>Еще нет</ROMV_ClanLasombra.Description>
+
+  <ROMV_ClanPijavica.Label>Пиджавик</ROMV_ClanPijavica.Label>
+  <ROMV_ClanPijavica.Description>Еще нет</ROMV_ClanPijavica.Description>
+
+  <ROMV_ClanGargoyle.Label>Горгульи</ROMV_ClanGargoyle.Label>
+  <ROMV_ClanGargoyle.Description>Еще нет</ROMV_ClanGargoyle.Description>
+
+</LanguageData>

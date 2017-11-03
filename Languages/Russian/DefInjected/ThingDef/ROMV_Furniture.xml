@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LanguageData>
+
+  <!--============================== Beds ==============================-->
+
+  <ROMV_RoyalCoffin.Label>Роскошный гроб</ROMV_RoyalCoffin.Label>
+  <ROMV_RoyalCoffin.Description>Украшенное погребальное вместилище для почитаемых мертвецов.</ROMV_RoyalCoffin.Description>
+
+  <ROMV_HideyHole.Label>Странный участок грязи</ROMV_HideyHole.Label>
+  <ROMV_HideyHole.Description>Это пятно кажется неуместным.</ROMV_HideyHole.Description>
+
+</LanguageData>

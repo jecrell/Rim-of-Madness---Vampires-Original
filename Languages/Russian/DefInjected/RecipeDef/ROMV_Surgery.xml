@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<LanguageData>
+
+  <ROMV_ExtractBloodVial.Label>Извлечь флакон крови</ROMV_ExtractBloodVial.Label>
+  <ROMV_ExtractBloodVial.Description>Сделать флакон с кровью.</ROMV_ExtractBloodVial.Description>
+  <ROMV_ExtractBloodVial.jobString>Извлекает кровь.</ROMV_ExtractBloodVial.jobString>
+
+  <ROMV_ExtractBloodPack.Label>Извлечь пакет крови</ROMV_ExtractBloodPack.Label>
+  <ROMV_ExtractBloodPack.Description>Сделать пакет с кровью.</ROMV_ExtractBloodPack.Description>
+  <ROMV_ExtractBloodPack.jobString>Извлекает кровь.</ROMV_ExtractBloodPack.jobString>
+
+</LanguageData>

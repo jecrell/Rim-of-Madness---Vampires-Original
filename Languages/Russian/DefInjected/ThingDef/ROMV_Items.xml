@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LanguageData>
+
+  <!--
+  ██████   █████   ██████ ██   ██ ███████
+  ██   ██ ██   ██ ██      ██  ██  ██
+  ██████  ███████ ██      █████   ███████
+  ██      ██   ██ ██      ██  ██       ██
+  ██      ██   ██  ██████ ██   ██ ███████
+-->
+
+  <BloodPack_Animal.Label>Пакет крови (животного)</BloodPack_Animal.Label>
+  <BloodPack_Animal.Description>Собранная для потребления кровь животного. (1 пункт крови)</BloodPack_Animal.Description>
+
+  <BloodPack_LowBlood.Label>Пакет крови (низшая кровь)</BloodPack_LowBlood.Label>
+  <BloodPack_LowBlood.Description>Низкая кровь или кровь, которая не соответствует более высоким королевским стандартам (проститутки, рабы, бездомные или больные), собранная в небольшой пакет. (3 пункта крови)</BloodPack_LowBlood.Description>
+
+  <BloodPack_AverageBlood.Label>Пакет крови (обычная)</BloodPack_AverageBlood.Label>
+  <BloodPack_AverageBlood.Description>Кровь, которая не слишком выдающаяся для сурового вампира или слишком низкого класса для потребления более высокими членами общества вампиров. (3 пункта крови)</BloodPack_AverageBlood.Description>
+
+  <BloodPack_HighBlood.Label>Пакет крови (высшая кровь)</BloodPack_HighBlood.Label>
+  <BloodPack_HighBlood.Description>Высшая кровь или кровь, подходящая для королевских вампиров (кровь аристократов, богатых людей или из мира утопии), хранится в пакете. (2 пункта крови)</BloodPack_HighBlood.Description>
+
+  <!--
+  ██    ██ ██  █████  ██      ███████
+  ██    ██ ██ ██   ██ ██      ██
+  ██    ██ ██ ███████ ██      ███████
+   ██  ██  ██ ██   ██ ██           ██
+    ████   ██ ██   ██ ███████ ███████
+  -->
+
+  <BloodVial_LowBlood.Label>Флакон крови (низшая)</BloodVial_LowBlood.Label>
+  <BloodVial_LowBlood.Description>Низкая кровь или кровь, которая не соответствует более высоким королевским стандартам (проститутки, рабы, бездомные или больные), собранная в небольшой флакон. (1 пункт крови)</BloodVial_LowBlood.Description>
+
+  <BloodVial_AverageBlood.Label>Флакон крови (обычная)</BloodVial_AverageBlood.Label>
+  <BloodVial_AverageBlood.Description>Кровь, которая не слишком выдающаяся для сурового вампира или слишком низкого класса для потребления более высокими членами общества вампиров. (1 пункт крови)</BloodVial_AverageBlood.Description>
+
+  <BloodVial_HighBlood.Label>Флакон крови (высшая кровь)</BloodVial_HighBlood.Label>
+  <BloodVial_HighBlood.Description>Высшая кровь или кровь, подходящая для королевских вампиров (кровь аристократов, богатых людей или из мира утопии), хранится во флаконе.</BloodVial_HighBlood.Description>
+
+  <BloodVial_Special.Label>Флакон крови (специальная)</BloodVial_Special.Label>
+  <BloodVial_Special.Description>Специальная кровь, возможно, полученная из мифических существ, хранится во флаконе.</BloodVial_Special.Description>
+
+</LanguageData>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LanguageData>
+
+  <ROMV_Auspex_HeightenedSenses.Label>Усиленные чувства</ROMV_Auspex_HeightenedSenses.Label>
+  <ROMV_Auspex_HeightenedSenses.Description>Временно улучшает чувства и умение "стрельбы".</ROMV_Auspex_HeightenedSenses.Description>
+
+  <ROMV_Auspex_CrocodileTongue.Label>Крокодиловый язык</ROMV_Auspex_CrocodileTongue.Label>
+  <ROMV_Auspex_CrocodileTongue.Description>Предоставляет временный бонус к социальным навыкам и торговле.</ROMV_Auspex_CrocodileTongue.Description>
+
+  <ROMV_Auspex_RevealIllusions.Label>Обнаружение иллюзии</ROMV_Auspex_RevealIllusions.Label>
+  <ROMV_Auspex_RevealIllusions.Description>Показывает иллюзии, рассеивает страдания или обнаруживает скрытые местоположения на карте.</ROMV_Auspex_RevealIllusions.Description>
+
+  <ROMV_Auspex_ReadMind.Label>Чтение мислей</ROMV_Auspex_ReadMind.Label>
+  <ROMV_Auspex_ReadMind.Description>Читает мысли цели, узнает их следующий ход и мешает им наносить вред заклинателю используя обычные средства.</ROMV_Auspex_ReadMind.Description>
+
+</LanguageData>

@@ -58,7 +58,7 @@ namespace Vampire
             {
                 xp = value;
                 if (xp > XPTillNextLevel)
-                    Notify_LevelUp(true);
+                   Notify_LevelUp(true);
             }
         }
 
@@ -254,6 +254,7 @@ namespace Vampire
 
         public void InitializeVampirism(Pawn newSire, BloodlineDef newBloodline = null, int newGeneration = -1, bool firstVampire = false)
         {
+            this.AbilityUser.health.hediffSet.hediffs.RemoveAll(x => x is HediffVampirism_VampGiver);
             VampireGen.TryGiveVampirismHediff(this.AbilityUser, newGeneration, newBloodline, newSire, firstVampire);
             if (!firstVampire)
             {

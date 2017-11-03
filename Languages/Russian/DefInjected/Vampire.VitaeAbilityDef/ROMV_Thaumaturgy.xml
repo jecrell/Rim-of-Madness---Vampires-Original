@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LanguageData>
+
+  <ROMV_Thaumaturgy_BloodStrike.Label>Кровавый удар</ROMV_Thaumaturgy_BloodStrike.Label>
+  <ROMV_Thaumaturgy_BloodStrike.Description>Запускает снаряд крови в цель, который может собирать и вернуть кровь заклинателю.</ROMV_Thaumaturgy_BloodStrike.Description>
+
+  <ROMV_Thaumaturgy_BloodShield.Label>Кровавый щит</ROMV_Thaumaturgy_BloodShield.Label>
+  <ROMV_Thaumaturgy_BloodShield.Description>Кровавый щит окружает заклинателя и поглощает несколько ударов перед тем как рассеяться.</ROMV_Thaumaturgy_BloodShield.Description>
+
+  <ROMV_Thaumaturgy_BloodSalvo.Label>Кровавый залп</ROMV_Thaumaturgy_BloodSalvo.Label>
+  <ROMV_Thaumaturgy_BloodSalvo.Description>Запускает три снаряда крови в зону действия, которые могут собирать и вернуть кровь заклинателю.</ROMV_Thaumaturgy_BloodSalvo.Description>
+
+  <ROMV_Thaumaturgy_BloodBoil.Label>Кипение крови</ROMV_Thaumaturgy_BloodBoil.Label>
+  <ROMV_Thaumaturgy_BloodBoil.Description>Запускает кипящую кровь в цель, наносит урон другим во время взрыва.</ROMV_Thaumaturgy_BloodBoil.Description>
+
+</LanguageData>
