@@ -153,6 +153,16 @@ namespace Vampire
             harmony.Patch(AccessTools.Method(typeof(Scenario), "Notify_PawnGenerated"), null,
                 new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_DontGenerateVampsInDaylight)));
 
+            //Patches to remove vampires from daylight raids.
+            harmony.Patch(AccessTools.Method(typeof(Pawn_JobTracker), "EndCurrentJob"),
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_EndCurrentJob)), null);
+
+
+            //Patches to remove vampires from daylight raids.
+            harmony.Patch(AccessTools.Method(typeof(PawnUtility), "GainComfortFromCellIfPossible"), null,
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_BedComfort)), null);
+
+
             #region DubsBadHygiene
             {
                 try
@@ -170,6 +180,46 @@ namespace Vampire
             }
             #endregion
             
+        }
+
+        // RimWorld.PawnUtility
+        public static void Vamp_BedComfort(Pawn p)
+        {
+            if (Find.TickManager.TicksGame % 10 == 0)
+            {
+                Building edifice = p.Position.GetEdifice(p.Map);
+                if (edifice != null)
+                {
+                    if (edifice.TryGetComp<CompVampBed>() is CompVampBed vBed && vBed.Bed != null)
+                    {
+                        float statValue = vBed.Bed.GetStatValue(StatDefOf.Comfort, true);
+                        if (statValue >= 0f && p.needs != null && p.needs.comfort != null)
+                        {
+                            p.needs.comfort.ComfortUsed(statValue);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Verse.AI.Pawn_JobTracker
+        public static void Vamp_EndCurrentJob(Pawn_JobTracker __instance, JobCondition condition, bool startNewJob)
+        {
+            Pawn pawn = (Pawn)AccessTools.Field(typeof(Pawn_JobTracker), "pawn").GetValue(__instance);
+            if (pawn.IsVampire())
+            {
+                if (__instance.curJob != null && __instance.curDriver.layingDown != LayingDownState.NotLaying && !pawn.Downed)
+                {
+                    if (pawn.BloodNeed() is Need_Blood bN)
+                    {
+                        bN.AdjustBlood(-1);
+                    }
+                    else
+                    {
+                        Log.Warning("Vampires :: Failed to show blood need.");
+                    }
+                }
+            }
         }
 
         // RimWorld.Scenario
@@ -796,7 +846,7 @@ namespace Vampire
                     }
                     if (t is Pawn victim && pawn != victim && victim.BloodNeed() is Need_Blood n)
                     {
-                        if (pawn.IsVampire() && !victim.IsVampire())
+                        if (pawn.IsVampire() && (!victim.IsVampire() || (pawn?.VampComp()?.Bloodline is BloodlineDef blDef && blDef.canFeedOnVampires)))
                         {
                             Action action = delegate
                             {

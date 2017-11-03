@@ -154,6 +154,7 @@
   <Vampire.VitaeAbilityDef ParentName="BaseVampAbility">
     <defName>ROMV_Thaumaturgy_BloodBoil</defName>
     <label>blood boil</label>
+    <bloodCost>3</bloodCost>
     <uiIconPath>UI/Icons/Commands/Thaumaturgy_BloodBoil</uiIconPath>
     <description>Makes the target's blood boil until they damage others in an explosion.</description>
     <MainVerb Class="AbilityUser.VerbProperties_Ability">

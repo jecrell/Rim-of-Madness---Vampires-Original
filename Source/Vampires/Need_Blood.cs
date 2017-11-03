@@ -25,8 +25,9 @@ namespace Vampire
     {
         #region Variables
         private int curBloodPoints = Int32.MinValue;
-        private int nextBloodChangeTick = Int32.MaxValue;
-        private int lastNonStarvingTick = -99999;
+        private int nextBloodChangeTick = -1;
+        private int lastNonStarvingTick = -1;
+        private bool bloodFixer = false;
         public PreferredFeedMode preferredFeedMode = PreferredFeedMode.HumanoidNonLethal;
         #endregion Variables
 
@@ -142,9 +143,10 @@ namespace Vampire
             //private int curBloodPoints = Int32.MinValue;
             //private int nextBloodChangeTick = Int32.MaxValue;
             base.ExposeData();
-            Scribe_Values.Look<int>(ref this.lastNonStarvingTick, "lastNonStarvingTick", -99999, false);
-            Scribe_Values.Look<int>(ref this.nextBloodChangeTick, "nextBloodChangeTick", -99999, false);
-            Scribe_Values.Look<int>(ref this.curBloodPoints, "curBloodPoints", -99999, false);
+            Scribe_Values.Look<int>(ref this.lastNonStarvingTick, "lastNonStarvingTick", -1, false);
+            Scribe_Values.Look<int>(ref this.nextBloodChangeTick, "nextBloodChangeTick", -1, false);
+            Scribe_Values.Look<int>(ref this.curBloodPoints, "curBloodPoints", -1, false);
+            Scribe_Values.Look<bool>(ref this.bloodFixer, "bloodFixer", false);
             Scribe_Values.Look<PreferredFeedMode>(ref this.preferredFeedMode, "preferredFeedMode", PreferredFeedMode.HumanoidNonLethal);
         }
         
@@ -189,9 +191,25 @@ namespace Vampire
             int removedAmt = AdjustBlood(-amt);
             if (removedAmt > 0) otherPool.AdjustBlood(removedAmt);
         }
-
+        
         public override void NeedInterval()
         {
+            if (!bloodFixer)
+            {
+                bloodFixer = true;
+                this.nextBloodChangeTick = -1;
+            }
+
+            if (Find.TickManager.TicksGame % 250 == 0)
+                //Log.Message("Ticks => " + Find.TickManager.TicksGame);
+            if (Find.TickManager.TicksGame > this.nextBloodChangeTick)
+            {
+                int math = Find.TickManager.TicksGame + GenDate.TicksPerDay;
+                //Log.Message("BLOOD TICKS SET TO => " + math);
+                this.nextBloodChangeTick = math;
+                AdjustBlood(BloodChangePerDay);
+            }
+
             if (!this.Starving)
             {
                 this.lastNonStarvingTick = Find.TickManager.TicksGame;
@@ -199,11 +217,6 @@ namespace Vampire
 
             if (!base.IsFrozen)
             {
-                if (Find.TickManager.TicksGame > this.nextBloodChangeTick)
-                {
-                    nextBloodChangeTick = (Find.TickManager.TicksGame) + GenDate.TicksPerDay;
-                    AdjustBlood(BloodChangePerDay);
-                }
 
                 if (this.Starving)
                 {
@@ -215,7 +228,6 @@ namespace Vampire
                     }
                     else if (!this.pawn.Dead)
                     {
-                        Log.Message("2baa");
 
                         HealthUtility.AdjustSeverity(this.pawn, HediffDefOf.BloodLoss, 1f);
                         this.pawn.Kill(null);

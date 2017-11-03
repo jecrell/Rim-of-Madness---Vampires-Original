@@ -61,11 +61,11 @@ namespace Vampire
             {
                 if (this.pawn.VampComp().Generation != -1)
                 {
-                    return "Vampire (" + AddOrdinal(this.pawn.VampComp().Generation) + " Generation)";
+                    return "ROMV_HI_VampGeneration".Translate(AddOrdinal(this.pawn.VampComp().Generation));
                 }
                 if (this.generation != -1)
                 {
-                    return "Vampire (" + AddOrdinal(this.generation) + " Generation)";
+                    return "ROMV_HI_VampGeneration".Translate(AddOrdinal(this.generation));
                 }
                 return "Vampire";
             }

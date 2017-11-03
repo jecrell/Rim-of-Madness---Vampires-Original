@@ -9,19 +9,55 @@ namespace Vampire
     public class HediffVampirism_VampGiver : HediffWithComps
     {
         public virtual BloodlineDef Bloodline => VampireUtility.RandBloodline;
+        private int generation = -1;
         public virtual int Generation
         {
             get
             {
-                int result = Rand.Range(10, 13);
-                switch (this.CurStageIndex)
+                if (generation == -1)
                 {
-                    case 0: result = 14; break;
-                    case 1: result = Rand.Range(10, 13); break;
-                    case 2: result = Rand.Range(7, 9); break;
-                    case 3: result = Rand.Range(5, 6); break;
+                    switch (this.CurStageIndex)
+                    {
+                        case 0: generation = 14; break;
+                        case 1: generation = Rand.Range(10, 13); break;
+                        case 2: generation = Rand.Range(7, 9); break;
+                        case 3: generation = Rand.Range(5, 6); break;
+                    }
                 }
-                return result;
+                return generation;
+            }
+        }
+
+        public override string LabelInBrackets
+        {
+            get
+            {
+                return "ROMV_HI_Generation".Translate(HediffVampirism.AddOrdinal(Generation));
+            }
+        }
+
+        public override string TipStringExtra
+        {
+            get
+            {
+                int gen = this.generation;
+                int math = (gen > 7) ? 10 + (Math.Abs(gen - 13)) : 10 * (Math.Abs(gen - 9));
+
+                StringBuilder s = new StringBuilder();
+                s.AppendLine(Bloodline.LabelCap);
+                s.AppendLine(Bloodline.description);
+                s.AppendLine("---");
+                s.AppendLine("ROMV_Disciplines".Translate());
+                if (Bloodline.disciplines is List<DisciplineDef> dDefs && !dDefs.NullOrEmpty())
+                {
+                    foreach (DisciplineDef dDef in dDefs)
+                    {
+                        s.AppendLine(" -" + dDef.LabelCap);
+                    }
+                }
+                s.AppendLine("---");
+                s.AppendLine("ROMV_HI_VitaeAvailable".Translate(math));
+                return s.ToString();
             }
         }
 
@@ -46,6 +82,7 @@ namespace Vampire
         {
             base.ExposeData();
             Scribe_Values.Look<bool>(ref this.setup, "setup", false);
+            Scribe_Values.Look<int>(ref this.generation, "generation", -1);
         }
     }
 }

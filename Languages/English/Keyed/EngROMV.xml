@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 
+<!-- 11-4-17 -->
+<ROMV_HI_VampGeneration>Vampire ({0} Generation)</ROMV_HI_VampGeneration>
+<ROMV_HI_Generation>{0} Generation</ROMV_HI_Generation>
+<ROMV_HI_VitaeAvailable>{0} Starting Blood Points</ROMV_HI_VitaeAvailable>
+
 <!-- Used Ability Effects -->
 <!-- Animalism -->
 <ROMV_AnimalHerd>Herd</ROMV_AnimalHerd>

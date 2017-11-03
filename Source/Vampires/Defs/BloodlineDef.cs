@@ -15,6 +15,7 @@ namespace Vampire
         public HediffDef fangsHediff = VampDefOf.ROMV_Fangs;
         public Type embraceWorker;
         public bool scenarioCanAdd = true;
+        public bool canFeedOnVampires = false;
         public BloodPreferabilty minBloodPref = BloodPreferabilty.Lowblood;
         public BloodPreferabilty desperateBloodPref = BloodPreferabilty.Any;
         public List<DisciplineDef> disciplines = null;
