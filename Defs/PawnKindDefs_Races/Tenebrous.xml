@@ -16,6 +16,7 @@
 
     <PawnKindDef ParentName="AnimalKindBase" Name="ROMV_AnimalKindBaseTenebrous" Abstract="True">
       <combatPower>175</combatPower>
+      <canArriveManhunter>false</canArriveManhunter>
       <wildSpawn_spawnWild>false</wildSpawn_spawnWild>
       <wildSpawn_EcoSystemWeight>0.0</wildSpawn_EcoSystemWeight>
     </PawnKindDef>

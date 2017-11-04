@@ -15,7 +15,7 @@ namespace Vampire
             base.Impact_Override(hitThing);
             if (hitThing is Pawn p && p.BloodNeed() is Need_Blood bn)
             {
-                MoteMaker.ThrowText(p.DrawPos, p.Map, "+1", -1f);
+                MoteMaker.ThrowText(p.DrawPos, p.Map, "+2", -1f);
                 bn.AdjustBlood(2);
             }
         }

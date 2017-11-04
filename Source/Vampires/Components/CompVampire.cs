@@ -190,7 +190,7 @@ namespace Vampire
                     Map curMap = this.AbilityUser.Map;
                     if (curMap != null)
                     {
-                        if ((GenLocalDate.HourInteger(this.AbilityUser) >= 6 && GenLocalDate.HourInteger(this.AbilityUser) <= 17)
+                        if (VampireUtility.IsDaylight(this.AbilityUser)
                             && !this.AbilityUser.PositionHeld.Roofed(curMap))
                         {
                             return true;

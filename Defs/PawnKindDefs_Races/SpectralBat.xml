@@ -83,6 +83,7 @@
     <defName>ROMV_BatSpectralKind</defName>
     <label>spectral bat</label>
     <race>ROMV_BatSpectralRace</race>
+    <canArriveManhunter>false</canArriveManhunter>
     <combatPower>50</combatPower>
     <wildSpawn_EcoSystemWeight>0</wildSpawn_EcoSystemWeight>
     <wildSpawn_spawnWild>false</wildSpawn_spawnWild>

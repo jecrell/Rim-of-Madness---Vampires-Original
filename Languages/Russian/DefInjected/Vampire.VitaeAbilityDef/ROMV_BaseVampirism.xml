@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LanguageData>
+
+  <ROMV_VampiricHealing.Label>Вампирическое исцеление</ROMV_VampiricHealing.Label>
+  <ROMV_VampiricHealing.Description>Восстанавливает поврежденную плоть, используя витэ.</ROMV_VampiricHealing.Description>
+
+  <ROMV_RegenerateLimb.Label>Регенерировать конечность</ROMV_RegenerateLimb.Label>
+  <ROMV_RegenerateLimb.Description>Восстанавливает конечность или часть тела, потерянную в бою.</ROMV_RegenerateLimb.Description>
+
+</LanguageData>

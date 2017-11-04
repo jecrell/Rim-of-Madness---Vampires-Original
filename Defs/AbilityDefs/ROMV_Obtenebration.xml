@@ -167,7 +167,7 @@
     <label>enter the abyss</label>
     <bloodCost>3</bloodCost>
     <uiIconPath>UI/Icons/Commands/Obtenebration_EnterTheAbyss</uiIconPath>
-    <description>Allows the caster to walk thruogh the dark abyss and teleport anywhere on the map instantaneously.</description>
+    <description>Allows the caster to walk through the dark abyss and teleport anywhere on the map instantaneously.</description>
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_EnterTheAbyss</verbClass>
       <hasStandardCommand>true</hasStandardCommand>

@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 
+<!-- 11-4-17 x2-->
+<ROMV_HI_UnusedCapacities>NAME - это одно с мертвыми. HIS труп не нуждается в большинстве физических функций. HECAP CAN может заставить их функционировать, чтобы сойти за одного из живых или когда это совершенно необходимо.</ROMV_HI_UnusedCapacities>
+<ROMV_HI_Unused>Отсутствует</ROMV_HI_Unused>
+<ROMV_HI_Immunities>Предотвращает: заболевания, инфекции, температурные эффекты.</ROMV_HI_Immunities>
+<ROMV_HI_Vampirism>Вампиризм</ROMV_HI_Vampirism>
+
+<!-- 11-4-17 -->
+<ROMV_HI_VampGeneration>Вампир ({0} Поколение)</ROMV_HI_VampGeneration>
+<ROMV_HI_Generation>{0} Поколение</ROMV_HI_Generation>
+<ROMV_HI_VitaeAvailable>{0} Начальные очки крови</ROMV_HI_VitaeAvailable>
+
 <!-- Used Ability Effects -->
 <!-- Animalism -->
 <ROMV_AnimalHerd>Стадо</ROMV_AnimalHerd>

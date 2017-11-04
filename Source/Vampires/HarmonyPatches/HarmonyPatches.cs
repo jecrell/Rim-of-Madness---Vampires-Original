@@ -193,6 +193,21 @@ namespace Vampire
             harmony.Patch(AccessTools.Method(typeof(PawnBreathMoteMaker), "BreathMoteMakerTick"),
                 new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_NoBreathingMote)), null);
 
+
+            //Vampires had trouble with lovin' due to a food check.
+            harmony.Patch(AccessTools.Method(typeof(LovePartnerRelationUtility), "GetLovinMtbHours"),
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_LovinFoodFix)), null);
+            //Guests were also checking for "food" related items.
+            harmony.Patch(AccessTools.Method(typeof(GatheringsUtility), "ShouldGuestKeepAttendingGathering"),
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_GuestFix)), null);
+            //More food checks
+            harmony.Patch(AccessTools.Method(typeof(JobGiver_EatInPartyArea), "TryGiveJob"),
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_DontEatAtTheParty)), null);
+
+            //Players can't slaughter temporary summons
+            harmony.Patch(AccessTools.Method(typeof(Designator_Slaughter), "CanDesignateThing"),
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_CantSlaughterTemps)), null);
+
             #region DubsBadHygiene
             {
                 try
@@ -211,33 +226,148 @@ namespace Vampire
             #endregion
         }
 
+        // RimWorld.Designator_Slaughter
+        public static bool Vamp_CantSlaughterTemps(Thing t, ref AcceptanceReport __result)
+        {
+            if (t is PawnTemporary)
+            {
+                __result = false;
+                return false;
+            }
+            return true;
+        }
+
+            //public class JobGiver_EatInPartyArea : ThinkNode_JobGiver
+            //{
+            public static bool Vamp_DontEatAtTheParty(Pawn pawn, ref Job __result)
+        {
+            if (pawn.IsVampire())
+            {
+                __result = null;
+                return false;
+            }
+            return true;
+        }
+
+                // RimWorld.GatheringsUtility
+                public static bool Vamp_GuestFix(Pawn p, ref bool __result)
+        {
+            if (p.IsVampire())
+            {
+                __result = !p.Downed && p.health.hediffSet.BleedRateTotal <= 0f && p?.needs?.rest?.CurCategory < RestCategory.Exhausted &&
+                !p.health.hediffSet.HasTendableNonInjuryNonMissingPartHediff(false) && p.Awake() && !p.InAggroMentalState && !p.IsPrisoner;
+                return false;
+            }
+            return true;
+        }
+
+
+        // RimWorld.LovePartnerRelationUtility
+        private static float LovinMtbSinglePawnFactor(Pawn pawn)
+        {
+            float num = 1f;
+            num /= 1f - pawn.health.hediffSet.PainTotal;
+            float level = pawn.health.capacities.GetLevel(PawnCapacityDefOf.Consciousness);
+            if (level < 0.5f)
+            {
+                num /= level * 2f;
+            }
+            return num / GenMath.FlatHill(0f, 14f, 16f, 25f, 80f, 0.2f, pawn.ageTracker.AgeBiologicalYearsFloat);
+        }
+
+
+        // RimWorld.LovePartnerRelationUtility
+        public static bool Vamp_LovinFoodFix(Pawn pawn, Pawn partner, ref float __result)
+        {
+            if (pawn.IsVampire() || partner.IsVampire())
+            {
+                if (pawn.Dead || partner.Dead)
+                {
+                    __result = -1f;
+                    return false;
+                }
+                if (DebugSettings.alwaysDoLovin)
+                {
+                    __result = 0.1f;
+                    return false;
+                }
+                if (pawn?.needs?.food is Need_Food food && food.Starving || partner?.needs?.food is Need_Food foodPartner && foodPartner.Starving)
+                {
+                    __result = -1f;
+                    return false;
+                }
+                if (pawn.health.hediffSet.BleedRateTotal > 0f || partner.health.hediffSet.BleedRateTotal > 0f)
+                {
+                    __result = -1f;
+                    return false;
+                }
+                float num = HarmonyPatches.LovinMtbSinglePawnFactor(pawn);
+                if (num <= 0f)
+                {
+                    __result = -1f;
+                    return false;
+                }
+                float num2 = HarmonyPatches.LovinMtbSinglePawnFactor(partner);
+                if (num2 <= 0f)
+                {
+                    __result = -1f;
+                    return false;
+                }
+                float num3 = 12f;
+                num3 *= num;
+                num3 *= num2;
+                num3 /= Mathf.Max(pawn.relations.SecondaryRomanceChanceFactor(partner), 0.1f);
+                num3 /= Mathf.Max(partner.relations.SecondaryRomanceChanceFactor(pawn), 0.1f);
+                num3 *= GenMath.LerpDouble(-100f, 100f, 1.3f, 0.7f, (float)pawn.relations.OpinionOf(partner));
+                __result = num3 * GenMath.LerpDouble(-100f, 100f, 1.3f, 0.7f, (float)partner.relations.OpinionOf(pawn));
+                return false;
+            }
+            return true;
+
+        }
+
+
         // Verse.HealthUtility
         // Verse.Pawn_HealthTracker
         public static bool AddHediff(Pawn_HealthTracker __instance, Hediff hediff, BodyPartRecord part, DamageInfo? dinfo)
         {
             Pawn pawn = (Pawn)AccessTools.Field(typeof(Pawn_HealthTracker), "pawn").GetValue(__instance);
 
-            if (pawn != null && !pawn.Dead && pawn.IsVampire() && hediff.def is HediffDef hdDef)
+            if (pawn != null && !pawn.Dead && hediff.def is HediffDef hdDef)
             {
-                if (hediff is Hediff_MissingPart missingPart)
+                if (pawn.IsVampire())
                 {
-                    missingPart.IsFresh = false;
-                }
-
-                if (hdDef == HediffDefOf.CryptosleepSickness ||
-                    hdDef == HediffDefOf.Flu ||
-                    hdDef == HediffDefOf.Heatstroke ||
-                    hdDef == HediffDefOf.Hypothermia ||
-                    hdDef == HediffDefOf.Malaria ||
-                    hdDef == HediffDefOf.ToxicBuildup ||
-                    hdDef == HediffDefOf.WoundInfection ||
-                    hdDef == HediffDefOf.Plague)
-                {
-                    if (pawn?.health?.hediffSet?.GetFirstHediffOfDef(hdDef) is Hediff hd)
+                    if (hediff is Hediff_MissingPart missingPart)
                     {
-                        pawn.health.hediffSet.hediffs.Remove(hd);
+                        missingPart.IsFresh = false;
                     }
-                    return false;
+
+                    if (hdDef == HediffDefOf.CryptosleepSickness ||
+                        hdDef == HediffDefOf.Flu ||
+                        hdDef == HediffDefOf.Heatstroke ||
+                        hdDef == HediffDefOf.Hypothermia ||
+                        hdDef == HediffDefOf.Malaria ||
+                        hdDef == HediffDefOf.ToxicBuildup ||
+                        hdDef == HediffDefOf.WoundInfection ||
+                        hdDef == HediffDefOf.Plague)
+                    {
+                        if (pawn?.health?.hediffSet?.GetFirstHediffOfDef(hdDef) is Hediff hd)
+                        {
+                            pawn.health.hediffSet.hediffs.Remove(hd);
+                        }
+                        return false;
+                    }
+                }
+                if (hediff is HediffVampirism v)
+                {
+                    if (pawn.MapHeld != null && VampireUtility.IsDaylight(pawn.MapHeld) && pawn.Faction != Faction.OfPlayerSilentFail)
+                    {
+                        if (pawn?.health?.hediffSet?.GetFirstHediffOfDef(hdDef) is Hediff hd)
+                        {
+                            pawn.health.hediffSet.hediffs.Remove(hd);
+                        }
+                        return false;
+                    }
                 }
             }
             return true;
@@ -954,7 +1084,7 @@ namespace Vampire
                 {
                     Thing t = current;
 
-                    if (t.def.ingestible != null && pawn.RaceProps.CanEverEat(t) && t.IngestibleNow)
+                    if (t.def.ingestible != null && pawn.RaceProps.CanEverEat(t) && t.IngestibleNow && pawn.IsVampire())
                     {
                         string text;
                         if (t.def.ingestible.ingestCommandString.NullOrEmpty())

@@ -28,8 +28,8 @@ namespace Vampire
             .RandomElement();
         public static BloodlineDef RandBloodline => DefDatabase<BloodlineDef>.AllDefs
             .Where(x => x != VampDefOf.ROMV_Caine && x != VampDefOf.ROMV_TheThree).RandomElement();
-        public static bool IsDaylight(Pawn p) => (GenLocalDate.HourInteger(p) >= 6 && GenLocalDate.HourInteger(p) <= 17);
-        public static bool IsDaylight(Map m) => (GenLocalDate.HourInteger(m) >= 6 && GenLocalDate.HourInteger(m) <= 17);
+        public static bool IsDaylight(Pawn p) => (GenLocalDate.HourInteger(p) >= 6 && GenLocalDate.HourInteger(p) <= 17) && !Find.World.GameConditionManager.ConditionIsActive(GameConditionDefOf.Eclipse);
+        public static bool IsDaylight(Map m) => (GenLocalDate.HourInteger(m) >= 6 && GenLocalDate.HourInteger(m) <= 17) && !Find.World.GameConditionManager.ConditionIsActive(GameConditionDefOf.Eclipse);
 
         // Verse.Pawn
         public static string MainDesc(Pawn pawn)
