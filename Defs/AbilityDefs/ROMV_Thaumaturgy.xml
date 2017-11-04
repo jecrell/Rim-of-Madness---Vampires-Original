@@ -93,6 +93,12 @@
     <defName>ROMV_BloodShieldHediff</defName>
     <label>blood shield (Thaumaturgy)</label>
     <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>
+          <min>3000</min>
+          <max>3000</max>
+        </disappearsAfterTicks>
+      </li>
       <li>
         <compClass>Vampire.HediffComp_Shield</compClass>
       </li>

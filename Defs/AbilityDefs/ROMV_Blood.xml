@@ -87,7 +87,7 @@
     <label>stem the tide</label>
     <bloodCost>2</bloodCost>
     <uiIconPath>UI/Icons/Commands/Blood_StemTheTide</uiIconPath>
-    <description>Stops all blood loss.</description>
+    <description>Stops all blood loss on the target.</description>
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_StemTheTide</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
@@ -121,7 +121,7 @@
     <label>unstoppable tide</label>
     <bloodCost>3</bloodCost>
     <uiIconPath>UI/Icons/Commands/Blood_UnstoppableTide</uiIconPath>
-    <description>Breaks off some of the caster's body to become a floating mass of blood that goes to consume the target's blood, skin, and bones, and return the result to the caster.</description>
+    <description>Breaks off some of the caster's body to become a floating mass of vitae that goes to consume the target's blood, skin, and bones, and return the result to the caster.</description>
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_UnstoppableTide</verbClass>
       <hasStandardCommand>true</hasStandardCommand>

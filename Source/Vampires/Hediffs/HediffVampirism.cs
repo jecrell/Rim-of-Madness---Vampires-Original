@@ -7,6 +7,7 @@ using Verse;
 
 namespace Vampire
 {
+
     public class HediffVampirism : HediffWithComps
     {
         private bool initialized = false;
@@ -14,6 +15,10 @@ namespace Vampire
         public int generation = -1;
         public CompVampire sire = null;
         public BloodlineDef bloodline = null;
+        //private Dictionary<Hediff, int> carriedBloodInfectors = null;
+        //private Dictionary<Hediff, int> carriedBloodDrugEffects = null;
+        //public bool IsInfectionCarrier => carriedBloodInfectors != null;
+        //public bool IsDrugCarrier => carriedBloodDrugEffects != null;
 
         public override void PostTick()
         {
@@ -43,13 +48,20 @@ namespace Vampire
                     }
                     this.pawn.Drawer.renderer.graphics.ResolveAllGraphics();
                 }
-                
+
                 if (Find.TickManager.TicksGame % 60 == 0)
                 {
                     if (v.InSunlight)
                         HealthUtility.AdjustSeverity(pawn, VampDefOf.ROMV_SunExposure, 0.001f);
                     if (v.BloodPool?.CurLevelPercentage < 0.3f)
                         HealthUtility.AdjustSeverity(pawn, VampDefOf.ROMV_TheBeast, 0.001f);
+                    if (this.pawn.health.hediffSet is HediffSet hdSet)
+                    {
+                        if (hdSet.GetFirstHediffOfDef(HediffDefOf.Hypothermia) is Hediff hypoThermia)
+                            hdSet.hediffs.Remove(hypoThermia);
+                        else if (hdSet.GetFirstHediffOfDef(HediffDefOf.Heatstroke) is Hediff heatStroke)
+                            hdSet.hediffs.Remove(heatStroke);
+                    }
                 }
 
             }
@@ -98,6 +110,7 @@ namespace Vampire
                 }
                 if (this?.pawn?.VampComp()?.Thinblooded ?? false)
                     s.AppendLine("ROMV_HI_Thinblooded".Translate());
+                s.AppendLine("ROMV_HI_Immunities".Translate());
                 return s.ToString();
             }
         }
@@ -132,6 +145,8 @@ namespace Vampire
         {
             base.ExposeData();
             Scribe_Values.Look<bool>(ref this.initialized, "initialized", false);
+            //Scribe_Collections.Look<Hediff, int>(ref this.carriedBloodInfectors, "carriedBloodInfectors", LookMode.Deep, LookMode.Value);
+            //Scribe_Collections.Look<Hediff, int>(ref this.carriedBloodDrugEffects, "carriedBloodDrugEffects", LookMode.Deep, LookMode.Value);
         }
     }
 }

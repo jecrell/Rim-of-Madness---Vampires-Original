@@ -17,6 +17,8 @@ namespace Vampire
             return pawn.GetComp<CompVampire>();
         }
 
+        public static readonly Color VampColor = new Color(0.6f, 0.5f, 0.9f);
+
         public static int RandHigherGeneration => Rand.Range(7, 13);
         public static int RandLowerGeneration => Rand.Range(3, 6);
         public static Faction RandVampFaction => Find.FactionManager.AllFactions

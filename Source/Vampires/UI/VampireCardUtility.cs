@@ -211,7 +211,10 @@ namespace Vampire
             Text.Anchor = TextAnchor.UpperLeft;
             Rect rect3 = new Rect(rect.x, rect.y + rect.height / 2f, rect.width, rect.height);
             rect3 = new Rect(rect3.x, rect3.y, rect3.width, rect3.height - num2);
-            Widgets.FillableBar(rect3, (float)compVampire.XPTillNextLevelPercent, (Texture2D)AccessTools.Field(typeof(Widgets), "BarFullTexHor").GetValue(null), BaseContent.GreyTex, false);
+
+            Color colorToUse = new Color(1.0f, 0.91f, 0f);
+            Widgets.FillableBar(rect3, (float)compVampire.XPTillNextLevelPercent, SolidColorMaterials.NewSolidColorTexture(colorToUse), BaseContent.GreyTex, false);
+            //Widgets.FillableBar(rect3, (float)compVampire.XPTillNextLevelPercent, (Texture2D)AccessTools.Field(typeof(Widgets), "BarFullTexHor").GetValue(null), BaseContent.GreyTex, false);
             //compVampire.XPTillNextLevelPercent
         }
         #endregion InfoPane

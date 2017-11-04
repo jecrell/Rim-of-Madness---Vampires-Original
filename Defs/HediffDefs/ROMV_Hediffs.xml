@@ -6,6 +6,24 @@
     <hediffClass>Vampire.HediffVampirism</hediffClass>
     <label>vampirism</label>
     <scenarioCanAdd>false</scenarioCanAdd>
+    <stages>
+      <li>
+        <makeImmuneTo>
+          <li>WoundInfection</li>
+          <li>Heatstroke</li>
+          <li>Hypothermia</li>
+          <li>ToxicBuildup</li>
+          <li>Flu</li>
+          <li>GutWorms</li>
+          <li>MuscleParasites</li>
+          <li>FibrousMechanites</li>
+          <li>SensoryMechanites</li>
+          <li>SleepingSickness</li>
+          <li>Malaria</li>
+          <li>Plague</li>
+        </makeImmuneTo>
+      </li>
+    </stages>
   </HediffDef>
 
   <HediffDef ParentName="ROMV_VampGiver">

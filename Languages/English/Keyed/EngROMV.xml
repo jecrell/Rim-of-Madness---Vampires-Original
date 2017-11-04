@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 
+<!-- 11-4-17 x2-->
+<ROMV_HI_UnusedCapacities>NAME is one with the dead. HISCAP corpse has no need for most bodily functions. HECAP CAN still force them to function, to pass for being one of the living or when absolutely necessary.</ROMV_HI_UnusedCapacities>
+<ROMV_HI_Unused>Unused</ROMV_HI_Unused>
+<ROMV_HI_Immunities>Prevents: disease, infections, temperature effects.</ROMV_HI_Immunities>
+<ROMV_HI_Vampirism>Vampirism</ROMV_HI_Vampirism>
+
 <!-- 11-4-17 -->
 <ROMV_HI_VampGeneration>Vampire ({0} Generation)</ROMV_HI_VampGeneration>
 <ROMV_HI_Generation>{0} Generation</ROMV_HI_Generation>

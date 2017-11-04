@@ -14,9 +14,9 @@ namespace Vampire
         [DebuggerHidden]
         public override IEnumerable<BodyPartRecord> GetPartsToApplyOn(Pawn pawn, RecipeDef recipe)
         {
-            if (pawn?.BloodNeed() is Need_Blood n && n.CurBloodPoints > 0 && BloodTypeUtility.BloodType(pawn) != BloodType.Special) //No special blood packs
+            if (pawn?.BloodNeed() is Need_Blood n && !n.IsAnimal && n.CurBloodPoints > 0) //Animals do not have blood vials.
             {
-                if (pawn.health.hediffSet.GetBrain() is BodyPartRecord r)
+                if (pawn.RaceProps.body.corePart is BodyPartRecord r)
                     yield return r;
             }
         }

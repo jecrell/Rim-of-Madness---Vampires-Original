@@ -142,7 +142,8 @@ namespace Vampire
             harmony.Patch(AccessTools.Method(typeof(Pawn), "GetGizmos"), null, new HarmonyMethod(typeof(HarmonyPatches).GetMethod("GetGizmos_PostFix")));
             harmony.Patch(AccessTools.Method(typeof(PawnRenderer), "DrawEquipment"), null, new HarmonyMethod(typeof(HarmonyPatches).GetMethod("DrawEquipment_PostFix")));
 
-            harmony.Patch(AccessTools.Method(typeof(ForbidUtility), "IsForbidden", new Type[] { typeof(IntVec3), typeof(Pawn) }), null, new HarmonyMethod(typeof(HarmonyPatches).GetMethod("Vamp_IsForbidden")));
+            harmony.Patch(AccessTools.Method(typeof(ForbidUtility), "IsForbidden", new Type[] { typeof(IntVec3), typeof(Pawn) }), null,
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_IsForbidden)));
 
             //Patches so that wardens do not try to feed vampires
             harmony.Patch(AccessTools.Method(typeof(Pawn_GuestTracker), "get_CanBeBroughtFood"), null, 
@@ -153,15 +154,44 @@ namespace Vampire
             harmony.Patch(AccessTools.Method(typeof(Scenario), "Notify_PawnGenerated"), null,
                 new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_DontGenerateVampsInDaylight)));
 
-            //Patches to remove vampires from daylight raids.
+            //Makes vampires use one blood point to be forced awake from slumber.
             harmony.Patch(AccessTools.Method(typeof(Pawn_JobTracker), "EndCurrentJob"),
                 new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_EndCurrentJob)), null);
 
 
-            //Patches to remove vampires from daylight raids.
+            //Patch to add comfort to vampire beds.
             harmony.Patch(AccessTools.Method(typeof(PawnUtility), "GainComfortFromCellIfPossible"), null,
                 new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_BedComfort)), null);
 
+            //Patch to remove vampire's ability to bleed.
+            harmony.Patch(AccessTools.Method(typeof(Hediff_Injury), "get_BleedRate"), null,
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(get_VampBleedRate)), null);
+
+            //Patch to hide vampire capacities.
+            //harmony.Patch(AccessTools.Method(typeof(PawnCapacitiesHandler), "GetLevel"), null,
+            //    new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_HidePawnCapacities)), null);
+            harmony.Patch(AccessTools.Method(typeof(HealthCardUtility), "GetPawnCapacityTip"), null,
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_GetPawnCapacityTip)), null);
+            harmony.Patch(AccessTools.Method(typeof(HealthCardUtility), "GetEfficiencyLabel"), null,
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(GetEfficiencyLabel)), null);
+
+            //Vampires do not worry about hot and cold
+            harmony.Patch(AccessTools.Method(typeof(ThoughtWorker_Hot), "CurrentStateInternal"), null,
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_IgnoreHotAndCold)), null);
+            harmony.Patch(AccessTools.Method(typeof(ThoughtWorker_Cold), "CurrentStateInternal"), null,
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_IgnoreHotAndCold)), null);
+
+            //Vampires are not affected by Hypothermia nor Heatstroke
+            harmony.Patch(AccessTools.Method(typeof(HediffGiver_Heat), "OnIntervalPassed"), null,
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_IgnoreStrokeAndHypotherm)), null);
+            harmony.Patch(AccessTools.Method(typeof(HediffGiver_Hypothermia), "OnIntervalPassed"), null,
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_IgnoreStrokeAndHypotherm)), null);
+            harmony.Patch(AccessTools.Method(typeof(Pawn_HealthTracker), "AddHediff", new Type[] { typeof(Hediff), typeof(BodyPartRecord), typeof(DamageInfo?) }),
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(AddHediff)), null);
+
+            //Vampires do not make breath motes
+            harmony.Patch(AccessTools.Method(typeof(PawnBreathMoteMaker), "BreathMoteMakerTick"),
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_NoBreathingMote)), null);
 
             #region DubsBadHygiene
             {
@@ -179,7 +209,137 @@ namespace Vampire
                 catch (TypeLoadException ex) { /*Log.Message(ex.ToString());*/ }
             }
             #endregion
-            
+        }
+
+        // Verse.HealthUtility
+        // Verse.Pawn_HealthTracker
+        public static bool AddHediff(Pawn_HealthTracker __instance, Hediff hediff, BodyPartRecord part, DamageInfo? dinfo)
+        {
+            Pawn pawn = (Pawn)AccessTools.Field(typeof(Pawn_HealthTracker), "pawn").GetValue(__instance);
+
+            if (pawn != null && !pawn.Dead && pawn.IsVampire() && hediff.def is HediffDef hdDef)
+            {
+                if (hediff is Hediff_MissingPart missingPart)
+                {
+                    missingPart.IsFresh = false;
+                }
+
+                if (hdDef == HediffDefOf.CryptosleepSickness ||
+                    hdDef == HediffDefOf.Flu ||
+                    hdDef == HediffDefOf.Heatstroke ||
+                    hdDef == HediffDefOf.Hypothermia ||
+                    hdDef == HediffDefOf.Malaria ||
+                    hdDef == HediffDefOf.ToxicBuildup ||
+                    hdDef == HediffDefOf.WoundInfection ||
+                    hdDef == HediffDefOf.Plague)
+                {
+                    if (pawn?.health?.hediffSet?.GetFirstHediffOfDef(hdDef) is Hediff hd)
+                    {
+                        pawn.health.hediffSet.hediffs.Remove(hd);
+                    }
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // RimWorld.HealthCardUtility
+        public static void GetEfficiencyLabel(ref Pair<string, Color> __result, Pawn pawn, PawnCapacityDef activity)
+        {
+            if (pawn.IsVampire() &&
+               (
+               activity == PawnCapacityDefOf.Breathing ||
+               activity == PawnCapacityDefOf.BloodPumping ||
+               activity == PawnCapacityDefOf.BloodFiltration ||
+               activity == PawnCapacityDefOf.Eating ||
+               activity == PawnCapacityDefOf.Metabolism))
+            {
+                __result = new Pair<string, Color>("ROMV_HI_Unused".Translate(), VampireUtility.VampColor);
+            }
+        }
+
+        // Verse.HediffGiver_Heat
+        public static void Vamp_IgnoreStrokeAndHypotherm(Pawn pawn, Hediff cause)
+        {
+            if (cause?.def == HediffDefOf.Hypothermia ||
+                cause?.def == HediffDefOf.Heatstroke)
+            {
+                if (pawn?.health?.hediffSet?.GetFirstHediffOfDef(cause.def) is Hediff h)
+                {
+                    pawn.health.RemoveHediff(h);
+                }
+            }
+        }
+
+        // RimWorld.PawnBreathMoteMaker
+        public static bool Vamp_NoBreathingMote(PawnBreathMoteMaker __instance)
+        {
+            Pawn pawn = (Pawn)AccessTools.Field(typeof(PawnBreathMoteMaker), "pawn").GetValue(__instance);
+            if (pawn.IsVampire())
+            {
+                return false;
+            }
+            return true;
+        }
+
+        //ThoughtWorker_Hot
+        public static void Vamp_IgnoreHotAndCold(Pawn p, ref ThoughtState __result)
+        {
+            if (p != null && p.IsVampire())
+            {
+                __result = ThoughtState.Inactive;
+            }
+        }
+
+        // RimWorld.HealthCardUtility
+        public static void Vamp_GetPawnCapacityTip(Pawn pawn, PawnCapacityDef capacity, ref string __result)
+        {
+            if (pawn.IsVampire() &&
+                (
+                capacity == PawnCapacityDefOf.Breathing ||
+                capacity == PawnCapacityDefOf.BloodPumping ||
+                capacity == PawnCapacityDefOf.BloodFiltration ||
+                capacity == PawnCapacityDefOf.Eating ||
+                capacity == PawnCapacityDefOf.Metabolism))
+            {
+                StringBuilder s = new StringBuilder();
+                s.AppendLine(capacity.LabelCap + ": 0%");
+                s.AppendLine();
+                s.AppendLine("AffectedBy".Translate());
+                s.AppendLine("  " + "ROMV_HI_Vampirism".Translate());
+                s.AppendLine("  " + "ROMV_HI_UnusedCapacities".Translate().AdjustedFor(pawn));
+                __result = s.ToString();
+
+            }
+        }
+
+
+        //// Verse.PawnCapacitiesHandler
+        //public static void Vamp_HidePawnCapacities(PawnCapacitiesHandler __instance, PawnCapacityDef capacity, ref float __result)
+        //{
+        //    Pawn pawn = (Pawn)AccessTools.Field(typeof(PawnCapacitiesHandler), "pawn").GetValue(__instance);
+        //    if (pawn.IsVampire() &&
+        //        (
+        //        capacity == PawnCapacityDefOf.Breathing ||
+        //        capacity == PawnCapacityDefOf.BloodPumping ||
+        //        capacity == PawnCapacityDefOf.BloodFiltration ||
+        //        capacity == PawnCapacityDefOf.Eating ||
+        //        capacity == PawnCapacityDefOf.Metabolism))
+        //        {
+        //        __result = 0f;
+
+        //    }
+
+        //}
+
+
+        // Verse.Hediff_Injury
+        public static void get_VampBleedRate(Hediff_Injury __instance, ref float __result)
+        {
+            if (__instance.pawn is Pawn p && p.IsVampire())
+            {
+                __result = 0f;
+            }
         }
 
         // RimWorld.PawnUtility

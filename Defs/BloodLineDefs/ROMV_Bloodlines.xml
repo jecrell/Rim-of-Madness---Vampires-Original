@@ -24,7 +24,7 @@
   <Vampire.BloodlineDef>
     <defName>ROMV_ClanTzimize</defName>
     <label>Tzimisce</label>
-    <description>Clan Tzimisce are true sociopaths that have abandoned humanity in favor of their own reviled persuits. One might be inclined to consider them abominations, murderers, and truly damned, in which case they'd likely agree.</description>
+    <description>Clan Tzimisce are true sociopaths that have abandoned humanity in favor of their own reviled pursuits. One might be inclined to consider them abominations, murderers, and truly damned, in which case they'd likely agree.</description>
     <fangsHediff>ROMV_Fangs</fangsHediff>
     <bloodlineHediff/>
     <embraceWorker>Vampire.EmbraceWorker</embraceWorker>

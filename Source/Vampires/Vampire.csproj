@@ -65,6 +65,7 @@
     <Compile Include="AI_Jobs\JobDriver_MakeBloodBond.cs" />
     <Compile Include="Buttons.cs" />
     <Compile Include="Defs\VitaeAbilityDef.cs" />
+    <Compile Include="Disciplines\Vampirism\DisciplineEffect_RegenerateLimb.cs" />
     <Compile Include="Disciplines\Animalism\DisciplineEffect_Beckoning.cs" />
     <Compile Include="Disciplines\Animalism\DisciplineEffect_Communion.cs" />
     <Compile Include="Disciplines\Animalism\DisciplineEffect_NightwispRavens.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Disciplines\Thaumaturgy\Projectile_BloodBoil.cs" />
     <Compile Include="Disciplines\Thaumaturgy\Projectile_BloodReturner.cs" />
     <Compile Include="Disciplines\Thaumaturgy\Projectile_BloodStealer.cs" />
+    <Compile Include="Disciplines\Vampirism\DisciplineEffect_VampiricHealing.cs" />
     <Compile Include="FlyingObject.cs" />
     <Compile Include="Hediffs\Gizmo_HediffShieldStatus.cs" />
     <Compile Include="Hediffs\HediffComp_ReadMind.cs" />
@@ -145,7 +147,7 @@
     <Compile Include="Components\CompProperties_BloodItem.cs" />
     <Compile Include="Components\CompVampire.cs" />
     <Compile Include="Defs\DisciplineDef.cs" />
-    <Compile Include="Utilities\VampireCardUtility.cs" />
+    <Compile Include="UI\VampireCardUtility.cs" />
     <Compile Include="Utilities\VampireGraphicUtility.cs" />
     <Compile Include="VampAbility.cs" />
     <Compile Include="Workers\EmbraceWorker.cs" />

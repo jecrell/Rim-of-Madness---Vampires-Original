@@ -15,6 +15,9 @@ namespace Vampire
         public static HediffDef ROMV_Fangs;
         public static HediffDef ROMV_TheBeast;
 
+        public static VitaeAbilityDef ROMV_RegenerateLimb;
+        public static VitaeAbilityDef ROMV_VampiricHealing;
+
         public static DamageDef ROMV_Drain;
 
         public static HediffDef ROMV_SleepHediff;

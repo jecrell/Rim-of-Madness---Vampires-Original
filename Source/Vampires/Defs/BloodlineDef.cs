@@ -19,6 +19,7 @@ namespace Vampire
         public BloodPreferabilty minBloodPref = BloodPreferabilty.Lowblood;
         public BloodPreferabilty desperateBloodPref = BloodPreferabilty.Any;
         public List<DisciplineDef> disciplines = null;
+        public List<VitaeAbilityDef> bloodlineAbilities = null;
         public string nakedBodyGraphicsPath = "";
         public string headGraphicsPath = "";
         public List<Color> skinColors = null;

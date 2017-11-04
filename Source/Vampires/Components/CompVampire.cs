@@ -221,21 +221,47 @@ namespace Vampire
 
         public void Notify_UpdateAbilities()
         {
-            if (Sheet?.Disciplines is List<Discipline> dd && !dd.NullOrEmpty())
+            if (this.AbilityUser.IsVampire() && this is CompVampire)
             {
-                foreach (Discipline d in dd)
+                //Disciplines Skill Sheet
+                if (Sheet?.Disciplines is List<Discipline> dd && !dd.NullOrEmpty())
                 {
-                    if (d?.AvailableAbilities is List<VitaeAbilityDef> vdd && !vdd.NullOrEmpty())
+                    foreach (Discipline d in dd)
                     {
-                        foreach (VitaeAbilityDef vd in vdd)
+                        if (d?.AvailableAbilities is List<VitaeAbilityDef> vdd && !vdd.NullOrEmpty())
                         {
-                            if (this.Powers.FirstOrDefault(x => x.Def.defName == vd.defName) == null)
+                            foreach (VitaeAbilityDef vd in vdd)
                             {
-                                this.AddPawnAbility(vd);
-                            }
+                                if (this.Powers.FirstOrDefault(x => x.Def.defName == vd.defName) == null)
+                                {
+                                    this.AddPawnAbility(vd);
+                                }
 
+                            }
                         }
                     }
+                }
+                //Bloodlines Abilities
+                if (this?.Bloodline?.bloodlineAbilities is List<VitaeAbilityDef> bloodVADs && !bloodVADs.NullOrEmpty())
+                {
+                    foreach (VitaeAbilityDef bloodVAD in bloodVADs)
+                    {
+                        if (this.Powers.FirstOrDefault(x => x.Def.defName == bloodVAD.defName) == null)
+                        {
+                            this.AddPawnAbility(bloodVAD);
+                        }
+                    }
+                }
+                //Regenerate Limb
+                if (this?.Powers?.FirstOrDefault(x => x.Def is VitaeAbilityDef vDef && vDef == VampDefOf.ROMV_RegenerateLimb) == null)
+                {
+                    this.AddPawnAbility(VampDefOf.ROMV_RegenerateLimb);
+                }
+
+                //Vampiric Healing
+                if (this?.Powers?.FirstOrDefault(x => x.Def is VitaeAbilityDef vDef && vDef == VampDefOf.ROMV_VampiricHealing) == null)
+                {
+                    this.AddPawnAbility(VampDefOf.ROMV_VampiricHealing);
                 }
             }
         }
@@ -331,6 +357,8 @@ namespace Vampire
 
         }
 
+
+
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
             if (Find.Selector.NumSelected == 1)
@@ -372,6 +400,7 @@ namespace Vampire
                             }
                         }
                     }
+                    this.Notify_UpdateAbilities();
                 }
             }
         }

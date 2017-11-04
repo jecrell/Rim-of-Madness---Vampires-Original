@@ -200,7 +200,7 @@ namespace Vampire
                 this.nextBloodChangeTick = -1;
             }
 
-            if (Find.TickManager.TicksGame % 250 == 0)
+            //if (Find.TickManager.TicksGame % 250 == 0)
                 //Log.Message("Ticks => " + Find.TickManager.TicksGame);
             if (Find.TickManager.TicksGame > this.nextBloodChangeTick)
             {
