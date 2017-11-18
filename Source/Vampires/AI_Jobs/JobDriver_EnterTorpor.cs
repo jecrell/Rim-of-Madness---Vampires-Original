@@ -9,6 +9,11 @@ namespace Vampire
 {
     public class JobDriver_EnterTorpor : JobDriver
     {
+        public override bool TryMakePreToilReservations()
+        {
+            return pawn.Reserve(TargetA, this.job);
+        }
+
         [DebuggerHidden]
         protected override IEnumerable<Toil> MakeNewToils()
         {

@@ -2,7 +2,7 @@
 <Defs>
 
   <NeedDef>
-    <DefName>ROMV_Blood</DefName>
+    <defName>ROMV_Blood</defName>
     <needClass>Vampire.Need_Blood</needClass>
     <label>Blood</label>
     <description>Tracks the blood points of an organism. Regains at a rate of 1 per day. When the bar is empty, the organism will die.</description>

@@ -33,7 +33,7 @@
     <socialPropernessMatters>true</socialPropernessMatters>
     <statBases>
       <MaxHitPoints>60</MaxHitPoints>
-      <MarketValue>100</MarketValue>
+      <MarketValue>30</MarketValue>
       <Mass>0.075</Mass>
       <Flammability>1.0</Flammability>
       <DeteriorationRate>8</DeteriorationRate>
@@ -65,7 +65,7 @@
     <socialPropernessMatters>true</socialPropernessMatters>
     <statBases>
       <MaxHitPoints>60</MaxHitPoints>
-      <MarketValue>200</MarketValue>
+      <MarketValue>60</MarketValue>
       <Mass>0.145</Mass>
       <Flammability>1.0</Flammability>
       <DeteriorationRate>8</DeteriorationRate>
@@ -101,6 +101,13 @@
     <defName>BloodPack_Animal</defName>
     <label>blood pack (animal)</label>
     <description>Animal blood collected for consumption. (1 blood point)</description>
+	<statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <MarketValue>10</MarketValue>
+      <Mass>0.145</Mass>
+      <Flammability>1.0</Flammability>
+      <DeteriorationRate>8</DeteriorationRate>
+    </statBases>
     <comps>
       <li Class="Vampire.CompProperties_BloodItem">
         <bloodType>Animal</bloodType>
@@ -136,7 +143,7 @@
   <ThingDef ParentName="ROMV_BloodPack">
     <defName>BloodPack_HighBlood</defName>
     <label>blood pack (highblood)</label>
-    <description>Highblood, or blood suitable for regal vampires (the blood of aristocrats, wealthy individuals, or gliterworlders), stored in a pack. (2 blood points)</description>
+    <description>Highblood, or blood suitable for regal vampires (the blood of aristocrats, wealthy individuals, or gliterworlders), stored in a pack. (3 blood points)</description>
     <comps>
       <li Class="Vampire.CompProperties_BloodItem">
         <bloodType>HighBlood</bloodType>

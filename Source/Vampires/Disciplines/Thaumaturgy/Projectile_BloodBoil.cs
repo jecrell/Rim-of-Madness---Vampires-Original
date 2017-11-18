@@ -15,8 +15,7 @@ namespace Vampire
             base.Impact_Override(hitThing);
             if (hitThing is Pawn p && p.BloodNeed() is Need_Blood bn)
             {
-                GenExplosion.DoExplosion(p.PositionHeld, p.MapHeld, 3.9f, DamageDefOf.Flame, p,
-                    null, null);
+                GenExplosion.DoExplosion(p.PositionHeld, p.MapHeld, 3.9f, DamageDefOf.Flame, p);
                 bn.AdjustBlood(-7);
                 int num = GenRadial.NumCellsInRadius(3.9f);
                 for (int i = 0; i < num; i++)

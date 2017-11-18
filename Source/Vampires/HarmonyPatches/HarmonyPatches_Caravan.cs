@@ -16,7 +16,7 @@ namespace Vampire
         {
             if (pawns.Any(x => x.IsVampire() && pawns.Any(y => !y.IsVampire())))
             {
-                Messages.Message("ROMV_Caravan_WarningMixedWithVampires".Translate(), MessageSound.RejectInput);
+                Messages.Message("ROMV_Caravan_WarningMixedWithVampires".Translate(), MessageTypeDefOf.RejectInput);
                 __result = false;
                 return;
             }

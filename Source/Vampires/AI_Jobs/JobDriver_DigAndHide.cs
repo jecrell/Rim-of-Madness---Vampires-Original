@@ -22,7 +22,7 @@ namespace Vampire
             doWork.initAction = delegate
             {
                 this.workLeft = BaseWorkAmount;
-                this.CurJob.SetTarget(TargetIndex.B, this.pawn);
+                this.job.SetTarget(TargetIndex.B, this.pawn);
             };
             doWork.tickAction = delegate
             {
@@ -55,6 +55,11 @@ namespace Vampire
         {
             base.ExposeData();
             Scribe_Values.Look<float>(ref this.workLeft, "workLeft", 0f, false);
+        }
+
+        public override bool TryMakePreToilReservations()
+        {
+            return true;
         }
     }
 }

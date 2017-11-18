@@ -18,8 +18,8 @@ namespace Vampire
         {
             get
             {
-                if (base.CurJob.targetA.Thing is Pawn p) return p;
-                if (base.CurJob.targetA.Thing is Corpse c) return c.InnerPawn;
+                if (base.job.targetA.Thing is Pawn p) return p;
+                if (base.job.targetA.Thing is Corpse c) return c.InnerPawn;
                 else return null;
             }
         }
@@ -64,5 +64,9 @@ namespace Vampire
             return false;
         }
 
+        public override bool TryMakePreToilReservations()
+        {
+            return true;
+        }
     }
 }

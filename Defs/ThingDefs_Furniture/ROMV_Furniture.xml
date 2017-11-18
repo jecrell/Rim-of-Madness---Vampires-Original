@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Buildings>
+<Defs>
 
 
   <!--============================== Beds ==============================-->
@@ -30,7 +30,6 @@
     <minifiedDef>MinifiedFurniture</minifiedDef>
     <building>
 			<ai_chillDestination>false</ai_chillDestination>
-			<preventDeterioration>true</preventDeterioration>
       <fullGraveGraphicData>
 				<texPath>Things/Building/Furniture/Coffin/RoyalCoffinFull/spoonshortageRoyalCoffinFull</texPath>
 				<graphicClass>Graphic_Multi</graphicClass>
@@ -89,21 +88,21 @@
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <staticSunShadowHeight>0.3</staticSunShadowHeight>
     <designationCategory>Misc</designationCategory>
-    <designationHotkey>Misc9</designationHotkey>
+    <designationHotKey>Misc9</designationHotKey>
   </ThingDef>
 
   <ThingDef ParentName="BuildingBase">
     <defName>ROMV_RoyalCoffinBed</defName>
     <label>sleeping spot</label>
-    <Description>Designates a spot on the ground where people should sleep. Not comfortable.</Description>
-    <ThingClass>Building_Bed</ThingClass>
+    <description>Designates a spot on the ground where people should sleep. Not comfortable.</description>
+    <thingClass>Building_Bed</thingClass>
     <graphicData>
       <texPath>Things/Building/Furniture/Coffin/RoyalCoffin/spoonshortageRoyalCoffin</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(3,3.5)</drawSize>
     </graphicData>
-    <AltitudeLayer>Building</AltitudeLayer>
+    <altitudeLayer>Building</altitudeLayer>
     <costStuffCount>0</costStuffCount>
     <stuffCategories>
       <li>Woody</li>
@@ -119,13 +118,13 @@
     </statBases>
 		<scatterableOnMapGen>false</scatterableOnMapGen>
     <useHitPoints>False</useHitPoints>
-    <Size>(1,2)</Size>
-    <Passability>Standable</Passability>
-    <DrawGUIOverlay>True</DrawGUIOverlay>
+    <size>(1,2)</size>
+    <passability>Standable</passability>
+    <drawGUIOverlay>True</drawGUIOverlay>
     <selectable>False</selectable>
     <building>
       <isEdifice>False</isEdifice>
-      <Bed_ShowSleeperBody>True</Bed_ShowSleeperBody>
+      <bed_showSleeperBody>True</bed_showSleeperBody>
       <sowTag>SupportPlantsOnly</sowTag>
       <canPlaceOverImpassablePlant>false</canPlaceOverImpassablePlant>
       <ai_chillDestination>false</ai_chillDestination>
@@ -141,14 +140,14 @@
   <ThingDef ParentName="BuildingBase">
     <defName>ROMV_SarcophagusBed</defName>
     <label>sleeping spot</label>
-    <Description>Designates a spot on the ground where people should sleep. Not comfortable.</Description>
-    <ThingClass>Building_Bed</ThingClass>
+    <description>Designates a spot on the ground where people should sleep. Not comfortable.</description>
+    <thingClass>Building_Bed</thingClass>
     <graphicData>
       <texPath>NullTex</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,1)</drawSize>
     </graphicData>
-    <AltitudeLayer>Building</AltitudeLayer>
+    <altitudeLayer>Building</altitudeLayer>
     <costStuffCount>0</costStuffCount>
     <stuffCategories>
       <li>Woody</li>
@@ -161,13 +160,13 @@
     </statBases>
 		<scatterableOnMapGen>false</scatterableOnMapGen>
     <useHitPoints>False</useHitPoints>
-    <Size>(1,2)</Size>
-    <Passability>Standable</Passability>
-    <DrawGUIOverlay>True</DrawGUIOverlay>
+    <size>(1,2)</size>
+    <passability>Standable</passability>
+    <drawGUIOverlay>True</drawGUIOverlay>
     <selectable>False</selectable>
     <building>
       <isEdifice>False</isEdifice>
-      <Bed_ShowSleeperBody>True</Bed_ShowSleeperBody>
+      <bed_showSleeperBody>True</bed_showSleeperBody>
       <sowTag>SupportPlantsOnly</sowTag>
       <canPlaceOverImpassablePlant>false</canPlaceOverImpassablePlant>
       <ai_chillDestination>false</ai_chillDestination>
@@ -204,7 +203,6 @@
       <building>
   			<ai_chillDestination>false</ai_chillDestination>
         <isInert>true</isInert>
-        <preventDeterioration>true</preventDeterioration>
         <fullGraveGraphicData>
   				<texPath>Things/Building/Misc/DirtPile</texPath>
   				<graphicClass>Graphic_Single</graphicClass>
@@ -230,7 +228,7 @@
       </inspectorTabs>
       <terrainAffordanceNeeded>Diggable</terrainAffordanceNeeded>
       <designationCategory>Misc</designationCategory>
-      <designationHotkey>Misc8</designationHotkey>
+      <designationHotKey>Misc8</designationHotKey>
     </ThingDef>
 
   <!--
@@ -286,4 +284,4 @@
 
 
 
-</Buildings>
+</Defs>

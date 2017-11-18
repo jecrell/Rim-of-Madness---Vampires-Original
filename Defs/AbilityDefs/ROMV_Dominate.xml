@@ -22,7 +22,7 @@
    <MainVerb Class="AbilityUser.VerbProperties_Ability">
      <verbClass>Vampire.DisciplineEffect_Mesmerise</verbClass>
      <hasStandardCommand>true</hasStandardCommand>
-     <projectileDef>ROMV_DominateProjectile</projectileDef>
+     <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
      <abilityDef>ROMV_Dominate_Mesmerise</abilityDef>
      <isViolent>false</isViolent>
      <warmupTime>1</warmupTime>
@@ -62,7 +62,7 @@
   <MainVerb Class="AbilityUser.VerbProperties_Ability">
     <verbClass>Vampire.DisciplineEffect_Sleep</verbClass>
     <hasStandardCommand>true</hasStandardCommand>
-    <projectileDef>ROMV_DominateProjectile</projectileDef>
+    <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
     <abilityDef>ROMV_Dominate_Mesmerise</abilityDef>
     <isViolent>false</isViolent>
     <warmupTime>1</warmupTime>
@@ -118,7 +118,7 @@
      <MainVerb Class="AbilityUser.VerbProperties_Ability">
        <verbClass>Vampire.DisciplineEffect_Suicide</verbClass>
        <hasStandardCommand>true</hasStandardCommand>
-       <projectileDef>ROMV_DominateProjectile</projectileDef>
+       <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
        <abilityDef>ROMV_Dominate_Suicide</abilityDef>
        <isViolent>true</isViolent>
        <warmupTime>1</warmupTime>
@@ -151,7 +151,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_Possession</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Dominate_Possession</abilityDef>
       <isViolent>true</isViolent>
       <warmupTime>1</warmupTime>

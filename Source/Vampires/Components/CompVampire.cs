@@ -203,7 +203,6 @@ namespace Vampire
         #endregion Access Properties
 
         #region Utility Props
-        public Pawn Pawn => this.AbilityUser;
         public Need_Blood Blood => this?.Pawn?.needs?.TryGetNeed<Need_Blood>();
         public Need_Blood BloodOther(Pawn other) => other?.needs?.TryGetNeed<Need_Blood>();
         #endregion Utility Props
@@ -232,7 +231,7 @@ namespace Vampire
                         {
                             foreach (VitaeAbilityDef vd in vdd)
                             {
-                                if (this.Powers.FirstOrDefault(x => x.Def.defName == vd.defName) == null)
+                                if (this.AbilityData.Powers.FirstOrDefault(x => x.Def.defName == vd.defName) == null)
                                 {
                                     this.AddPawnAbility(vd);
                                 }
@@ -246,20 +245,20 @@ namespace Vampire
                 {
                     foreach (VitaeAbilityDef bloodVAD in bloodVADs)
                     {
-                        if (this.Powers.FirstOrDefault(x => x.Def.defName == bloodVAD.defName) == null)
+                        if (this.AbilityData.Powers.FirstOrDefault(x => x.Def.defName == bloodVAD.defName) == null)
                         {
                             this.AddPawnAbility(bloodVAD);
                         }
                     }
                 }
                 //Regenerate Limb
-                if (this?.Powers?.FirstOrDefault(x => x.Def is VitaeAbilityDef vDef && vDef == VampDefOf.ROMV_RegenerateLimb) == null)
+                if (this?.AbilityData.Powers?.FirstOrDefault(x => x.Def is VitaeAbilityDef vDef && vDef == VampDefOf.ROMV_RegenerateLimb) == null)
                 {
                     this.AddPawnAbility(VampDefOf.ROMV_RegenerateLimb);
                 }
 
                 //Vampiric Healing
-                if (this?.Powers?.FirstOrDefault(x => x.Def is VitaeAbilityDef vDef && vDef == VampDefOf.ROMV_VampiricHealing) == null)
+                if (this?.AbilityData.Powers?.FirstOrDefault(x => x.Def is VitaeAbilityDef vDef && vDef == VampDefOf.ROMV_VampiricHealing) == null)
                 {
                     this.AddPawnAbility(VampDefOf.ROMV_VampiricHealing);
                 }
@@ -307,6 +306,48 @@ namespace Vampire
                 AbilityUser.story.hairDef = DefDatabase<HairDef>.GetNamed("Shaved");
         }
 
+        public override void CompTick()
+        {
+            base.CompTick();
+            if (IsVampire)
+                SunlightWatcherTick();
+        }
+
+        public void SunlightWatcherTick()
+        {
+            if (Find.TickManager.TicksGame % 60 == 0)
+            {
+                try
+                {
+                    //Log.Message("SunlightWatcher");
+                    Pawn p = this.Pawn;
+                    Map m = p.MapHeld;
+                    IntVec3 i = p.PositionHeld;
+                    if (p.ParentHolder.IsEnclosingContainer())
+                        return;
+                    if (p.Spawned && VampireUtility.IsDaylight(m) && !i.Roofed(m))
+                    {
+                        ThinkNode_JobGiver thinkNode_JobGiver = (ThinkNode_JobGiver)Activator.CreateInstance(typeof(JobGiver_SeekShelterFromSunlight));
+                        thinkNode_JobGiver.ResolveReferences();
+                        ThinkResult thinkResult = thinkNode_JobGiver.TryIssueJobPackage(p, default(JobIssueParams));
+                        if (thinkResult.Job != null)
+                        {
+                            p.jobs.StartJob(thinkResult.Job, JobCondition.Incompletable, null, false, true, null, null, false);
+                        }
+                        else
+                        {
+                            //Messages.Message("Failed to give seek shelter from sunlight job", MessageTypeDefOf.RejectInput);
+                        }
+                    }
+                }
+                catch
+                {
+
+                }
+
+            }
+        }
+
         public void Notify_Starving(int lastNonStarvingTick)
         {
 
@@ -320,7 +361,7 @@ namespace Vampire
                 this.AbilityUser.LabelShort,
                 sireComp.AbilityUser.LabelShort,
                 sireComp.Bloodline.LabelCap
-            }), MessageSound.Benefit);
+            }), MessageTypeDefOf.PositiveEvent);
         }
         
         public void Notify_Diablerie(CompVampire victim)
@@ -329,7 +370,7 @@ namespace Vampire
 {
                 this.AbilityUser.LabelShort,
                 victim.AbilityUser.LabelShort
-            }), MessageSound.Benefit);
+            }), MessageTypeDefOf.PositiveEvent);
             this.Generation = Math.Min(this.Generation, victim.Generation);
             this.Souls.Add(victim.AbilityUser);
             VampireThoughtUtility.GiveThoughtsForDiablerie(this.AbilityUser);
@@ -363,9 +404,9 @@ namespace Vampire
         {
             if (Find.Selector.NumSelected == 1)
             {
-                for (int i = 0; i < this.AllPowers.Count; i++)
+                for (int i = 0; i < this.AbilityData.AllPowers.Count; i++)
                 {
-                    if (this.AllPowers[i] is VampAbility p && (p.AbilityDef.MainVerb.hasStandardCommand && p.AbilityDef.bloodCost != 0)) yield return p.GetGizmo();
+                    if (this.AbilityData.AllPowers[i] is VampAbility p && (p.AbilityDef.MainVerb.hasStandardCommand && p.AbilityDef.bloodCost != 0)) yield return p.GetGizmo();
                 }
             }
 
@@ -384,8 +425,8 @@ namespace Vampire
             base.PostExposeData();
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
-                this.Powers.Clear();
-                if (this.AbilityUser.IsVampire() && (base.Powers == null || base.Powers.NullOrEmpty()))
+                this.AbilityData.Powers.Clear();
+                if (this.AbilityUser.IsVampire() && (base.AbilityData.Powers == null || base.AbilityData.Powers.NullOrEmpty()))
                 {
                     if (this.Sheet.Disciplines is List<Discipline> dd && !dd.NullOrEmpty())
                     {

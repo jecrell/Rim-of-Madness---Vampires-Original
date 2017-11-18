@@ -22,7 +22,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_ArmOfTheAbyss</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Obtenebration_ArmOfTheAbyss</abilityDef>
       <isViolent>true</isViolent>
       <warmupTime>1</warmupTime>
@@ -56,7 +56,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_BlackMetamorphosis</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Obtenebration_BlackMetamorphosis</abilityDef>
       <isViolent>false</isViolent>
       <warmupTime>1</warmupTime>
@@ -121,7 +121,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_TenebrousForm</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Obtenebration_TenebrousForm</abilityDef>
       <isViolent>false</isViolent>
       <warmupTime>1</warmupTime>
@@ -152,7 +152,7 @@
     <comps>
       <li Class="Vampire.HediffCompProperties_AnimalForm">
         <animalToChangeInto>ROMV_TenebrousKind</animalToChangeInto>
-        <immuneToDamage>true</immuneToDamage>
+        <immuneTodamage>true</immuneTodamage>
         <canGiveDamage>false</canGiveDamage>
         <disappearsAfterTicks>
           <min>3000</min>
@@ -171,7 +171,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_EnterTheAbyss</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Obtenebration_EnterTheAbyss</abilityDef>
       <isViolent>false</isViolent>
       <warmupTime>1</warmupTime>

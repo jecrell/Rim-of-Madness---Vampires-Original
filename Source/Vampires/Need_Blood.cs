@@ -174,9 +174,9 @@ namespace Vampire
             if (this.pawn.Faction == Faction.OfPlayer)
             {
                 if (this.pawn.IsVampire())
-                    Messages.Message("ROMV_BloodDepletedVamp".Translate(this.pawn.LabelCap), MessageSound.Standard);
+                    Messages.Message("ROMV_BloodDepletedVamp".Translate(this.pawn.LabelCap), MessageTypeDefOf.NeutralEvent);
                 else
-                    Messages.Message("ROMV_BloodDepleted".Translate(this.pawn.LabelCap), MessageSound.Negative);
+                    Messages.Message("ROMV_BloodDepleted".Translate(this.pawn.LabelCap), MessageTypeDefOf.NegativeEvent);
             }
 
             if (!this.pawn.IsVampire())

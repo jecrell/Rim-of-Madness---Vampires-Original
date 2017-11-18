@@ -46,6 +46,10 @@
       <HintPath>C:\Users\mattw\Downloads\Dubs Bad Hygiene v1.2.2\Dubs Bad Hygiene\Assemblies\BadHygiene.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="JecsTools">
+      <HintPath>..\..\..\JecsTools\Assemblies\JecsTools.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -64,6 +68,7 @@
     <Compile Include="AI_Jobs\JobDriver_FeedSip.cs" />
     <Compile Include="AI_Jobs\JobDriver_MakeBloodBond.cs" />
     <Compile Include="Buttons.cs" />
+    <Compile Include="Defs\ScenPart_GameStartNight.cs" />
     <Compile Include="Defs\VitaeAbilityDef.cs" />
     <Compile Include="Disciplines\Vampirism\DisciplineEffect_RegenerateLimb.cs" />
     <Compile Include="Disciplines\Animalism\DisciplineEffect_Beckoning.cs" />

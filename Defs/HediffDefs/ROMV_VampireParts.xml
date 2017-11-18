@@ -2,17 +2,9 @@
 <Defs>
   <!-- Added body parts -->
 
-  <HediffDef Name="AddedBodyPartBase" Abstract="True">
-    <hediffClass>Hediff_AddedPart</hediffClass>
-    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
-    <isBad>false</isBad>
-  </HediffDef>
-
-
     <HediffDef Name="ROMV_AddedBodyPartBase" Abstract="True">
       <hediffClass>Hediff_AddedPart</hediffClass>
       <defaultLabelColor>(0.6, 0.5, 0.9)</defaultLabelColor>
-      <isBad>false</isBad>
     </HediffDef>
 
 
@@ -23,6 +15,7 @@
       <isSolid>true</isSolid>
       <partEfficiency>1.2</partEfficiency>
     </addedPartProps>
+	<scenarioCanAdd>false</scenarioCanAdd>
     <comps>
       <li Class="HediffCompProperties_VerbGiver">
         <verbs>

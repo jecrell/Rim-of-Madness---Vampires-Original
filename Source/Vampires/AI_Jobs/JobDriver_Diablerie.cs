@@ -18,8 +18,8 @@ namespace Vampire
         {
             get
             {
-                if (base.CurJob.targetA.Thing is Pawn p) return p;
-                if (base.CurJob.targetA.Thing is Corpse c) return c.InnerPawn;
+                if (base.job.targetA.Thing is Pawn p) return p;
+                if (base.job.targetA.Thing is Corpse c) return c.InnerPawn;
                 else return null;
             }
         }
@@ -62,8 +62,8 @@ namespace Vampire
                 {
                     Pawn p = (Pawn)TargetA;
                     if (!p.Dead) p.Kill(null);
-                    this.CurJob.SetTarget(TargetIndex.A, p.Corpse);
-                    this.pawn.Reserve(TargetA);
+                    this.job.SetTarget(TargetIndex.A, p.Corpse);
+                    this.pawn.Reserve(TargetA, this.job);
                 }
             };
             yield return Toils_Misc.ThrowColonistAttackingMote(TargetIndex.A);
@@ -92,5 +92,9 @@ namespace Vampire
             return true;
         }
 
+        public override bool TryMakePreToilReservations()
+        {
+            return true;
+        }
     }
 }

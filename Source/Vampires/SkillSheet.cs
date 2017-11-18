@@ -13,7 +13,7 @@ namespace Vampire
         private Pawn pawn;
         private List<Discipline> disciplines;
 
-        public Pawn Pawn => pawn;
+        public Pawn Pawn { get { return pawn; } set { pawn = value; } }
         public List<Discipline> Disciplines => disciplines;
 
         public void InitializeDisciplines()

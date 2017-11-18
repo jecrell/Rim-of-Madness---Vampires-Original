@@ -22,7 +22,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_BloodStrike</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
-      <projectileDef>ROMV_BloodProjectile</projectileDef>
+      <defaultProjectile>ROMV_BloodProjectile</defaultProjectile>
       <abilityDef>ROMV_Thaumaturgy_BloodStrike</abilityDef>
       <isViolent>true</isViolent>
       <warmupTime>1</warmupTime>
@@ -63,7 +63,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_BloodShield</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Thaumaturgy_BloodShield</abilityDef>
       <isViolent>true</isViolent>
       <warmupTime>1</warmupTime>
@@ -116,7 +116,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_BloodSalvo</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
-      <projectileDef>ROMV_BloodProjectile</projectileDef>
+      <defaultProjectile>ROMV_BloodProjectile</defaultProjectile>
       <abilityDef>ROMV_Thaumaturgy_BloodSalvo</abilityDef>
       <isViolent>true</isViolent>
       <warmupTime>1</warmupTime>
@@ -166,7 +166,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_BloodBoil</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
-      <projectileDef>ROMV_BloodProjectile_BloodBoil</projectileDef>
+      <defaultProjectile>ROMV_BloodProjectile_BloodBoil</defaultProjectile>
       <abilityDef>ROMV_Thaumaturgy_BloodBoil</abilityDef>
       <isViolent>true</isViolent>
       <warmupTime>1</warmupTime>

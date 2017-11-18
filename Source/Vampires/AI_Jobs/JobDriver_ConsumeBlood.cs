@@ -26,7 +26,7 @@ namespace Vampire
         {
             get
             {
-                return base.CurJob.GetTarget(TargetIndex.A).Thing;
+                return base.job.GetTarget(TargetIndex.A).Thing;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Vampire
         {
             if (this.usingNutrientPasteDispenser)
             {
-                return base.CurJob.def.reportString.Replace("TargetA", ThingDefOf.MealNutrientPaste.label);
+                return base.job.def.reportString.Replace("TargetA", ThingDefOf.MealNutrientPaste.label);
             }
             Thing thing = this.pawn.CurJob.targetA.Thing;
             if (thing != null && thing.def.ingestible != null && !thing.def.ingestible.ingestReportString.NullOrEmpty())
@@ -133,7 +133,7 @@ namespace Vampire
                 Toil findExtraFoodToCollect = new Toil();
                 findExtraFoodToCollect.initAction = delegate
                 {
-                    if (this.pawn.inventory.innerContainer.TotalStackCountOfDef(this.IngestibleSource.def) < this.CurJob.takeExtraIngestibles)
+                    if (this.pawn.inventory.innerContainer.TotalStackCountOfDef(this.IngestibleSource.def) < this.job.takeExtraIngestibles)
                     {
                         Predicate<Thing> validator = (Thing x) => this.pawn.CanReserve(x, 1, -1, null, false) 
                         && !x.IsForbidden(this.pawn) && x.IsSociallyProper(this.pawn);
@@ -153,7 +153,7 @@ namespace Vampire
                 yield return reserveExtraFoodToCollect;
                 yield return Toils_Goto.GotoThing(TargetIndex.C, PathEndMode.Touch);
                 yield return Toils_Haul.TakeToInventory(TargetIndex.C, 
-                    () => this.CurJob.takeExtraIngestibles - this.pawn.inventory.innerContainer.TotalStackCountOfDef(this.IngestibleSource.def));
+                    () => this.job.takeExtraIngestibles - this.pawn.inventory.innerContainer.TotalStackCountOfDef(this.IngestibleSource.def));
                 yield return findExtraFoodToCollect;
             }
             yield return Toils_Ingest.CarryIngestibleToChewSpot(this.pawn, TargetIndex.A).FailOnDestroyedOrNull(TargetIndex.A);
@@ -190,7 +190,7 @@ namespace Vampire
                             this.pawn.jobs.EndCurrentJob(JobCondition.Incompletable, true);
                             return;
                         }
-                        this.pawn.Reserve(thing, 1, -1, null);
+                        this.pawn.Reserve(thing, this.job, 1, -1, null);
                     }
                 },
                 defaultCompleteMode = ToilCompleteMode.Instant
@@ -202,7 +202,7 @@ namespace Vampire
 
         public override bool ModifyCarriedThingDrawPos(ref Vector3 drawPos, ref bool behind, ref bool flip)
         {
-            IntVec3 cell = base.CurJob.GetTarget(TargetIndex.B).Cell;
+            IntVec3 cell = base.job.GetTarget(TargetIndex.B).Cell;
             return JobDriver_Ingest.ModifyCarriedThingDrawPosWorker(ref drawPos, ref behind, ref flip, cell, this.pawn);
         }
 
@@ -276,6 +276,9 @@ namespace Vampire
             return toil;
         }
 
-
+        public override bool TryMakePreToilReservations()
+        {
+            return this.pawn.Reserve(TargetA, this.job, 1, -1, null);
+        }
     }
 }

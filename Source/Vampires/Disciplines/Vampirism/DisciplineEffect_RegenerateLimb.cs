@@ -23,7 +23,7 @@ namespace Vampire
                 Messages.Message("ROM_WerewolfLimbRegen".Translate(new object[] {
                 target.LabelShort,
                 partToRestore.Label
-            }), MessageSound.Benefit);
+            }), MessageTypeDefOf.PositiveEvent);
             }
         }
 

@@ -38,7 +38,7 @@ namespace Vampire
                         MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, pawn.LabelShort + " is now a vampire", -1f);
                     }
                     else
-                        Messages.Message(pawn.LabelCap + " is already a vampire.", MessageSound.RejectInput);
+                        Messages.Message(pawn.LabelCap + " is already a vampire.", MessageTypeDefOf.RejectInput);
                 }
             })});
 

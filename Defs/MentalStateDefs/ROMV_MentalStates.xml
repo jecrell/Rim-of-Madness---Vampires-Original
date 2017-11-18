@@ -24,7 +24,7 @@
     <nameColor>(0.9,0.2,0.5)</nameColor>
     <beginLetterLabel>The Beast</beginLetterLabel>
     <beginLetter>{0} has unleashed its inner-beast!</beginLetter>
-    <beginLetterDef>BadUrgent</beginLetterDef>
+    <beginLetterDef>ThreatBig</beginLetterDef>
     <minTicksBeforeRecovery>10000</minTicksBeforeRecovery>
     <recoveryMtbDays>0.3</recoveryMtbDays>
     <maxTicksBeforeRecovery>60000</maxTicksBeforeRecovery>
@@ -33,7 +33,6 @@
     <stateEffecter>Berserk</stateEffecter>
     <tale>MentalStateBerserk</tale>
     <recoverFromSleep>false</recoverFromSleep>
-    <recoverFromDowned>false</recoverFromDowned>
     <unspawnedCanDo>false</unspawnedCanDo>
   </MentalStateDef>
 
@@ -53,7 +52,7 @@
       <nameColor>(0.9,0.2,0.5)</nameColor>
       <beginLetterLabel>rotschreck</beginLetterLabel>
       <beginLetter>{0} is fleeing in terror of the light!</beginLetter>
-      <beginLetterDef>BadUrgent</beginLetterDef>
+      <beginLetterDef>ThreatBig</beginLetterDef>
       <minTicksBeforeRecovery>10000</minTicksBeforeRecovery>
       <recoveryMtbDays>0.3</recoveryMtbDays>
       <maxTicksBeforeRecovery>60000</maxTicksBeforeRecovery>
@@ -62,7 +61,6 @@
       <stateEffecter>Berserk</stateEffecter>
       <tale>MentalStateBerserk</tale>
       <recoverFromSleep>true</recoverFromSleep>
-      <recoverFromDowned>true</recoverFromDowned>
       <unspawnedCanDo>false</unspawnedCanDo>
     </MentalStateDef>
 

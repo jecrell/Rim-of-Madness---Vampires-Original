@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ThoughtDefs>
+<Defs>
 
 <!-- Blood drain-related deaths -->
 
@@ -147,4 +147,4 @@
 	  </ThoughtDef>
 
 
-</ThoughtDefs>
+</Defs>

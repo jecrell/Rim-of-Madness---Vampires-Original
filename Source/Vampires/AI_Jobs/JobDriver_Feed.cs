@@ -15,7 +15,7 @@ namespace Vampire
         private float workLeft = -1f;
         public static float BaseFeedTime = 320f;
         
-        protected Pawn Victim => (Pawn)base.CurJob.targetA.Thing;
+        protected Pawn Victim => (Pawn)base.job.targetA.Thing;
         protected CompVampire CompVictim => Victim.GetComp<CompVampire>();
         protected CompVampire CompFeeder => this.GetActor().GetComp<CompVampire>();
         protected Need_Blood BloodVictim => Victim.BloodNeed();
@@ -71,7 +71,7 @@ namespace Vampire
 
                         if (victim.InAggroMentalState || victim.Faction != actor.Faction)
                         {
-                            if (!actor.CanGrapple(victim))
+                            if (!JecsTools.GrappleUtility.CanGrapple(actor, victim))
                             {
                                 thisDriver.EndJobWith(JobCondition.Incompletable);
                             }
@@ -115,7 +115,7 @@ namespace Vampire
                         workLeft = BaseFeedTime;
                         MoteMaker.MakeColonistActionOverlay(actor, ThingDefOf.Mote_ColonistAttacking);
                         effect();
-                        if ((victim.HostileTo(actor.Faction) || victim.IsPrisoner) && !actor.CanGrapple(victim))
+                        if ((victim.HostileTo(actor.Faction) || victim.IsPrisoner) && !JecsTools.GrappleUtility.CanGrapple(actor, victim))
                         {
                             thisDriver.EndJobWith(JobCondition.Incompletable);
                         }
@@ -204,5 +204,9 @@ namespace Vampire
             return true;
         }
 
+        public override bool TryMakePreToilReservations()
+        {
+            return true;
+        }
     }
 }

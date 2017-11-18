@@ -9,7 +9,11 @@
     <requiredCountAtGameStart>1</requiredCountAtGameStart>
     <fixedName>the underworld</fixedName>
     <hidden>true</hidden>
-    <raidCommonality>0</raidCommonality>
+	<raidCommonalityFromPointsCurve>
+		<points>
+			<li>(0, 0)</li>
+		</points>
+	</raidCommonalityFromPointsCurve>
     <humanlikeFaction>true</humanlikeFaction>
     <backstoryCategory>Civil</backstoryCategory>
     <hairTags>
@@ -42,7 +46,11 @@
     <pawnsPlural>outlanders</pawnsPlural>
     <fixedName>camarilla</fixedName>
     <hidden>true</hidden>
-    <raidCommonality>0</raidCommonality>
+	<raidCommonalityFromPointsCurve>
+		<points>
+			<li>(0, 0)</li>
+		</points>
+	</raidCommonalityFromPointsCurve>
     <baseSelectionWeight>0.0000001</baseSelectionWeight>
     <requiredCountAtGameStart>1</requiredCountAtGameStart>
     <canMakeRandomly>true</canMakeRandomly>
@@ -141,7 +149,11 @@
       <baseSelectionWeight>0.0000001</baseSelectionWeight>
       <requiredCountAtGameStart>1</requiredCountAtGameStart>
       <hidden>true</hidden>
-      <raidCommonality>0</raidCommonality>
+	  <raidCommonalityFromPointsCurve>
+		<points>
+			<li>(0, 0)</li>
+		</points>
+	  </raidCommonalityFromPointsCurve>
       <canSiege>true</canSiege>
       <canStageAttacks>true</canStageAttacks>
       <leaderTitle>baron</leaderTitle>
@@ -234,7 +246,11 @@
       destroy the Antediluvians once Gehenna arrives.</description>
     <pawnsPlural>sabbat</pawnsPlural>
     <hidden>true</hidden>
-    <raidCommonality>0</raidCommonality>
+	<raidCommonalityFromPointsCurve>
+		<points>
+			<li>(0, 0)</li>
+		</points>
+	</raidCommonalityFromPointsCurve>
     <baseSelectionWeight>0.0000001</baseSelectionWeight>
     <requiredCountAtGameStart>1</requiredCountAtGameStart>
     <maxCountAtGameStart>1</maxCountAtGameStart>

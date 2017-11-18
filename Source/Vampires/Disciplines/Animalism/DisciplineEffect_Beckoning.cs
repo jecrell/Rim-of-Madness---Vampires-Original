@@ -20,7 +20,7 @@ namespace Vampire
                 for (int i = 0; i < count; i++)
                     target.Map.wildSpawner.SpawnRandomWildAnimalAt(loc);
             }
-            Find.LetterStack.ReceiveLetter("ROMV_AnimalHerd".Translate(), "ROMV_AnimalHerdDesc".Translate(), LetterDefOf.Good, new RimWorld.Planet.GlobalTargetInfo(loc, target.Map), null);
+            Find.LetterStack.ReceiveLetter("ROMV_AnimalHerd".Translate(), "ROMV_AnimalHerdDesc".Translate(), LetterDefOf.PositiveEvent, new RimWorld.Planet.GlobalTargetInfo(loc, target.Map), null);
         }
     }
 }

@@ -11,6 +11,9 @@
       <li>ROMV_PotenceIII</li>
       <li>ROMV_PotenceIV</li>
     </abilities>
+    <tags>
+	  <li>Physical</li>
+	</tags>
   </Vampire.DisciplineDef>
 
   <Vampire.VitaeAbilityDef ParentName="BaseVampAbility">
@@ -21,7 +24,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_EnterTheAbyss</verbClass>
       <hasStandardCommand>false</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Obtenebration_EnterTheAbyss</abilityDef>
       <isViolent>false</isViolent>
       <warmupTime>1</warmupTime>
@@ -82,7 +85,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_EnterTheAbyss</verbClass>
       <hasStandardCommand>false</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Obtenebration_EnterTheAbyss</abilityDef>
       <isViolent>false</isViolent>
       <warmupTime>1</warmupTime>
@@ -143,7 +146,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_EnterTheAbyss</verbClass>
       <hasStandardCommand>false</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Obtenebration_EnterTheAbyss</abilityDef>
       <isViolent>false</isViolent>
       <warmupTime>1</warmupTime>
@@ -204,7 +207,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_EnterTheAbyss</verbClass>
       <hasStandardCommand>False</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Obtenebration_EnterTheAbyss</abilityDef>
       <isViolent>false</isViolent>
       <warmupTime>1</warmupTime>

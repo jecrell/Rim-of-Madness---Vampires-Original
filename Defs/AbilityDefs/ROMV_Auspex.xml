@@ -11,6 +11,9 @@
       <li>ROMV_Auspex_RevealIllusions</li>
       <li>ROMV_Auspex_ReadMind</li>
     </abilities>
+	<tags>
+	  <li>Sensory</li>
+	</tags>
   </Vampire.DisciplineDef>
 
   <Vampire.VitaeAbilityDef ParentName="BaseVampAbility">
@@ -22,7 +25,7 @@
    <MainVerb Class="AbilityUser.VerbProperties_Ability">
      <verbClass>Vampire.DisciplineEffect_HeightenedSenses</verbClass>
      <hasStandardCommand>true</hasStandardCommand>
-     <projectileDef>ROMV_DominateProjectile</projectileDef>
+     <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
      <abilityDef>ROMV_Auspex_HeightenedSenses</abilityDef>
      <isViolent>false</isViolent>
      <warmupTime>1</warmupTime>
@@ -88,7 +91,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_CrocodileTongue</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Auspex_CrocodileTongue</abilityDef>
       <isViolent>false</isViolent>
       <warmupTime>1</warmupTime>
@@ -139,7 +142,7 @@
    <MainVerb Class="AbilityUser.VerbProperties_Ability">
      <verbClass>Vampire.DisciplineEffect_RevealIllusions</verbClass>
      <hasStandardCommand>true</hasStandardCommand>
-     <projectileDef>ROMV_DominateProjectile</projectileDef>
+     <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
      <abilityDef>ROMV_Auspex_RevealIllusions</abilityDef>
      <isViolent>false</isViolent>
      <warmupTime>1</warmupTime>
@@ -174,7 +177,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_ReadMind</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Auspex_ReadMind</abilityDef>
       <isViolent>false</isViolent>
       <warmupTime>1</warmupTime>

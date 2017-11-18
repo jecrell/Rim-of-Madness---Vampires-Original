@@ -22,7 +22,7 @@
    <MainVerb Class="AbilityUser.VerbProperties_Ability">
      <verbClass>Vampire.DisciplineEffect_Beckoning</verbClass>
      <hasStandardCommand>true</hasStandardCommand>
-     <projectileDef>ROMV_DominateProjectile</projectileDef>
+     <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
      <abilityDef>ROMV_Animalism_Beckoning</abilityDef>
      <isViolent>false</isViolent>
      <warmupTime>1</warmupTime>
@@ -57,7 +57,7 @@
    <MainVerb Class="AbilityUser.VerbProperties_Ability">
      <verbClass>Vampire.DisciplineEffect_NightwispRavens</verbClass>
      <hasStandardCommand>true</hasStandardCommand>
-     <projectileDef>ROMV_DominateProjectile</projectileDef>
+     <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
      <abilityDef>ROMV_Animalism_NightwispRavens</abilityDef>
      <isViolent>false</isViolent>
      <warmupTime>1</warmupTime>
@@ -134,7 +134,7 @@
   <MainVerb Class="AbilityUser.VerbProperties_Ability">
     <verbClass>Vampire.DisciplineEffect_SpectralWolf</verbClass>
     <hasStandardCommand>true</hasStandardCommand>
-    <projectileDef>ROMV_DominateProjectile</projectileDef>
+    <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
     <abilityDef>ROMV_Animalism_SpectralWolf</abilityDef>
     <isViolent>false</isViolent>
     <warmupTime>1</warmupTime>
@@ -168,7 +168,7 @@
  <MainVerb Class="AbilityUser.VerbProperties_Ability">
    <verbClass>Vampire.DisciplineEffect_Communion</verbClass>
    <hasStandardCommand>true</hasStandardCommand>
-   <projectileDef>ROMV_DominateProjectile</projectileDef>
+   <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
    <abilityDef>ROMV_Animalism_Communion</abilityDef>
    <isViolent>false</isViolent>
    <warmupTime>1</warmupTime>

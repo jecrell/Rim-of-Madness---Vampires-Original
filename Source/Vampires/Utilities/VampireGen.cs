@@ -77,10 +77,15 @@ namespace Vampire
             Faction faction = (vampFaction != null) ? vampFaction :
                               (generation < 7) ? Find.FactionManager.FirstFactionOfDef(VampDefOf.ROMV_LegendaryVampires) : VampireUtility.RandVampFaction;
             PawnGenerationRequest request = new PawnGenerationRequest(
-                PawnKindDefOf.SpaceRefugee, faction, PawnGenerationContext.NonPlayer,
+                PawnKindDefOf.SpaceRefugee, Faction.OfSpacer, PawnGenerationContext.NonPlayer,
                 -1, false, false, false, false, true, true, 20f, false, true,
-                true, false, false, null, null, math, null, null, (firstVampire) ? "Caine" : null);
+                true, false, false, false, false, null, null, null, null, null, null, null);
             Pawn pawn = PawnGenerator.GeneratePawn(request);
+            if (firstVampire)
+            {
+                NameTriple caineName = new NameTriple("Caine", "Caine", "Darkfather");
+                pawn.Name = caineName;
+            }
             pawn.story.hairColor = PawnHairColors.RandomHairColor(pawn.story.SkinColor, 20);
             if (!bloodline.allowsHair)
                 pawn.story.hairDef = DefDatabase<HairDef>.GetNamed("Shaved");

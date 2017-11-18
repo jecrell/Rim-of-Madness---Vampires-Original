@@ -23,7 +23,7 @@
    <MainVerb Class="AbilityUser.VerbProperties_Ability">
      <verbClass>Vampire.DisciplineEffect_BatForm</verbClass>
      <hasStandardCommand>true</hasStandardCommand>
-     <projectileDef>ROMV_DominateProjectile</projectileDef>
+     <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
      <abilityDef>ROMV_Protean_BatForm</abilityDef>
      <isViolent>false</isViolent>
      <warmupTime>1</warmupTime>
@@ -71,7 +71,7 @@
    <MainVerb Class="AbilityUser.VerbProperties_Ability">
      <verbClass>Vampire.DisciplineEffect_FeralClaws</verbClass>
      <hasStandardCommand>true</hasStandardCommand>
-     <projectileDef>ROMV_DominateProjectile</projectileDef>
+     <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
      <abilityDef>ROMV_Protean_FeralClaws</abilityDef>
      <isViolent>false</isViolent>
      <warmupTime>1</warmupTime>
@@ -127,7 +127,7 @@
    <MainVerb Class="AbilityUser.VerbProperties_Ability">
      <verbClass>Vampire.DisciplineEffect_MistForm</verbClass>
      <hasStandardCommand>true</hasStandardCommand>
-     <projectileDef>ROMV_DominateProjectile</projectileDef>
+     <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
      <abilityDef>ROMV_Protean_MistForm</abilityDef>
      <isViolent>false</isViolent>
      <warmupTime>1</warmupTime>
@@ -157,7 +157,7 @@
    <comps>
      <li Class="Vampire.HediffCompProperties_AnimalForm">
        <animalToChangeInto>ROMV_MistKind</animalToChangeInto>
-       <immuneToDamage>true</immuneToDamage>
+       <immuneTodamage>true</immuneTodamage>
        <canGiveDamage>false</canGiveDamage>
        <disappearsAfterTicks>
          <min>3000</min>
@@ -176,7 +176,7 @@
      <MainVerb Class="AbilityUser.VerbProperties_Ability">
        <verbClass>Vampire.DisciplineEffect_WarForm</verbClass>
        <hasStandardCommand>true</hasStandardCommand>
-       <projectileDef>ROMV_DominateProjectile</projectileDef>
+       <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
        <abilityDef>ROMV_Protean_WarForm</abilityDef>
        <isViolent>false</isViolent>
        <warmupTime>1</warmupTime>

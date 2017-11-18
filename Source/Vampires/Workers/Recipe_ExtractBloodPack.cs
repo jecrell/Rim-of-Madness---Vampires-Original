@@ -25,7 +25,7 @@ namespace Vampire
         {
             if (BloodItemUtility.ExtractionWillKill(pawn))
             {
-                Messages.Message("ROMV_DeadlyOperation".Translate(pawn.Label), MessageSound.Negative);
+                Messages.Message("ROMV_DeadlyOperation".Translate(pawn.Label), MessageTypeDefOf.NegativeEvent);
             }
             return pawn.Faction != billDoerFaction; //|| BloodItemUtility.ExtractionWillKill(pawn, true); //&& HealthUtility.PartRemovalIntent(pawn, part) == BodyPartRemovalIntent.Harvest;
         }
@@ -36,8 +36,9 @@ namespace Vampire
                                    where x.Part == part
                                    select x).Any<Hediff>();
         }
+        
 
-        public override void ApplyOnPawn(Pawn pawn, BodyPartRecord part, Pawn billDoer, List<Thing> ingredients)
+        public override void ApplyOnPawn(Pawn pawn, BodyPartRecord part, Pawn billDoer, List<Thing> ingredients, Bill bill)
         {
             bool flag = IsClean(pawn, part);
             bool flag2 = this.IsViolationOnPawn(pawn, part, Faction.OfPlayer);

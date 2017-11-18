@@ -21,7 +21,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_EnterTheAbyss</verbClass>
       <hasStandardCommand>false</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Flight_LightWeight</abilityDef>
       <isViolent>false</isViolent>
       <warmupTime>1</warmupTime>
@@ -81,7 +81,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_WingBuffet</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Flight_WingBuffet</abilityDef>
       <isViolent>false</isViolent>
       <warmupTime>1</warmupTime>
@@ -115,7 +115,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_ShortFlight</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Flight_ShortFlight</abilityDef>
       <isViolent>false</isViolent>
       <warmupTime>1</warmupTime>
@@ -149,7 +149,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_SkyFall</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Flight_SkyFall</abilityDef>
       <isViolent>true</isViolent>
       <warmupTime>1</warmupTime>
@@ -182,7 +182,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_LongFlight</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Flight_LongFlight</abilityDef>
       <isViolent>false</isViolent>
       <warmupTime>1</warmupTime>

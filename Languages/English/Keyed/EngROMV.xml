@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 
+<!-- 11-19-17 -->
+<ROMV_CannotPurgeMechanoids>{0} has no blood to purge.</ROMV_CannotPurgeMechanoids>
+
 <!-- 11-4-17 x2-->
 <ROMV_HI_UnusedCapacities>NAME is one with the dead. HISCAP corpse has no need for most bodily functions. HECAP CAN still force them to function, to pass for being one of the living or when absolutely necessary.</ROMV_HI_UnusedCapacities>
 <ROMV_HI_Unused>Unused</ROMV_HI_Unused>

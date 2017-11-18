@@ -97,50 +97,50 @@ namespace Vampire
             return result;
         }
 
-        public static bool CanGrapple(this Pawn grappler, Pawn victim)
-        {
-            if (victim == null || victim.Dead)
-            {
-                return true;
-            }
+        //public static bool CanGrapple(this Pawn grappler, Pawn victim)
+        //{
+        //    if (victim == null || victim.Dead)
+        //    {
+        //        return true;
+        //    }
 
-            //Check downed
-            if (victim.Downed)
-            {
-                MoteMaker.ThrowText(grappler.DrawPos, grappler.Map, "ROMV_DownedGrapple".Translate(), -1f);
-                return true;
-            }
+        //    //Check downed
+        //    if (victim.Downed)
+        //    {
+        //        MoteMaker.ThrowText(grappler.DrawPos, grappler.Map, "ROMV_DownedGrapple".Translate(), -1f);
+        //        return true;
+        //    }
 
-            if (victim.IsPrisonerOfColony && RestraintsUtility.InRestraints(victim))
-            {
-                MoteMaker.ThrowText(grappler.DrawPos, grappler.Map, "ROMV_PrisonerGrapple".Translate(), -1f);
-                return true;
-            }
+        //    if (victim.IsPrisonerOfColony && RestraintsUtility.InRestraints(victim))
+        //    {
+        //        MoteMaker.ThrowText(grappler.DrawPos, grappler.Map, "ROMV_PrisonerGrapple".Translate(), -1f);
+        //        return true;
+        //    }
 
-            //Check line of sight.
-            //if (!victim.CanSee(grappler))
-            //{
-            //    MoteMaker.ThrowText(grappler.DrawPos, grappler.Map, "ROMV_SneakGrapple".Translate(), -1f);
-            //    return true;
-            //}
+        //    //Check line of sight.
+        //    //if (!victim.CanSee(grappler))
+        //    //{
+        //    //    MoteMaker.ThrowText(grappler.DrawPos, grappler.Map, "ROMV_SneakGrapple".Translate(), -1f);
+        //    //    return true;
+        //    //}
 
-            //Grapple check.
+        //    //Grapple check.
             
-            int roll = Rand.Range(1, 20);
-            int modifier = (int)grappler.RaceProps.baseBodySize;
-            modifier += (grappler.RaceProps.Humanlike) ? grappler.skills.GetSkill(SkillDefOf.Melee).Level : 0;
-            modifier += VampireUtility.GrapplerModifier(grappler);
-            int difficulty = (int)victim.RaceProps.baseBodySize;
-            difficulty += (victim.RaceProps.Humanlike) ? victim?.skills?.GetSkill(SkillDefOf.Melee)?.Level ?? 1 : 1;
+        //    int roll = Rand.Range(1, 20);
+        //    int modifier = (int)grappler.RaceProps.baseBodySize;
+        //    modifier += (grappler.RaceProps.Humanlike) ? grappler.skills.GetSkill(SkillDefOf.Melee).Level : 0;
+        //    modifier += VampireUtility.GrapplerModifier(grappler);
+        //    int difficulty = (int)victim.RaceProps.baseBodySize;
+        //    difficulty += (victim.RaceProps.Humanlike) ? victim?.skills?.GetSkill(SkillDefOf.Melee)?.Level ?? 1 : 1;
 
-            if (roll + modifier > difficulty)
-            {
-                MoteMaker.ThrowText(grappler.DrawPos, grappler.Map, roll + " + " + modifier + " = " + (roll + modifier) + " vs " + difficulty + " : " + StringsToTranslate.AU_CastSuccess, -1f);
-                return true;
-            }
-            MoteMaker.ThrowText(grappler.DrawPos, grappler.Map, roll + " + " + modifier + " = " + (roll + modifier) + " vs " + difficulty + " : " + StringsToTranslate.AU_CastFailure, -1f);
-            return false;
-        }
+        //    if (roll + modifier > difficulty)
+        //    {
+        //        MoteMaker.ThrowText(grappler.DrawPos, grappler.Map, roll + " + " + modifier + " = " + (roll + modifier) + " vs " + difficulty + " : " + StringsToTranslate.AU_CastSuccess, -1f);
+        //        return true;
+        //    }
+        //    MoteMaker.ThrowText(grappler.DrawPos, grappler.Map, roll + " + " + modifier + " = " + (roll + modifier) + " vs " + difficulty + " : " + StringsToTranslate.AU_CastFailure, -1f);
+        //    return false;
+        //}
 
         // RimWorld.SiegeBlueprintPlacer
         public static IntVec3 FindHideyHoleSpot(ThingDef holeDef, Rot4 rot, IntVec3 center, Map map)

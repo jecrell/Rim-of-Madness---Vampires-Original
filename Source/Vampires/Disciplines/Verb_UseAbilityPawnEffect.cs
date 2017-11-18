@@ -11,6 +11,10 @@ namespace Vampire
     {
         public virtual void Effect(Pawn target)
         {
+            if (this.Ability.Def.MainVerb.isViolent && target.Faction != this.CasterPawn.Faction)
+            {
+                target.mindState.Notify_DamageTaken(new DamageInfo(DamageDefOf.Cut, -1, -1, this.CasterPawn));
+            }
             target.Drawer.Notify_DebugAffected();
             MoteMaker.ThrowText(target.DrawPos, target.Map, AbilityUser.StringsToTranslate.AU_CastSuccess, -1f);
         }

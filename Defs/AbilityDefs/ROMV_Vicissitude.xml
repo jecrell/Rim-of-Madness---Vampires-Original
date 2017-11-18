@@ -22,7 +22,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_PerfectForm</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Vicissitude_PerfectForm</abilityDef>
       <isViolent>false</isViolent>
       <warmupTime>1</warmupTime>
@@ -72,7 +72,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_CorruptForm</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Vicissitude_CorruptForm</abilityDef>
       <isViolent>false</isViolent>
       <warmupTime>1</warmupTime>
@@ -192,7 +192,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_ShapeMonstrosity</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Vicissitude_PerfectForm</abilityDef>
       <isViolent>false</isViolent>
       <warmupTime>1</warmupTime>
@@ -225,7 +225,7 @@
     <MainVerb Class="AbilityUser.VerbProperties_Ability">
       <verbClass>Vampire.DisciplineEffect_ZuloForm</verbClass>
       <hasStandardCommand>true</hasStandardCommand>
-      <projectileDef>ROMV_DominateProjectile</projectileDef>
+      <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
       <abilityDef>ROMV_Vicissitude_BecomeZulo</abilityDef>
       <isViolent>false</isViolent>
       <warmupTime>1</warmupTime>

@@ -61,7 +61,7 @@ namespace Vampire
                     c = pawn.Position;
                     IL_A1:
                     pawn.CurJob.targetA = c;
-                    pawn.Drawer.rotator.FaceCell(c);
+                    pawn.rotationTracker.FaceCell(c);
                     pawn.pather.StopDead();
                 },
                 tickAction = delegate
@@ -94,6 +94,11 @@ namespace Vampire
             to.WithEffect(EffecterDef.Named("ROMV_BloodVomit"), TargetIndex.A);
             to.PlaySustainerOrSound(() => SoundDef.Named("Vomit"));
             yield return to;
+        }
+
+        public override bool TryMakePreToilReservations()
+        {
+            return true;
         }
     }
 }

@@ -131,12 +131,7 @@
     <label>the beast</label>
     <stages>
       <li>
-        <label>initial-hidden</label>
-        <everVisible>false</everVisible>
-      </li>
-      <li>
         <label>cravings</label>
-        <minSeverity>0.04</minSeverity>
         <painOffset>-0.05</painOffset>
         <capMods>
           <li>
@@ -237,12 +232,7 @@
     <lethalSeverity>1</lethalSeverity>
     <stages>
       <li>
-        <label>initial-hidden</label>
-        <everVisible>false</everVisible>
-      </li>
-      <li>
         <label>initial</label>
-        <minSeverity>0.04</minSeverity>
         <capMods>
           <li>
             <capacity>Consciousness</capacity>

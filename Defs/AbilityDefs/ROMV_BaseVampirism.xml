@@ -11,7 +11,7 @@
    <MainVerb Class="AbilityUser.VerbProperties_Ability">
      <verbClass>Vampire.DisciplineEffect_VampiricHealing</verbClass>
      <hasStandardCommand>true</hasStandardCommand>
-     <projectileDef>ROMV_DominateProjectile</projectileDef>
+     <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
      <abilityDef>ROMV_VampiricHealing</abilityDef>
      <isViolent>false</isViolent>
      <warmupTime>0</warmupTime>
@@ -46,7 +46,7 @@
    <MainVerb Class="AbilityUser.VerbProperties_Ability">
      <verbClass>Vampire.DisciplineEffect_RegenerateLimb</verbClass>
      <hasStandardCommand>true</hasStandardCommand>
-     <projectileDef>ROMV_DominateProjectile</projectileDef>
+     <defaultProjectile>ROMV_DominateProjectile</defaultProjectile>
      <abilityDef>ROMV_RegenerateLimb</abilityDef>
      <isViolent>false</isViolent>
      <warmupTime>0</warmupTime>

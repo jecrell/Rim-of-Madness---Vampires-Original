@@ -134,6 +134,14 @@ namespace Vampire
 
 
                 float curY = rectPowersLabel.yMax;
+                if (compVampire.Sheet.Pawn == null)
+                {
+                    compVampire.Sheet.Pawn = pawn;
+                }
+                if (compVampire.Sheet.Disciplines.NullOrEmpty())
+                {
+                    compVampire.Sheet.InitializeDisciplines();
+                }
                     for (int i = 0; i < compVampire.Sheet.Disciplines.Count; i++)
                     {
                         Rect rectDisciplines = new Rect(rect.x + ButtonSize, curY, rectPowersLabel.width, ButtonSize + Padding);
@@ -260,7 +268,7 @@ namespace Vampire
                         //    {
                         //    compVampire.AbilityPoints,
                         //    ability.abilityCost
-                        //    }), MessageSound.RejectInput);
+                        //    }), MessageTypeDefOf.RejectInput);
                         //    return;
                         //}
                         if (compVampire.AbilityUser.story != null && (compVampire.AbilityUser.story.WorkTagIsDisabled(WorkTags.Violent) && ability.MainVerb.isViolent))
@@ -268,7 +276,7 @@ namespace Vampire
                             Messages.Message("IsIncapableOfViolenceLower".Translate(new object[]
                             {
                             compVampire.parent.LabelShort
-                            }), MessageSound.RejectInput);
+                            }), MessageTypeDefOf.RejectInput);
                             return;
                         }
                         discipline.Notify_PointsInvested(1); //LevelUpPower(power);

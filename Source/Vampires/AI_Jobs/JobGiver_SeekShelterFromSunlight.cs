@@ -109,7 +109,7 @@ namespace Vampire
                                     Thing thingY = pawnPath.FirstBlockingBuilding(out cellBeforeBlocker, pawn);
                                     if (thingY != null)
                                     {
-                                        Job job = DigUtility.PassBlockerJob(pawn, thingY, cellBeforeBlocker, true);
+                                        Job job = DigUtility.PassBlockerJob(pawn, thingY, cellBeforeBlocker, true, true);
                                         if (job != null)
                                         {
                                             return job;
@@ -132,8 +132,8 @@ namespace Vampire
                     if (hideyHoleResult != null && hideyHoleResult.Value.IsValid)
                     {
                         //Log.Message("Hidey Place");
-
-                        return new Job(VampDefOf.ROMV_DigAndHide, hideyHoleResult.Value) { locomotionUrgency = LocomotionUrgency.Sprint };
+                        if (pawn.CurJob.def != VampDefOf.ROMV_DigAndHide)
+                            return new Job(VampDefOf.ROMV_DigAndHide, hideyHoleResult.Value) { locomotionUrgency = LocomotionUrgency.Sprint };
 
                     }
 
