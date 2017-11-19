@@ -46,7 +46,7 @@ namespace Vampire
                 return BloodMaster.CurBloodPoints == 0;
             });
             this.FailOnAggroMentalState(TargetIndex.A);
-            foreach (Toil t in JobDriver_Feed.MakeFeedToils(this, (Pawn)TargetA, this.GetActor(), workLeft, DoEffect, ShouldContinueFeeding))
+            foreach (Toil t in JobDriver_Feed.MakeFeedToils(this.job.def, this, (Pawn)TargetA, this.GetActor(), null, null, workLeft, DoEffect, ShouldContinueFeeding))
             {
                 yield return t;
             }

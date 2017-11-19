@@ -27,29 +27,26 @@ namespace Vampire
         {
             if (childeComp.AbilityUser is Pawn p)
             {
-                Pawn temp = p;
-                IntVec3 tempLoc = p.PositionHeld;
-                Faction f = p.Faction;
-                Map tempMap = p.MapHeld;
-                if (childeComp?.BloodPool is Need_Blood b && sireComp?.BloodPool is Need_Blood tempB)
+                Pawn vampToBe = p;
+                if (childeComp?.BloodPool is Need_Blood bloodOfVampToBe && sireComp?.BloodPool is Need_Blood bloodOfVampMaster)
                 {
-                    b.TransferBloodTo(9999, tempB);
+                    bloodOfVampToBe.TransferBloodTo(9999, bloodOfVampMaster);
                 }
-                Pawn newPawn = ResurrectedPawnUtility.DoGeneratePawnFromSource(temp, false);
-                if (!p.Dead) p.Kill(null);
+                ResurrectionUtility.Resurrect(vampToBe);
+                //Pawn newPawn = ResurrectedPawnUtility.DoGeneratePawnFromSource(temp, false);
+                //if (!p.Dead) p.Kill(null);
+                //GenSpawn.Spawn(newPawn, tempLoc, tempMap);
+                //newPawn.workSettings.EnableAndInitialize();
 
-                GenSpawn.Spawn(newPawn, tempLoc, tempMap);
-                newPawn.workSettings.EnableAndInitialize();
+                //if (p.Corpse != null) p.Corpse.DeSpawn();
 
-                if (p.Corpse != null) p.Corpse.DeSpawn();
-
-                if (sireComp?.BloodPool is Need_Blood sB && newPawn?.BloodNeed() is Need_Blood cB)
+                if (sireComp?.BloodPool is Need_Blood sB && vampToBe?.BloodNeed() is Need_Blood cB)
                 {
                     cB.CurBloodPoints = 0;
                     sB.TransferBloodTo(1, cB);
                     cB.CurBloodPoints = 1;
                 }
-                newPawn.VampComp().Notify_Embraced(sireComp);
+                vampToBe.VampComp().Notify_Embraced(sireComp);
             }
         }
 

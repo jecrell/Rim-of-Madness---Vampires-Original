@@ -73,6 +73,14 @@ namespace Vampire
         public static ThoughtDef ROMV_IWasBittenByAVampire;
         public static ThoughtDef ROMV_IGaveTheKiss;
         public static ThoughtDef ROMV_IConsumedASoul;
+        public static ThoughtDef ROMV_ITastedASoul;
+
+        public static ThoughtDef ROMV_WitnessedVampireFeeding;
+        public static ThoughtDef ROMV_WitnessedVampireFeedingVisitor;
+        public static ThoughtDef ROMV_WitnessedVampireEmbrace;
+        public static ThoughtDef ROMV_WitnessedVampireEmbraceVisitor;
+        public static ThoughtDef ROMV_WitnessedVampireDiablerie;
+        public static ThoughtDef ROMV_WitnessedVampireDiablerieVisitor;
 
         public static MentalStateDef ROMV_Rotschreck;
 

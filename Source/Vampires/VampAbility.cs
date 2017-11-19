@@ -14,19 +14,10 @@ namespace Vampire
         public CompVampire Vamp => this.Pawn.VampComp(); //VampUtility.GetVamp(this.Pawn);
         public VitaeAbilityDef AbilityDef => Def as VitaeAbilityDef;
 
-        public VampAbility() : base()
-        {
-        }
-
-        public VampAbility(CompAbilityUser abilityUser) : base(abilityUser)
-        {
-            this.abilityUser = abilityUser as CompVampire;
-        }
-
-        public VampAbility(Pawn user, AbilityDef pdef) : base(user, pdef)
-        {
-
-        }
+        public VampAbility() : base() { }
+        public VampAbility(CompAbilityUser abilityUser) : base(abilityUser) { this.abilityUser = abilityUser as CompVampire; }
+        public VampAbility(Pawn user, AbilityDef pdef) : base(user, pdef) { }
+        public VampAbility(AbilityData data) : base(data) { }
 
         public override void PostAbilityAttempt()
         {

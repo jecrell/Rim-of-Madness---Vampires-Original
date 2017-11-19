@@ -11,6 +11,7 @@
   <HediffDef ParentName="ROMV_AddedBodyPartBase">
     <defName>ROMV_Fangs</defName>
     <label>fangs</label>
+	<hediffClass>Vampire.Hediff_AddedPart_Fangs</hediffClass>
     <addedPartProps>
       <isSolid>true</isSolid>
       <partEfficiency>1.2</partEfficiency>

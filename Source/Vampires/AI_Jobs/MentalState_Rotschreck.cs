@@ -18,15 +18,18 @@ namespace Vampire
             return true;
         }
 
+        protected override bool CanEndBeforeMaxDurationNow => false;
         public override void MentalStateTick()
         {
             base.MentalStateTick();
-            Room room = pawn.GetRoom(RegionType.Set_All);
-            if (room != null)
-            {
-                if (!room.PsychologicallyOutdoors)
-                    this.RecoverFromState();
-            }
+            if (pawn.PositionHeld.Roofed(pawn.MapHeld))
+                this.RecoverFromState();
+            //Room room = pawn.GetRoom(RegionType.Set_All);
+            //if (room != null)
+            //{
+            //    if (!room.PsychologicallyOutdoors)
+            //        this.RecoverFromState();
+            //}
         }
 
         public override bool ForceHostileTo(Faction f)

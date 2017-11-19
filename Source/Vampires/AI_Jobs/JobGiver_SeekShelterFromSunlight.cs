@@ -18,12 +18,6 @@ namespace Vampire
 
         protected float wanderRadius = 7.5f;
 
-
-        public bool IsZero(IntVec3 loc)
-        {
-            return loc.x == 0 && loc.y == 0 && loc.z == 0;
-        }
-
         protected virtual IntVec3 GetExactWanderDest(Pawn pawn)
         {
             IntVec3 wanderRoot = pawn.PositionHeld;
@@ -51,7 +45,7 @@ namespace Vampire
                     Area area = pawn.MapHeld.areaManager.Home;
                     if (area != null)
                     {
-                        if (area.ActiveCells.FirstOrDefault(x => x.Roofed(pawn.Map) && x.Walkable(pawn.Map)) is IntVec3 safePlace && !IsZero(safePlace) && safePlace.IsValid)
+                        if (area.ActiveCells.FirstOrDefault(x => x.Roofed(pawn.Map) && x.Walkable(pawn.Map)) is IntVec3 safePlace && safePlace.IsValid)
                         {
                             //Log.Message("Safe Place");
                             return new Job(JobDefOf.Goto, safePlace) { locomotionUrgency = LocomotionUrgency.Sprint };
@@ -74,7 +68,7 @@ namespace Vampire
                     if (region != null)
                     {
                         IntVec3 result;
-                        if (region.TryFindRandomCellInRegion(x => !IsZero(x) && x.IsValid && x.InBounds(pawn.MapHeld) && x.GetDoor(pawn.MapHeld) == null, out result))
+                        if (region.TryFindRandomCellInRegion(x => x.IsValid && x.InBounds(pawn.MapHeld) && x.GetDoor(pawn.MapHeld) == null, out result))
                         {
                             //Log.Message("Region Place");
 
@@ -82,15 +76,14 @@ namespace Vampire
                         }
                     }
                     IntVec3? cellResult = null;
-                    cellResult = CellFinderLoose.RandomCellWith(x => !IsZero(x) && x.IsValid && x.InBounds(pawn.MapHeld) && x.Roofed(pawn.MapHeld) && x.Walkable(pawn.MapHeld)
-                    && pawn.Map.reachability.CanReach(pawn.PositionHeld, x, PathEndMode.OnCell, TraverseMode.ByPawn, Danger.Deadly), pawn.MapHeld, 1000);
-                    if (cellResult != null && cellResult.Value.IsValid && !IsZero(cellResult.Value))
+                    cellResult = VampireUtility.FindCellSafeFromSunlight(pawn);
+                    if (cellResult != null && cellResult.Value.IsValid)
                     {
                         //Log.Message("Random Place");
 
                         return new Job(JobDefOf.Goto, cellResult.Value) { locomotionUrgency = LocomotionUrgency.Sprint };
                     }
-
+                    
                     if (pawn.Faction != pawn.Map.ParentFaction)
                     {
                         bool flag = false;
@@ -125,6 +118,10 @@ namespace Vampire
                                 canBash = true
                             };
                         }
+                    }
+                    else
+                    {
+
                     }
 
                     IntVec3? hideyHoleResult = null;

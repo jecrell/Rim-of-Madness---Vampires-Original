@@ -11,11 +11,24 @@
 			<li>
 				<label>consumed a soul</label>
 				<description>I have never felt more alive!</description>
-				<baseMoodEffect>20</baseMoodEffect>
+				<baseMoodEffect>30</baseMoodEffect>
 			</li>
 		</stages>
 	</ThoughtDef>
 
+	
+		<ThoughtDef>
+		<defName>ROMV_ITastedASoul</defName>
+		<durationDays>3</durationDays>
+		<stackLimit>5</stackLimit>
+		<stages>
+			<li>
+				<label>tasted a soul</label>
+				<description>Truly a divine flavor!</description>
+				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
 
 	<ThoughtDef>
 		<defName>ROMV_IGaveTheKiss</defName>

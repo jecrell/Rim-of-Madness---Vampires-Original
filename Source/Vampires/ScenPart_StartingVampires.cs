@@ -159,7 +159,7 @@ namespace Vampire
                 }
             }
         }
-
+        
         public override void Notify_PawnGenerated(Pawn pawn, PawnGenerationContext context)
         {
             if (Find.VisibleMap == null)
@@ -168,30 +168,33 @@ namespace Vampire
                 BloodlineDef def = (randomBloodline) ? PossibleBloodlines().RandomElement() : bloodline;
                 if (pawn.RaceProps.Humanlike && context == PawnGenerationContext.PlayerStarter)
                 {
-                    if (Rand.Value < vampChance && curVampires < maxVampires)
+                    if (!pawn?.story?.WorkTagIsDisabled(WorkTags.Violent) ?? false)
                     {
-                        curVampires++;
-                        HediffDef hediffDefToApply = VampDefOf.ROM_VampirismRandom;
-                        if (def == VampDefOf.ROMV_ClanGargoyle) hediffDefToApply = VampDefOf.ROM_VampirismGargoyle;
-                        if (def == VampDefOf.ROMV_ClanLasombra) hediffDefToApply = VampDefOf.ROM_VampirismLasombra;
-                        if (def == VampDefOf.ROMV_ClanPijavica) hediffDefToApply = VampDefOf.ROM_VampirismPijavica;
-                        if (def == VampDefOf.ROMV_ClanTremere) hediffDefToApply = VampDefOf.ROM_VampirismTremere;
-                        if (def == VampDefOf.ROMV_ClanTzimize) hediffDefToApply = VampDefOf.ROM_VampirismTzimisce;
-                        HealthUtility.AdjustSeverity(pawn, hediffDefToApply, 0.5f);
-                        pawn.story.hairColor = PawnHairColors.RandomHairColor(pawn.story.SkinColor, 20);
-                        int ticksToAdd = Rand.Range(GenDate.TicksPerYear, GenDate.TicksPerYear * 200);
-                        pawn.ageTracker.AgeBiologicalTicks += ticksToAdd;
-                        pawn.ageTracker.AgeChronologicalTicks += ticksToAdd;
-                        if (pawn.health.hediffSet.hediffs is List<Hediff> hediffs)
+                        if (Rand.Value < vampChance && curVampires < maxVampires)
                         {
-                            hediffs.RemoveAll(x => x.IsOld() ||
-                            x.def == HediffDefOf.BadBack ||
-                            x.def == HediffDefOf.Frail ||
-                            x.def == HediffDefOf.Cataract ||
-                            x.def == HediffDef.Named("HearingLoss") ||
-                            x.def == HediffDef.Named("HeartArteryBlockage"));
+                            curVampires++;
+                            HediffDef hediffDefToApply = VampDefOf.ROM_VampirismRandom;
+                            if (def == VampDefOf.ROMV_ClanGargoyle) hediffDefToApply = VampDefOf.ROM_VampirismGargoyle;
+                            if (def == VampDefOf.ROMV_ClanLasombra) hediffDefToApply = VampDefOf.ROM_VampirismLasombra;
+                            if (def == VampDefOf.ROMV_ClanPijavica) hediffDefToApply = VampDefOf.ROM_VampirismPijavica;
+                            if (def == VampDefOf.ROMV_ClanTremere) hediffDefToApply = VampDefOf.ROM_VampirismTremere;
+                            if (def == VampDefOf.ROMV_ClanTzimize) hediffDefToApply = VampDefOf.ROM_VampirismTzimisce;
+                            HealthUtility.AdjustSeverity(pawn, hediffDefToApply, 0.5f);
+                            pawn.story.hairColor = PawnHairColors.RandomHairColor(pawn.story.SkinColor, 20);
+                            int ticksToAdd = Rand.Range(GenDate.TicksPerYear, GenDate.TicksPerYear * 200);
+                            pawn.ageTracker.AgeBiologicalTicks += ticksToAdd;
+                            pawn.ageTracker.AgeChronologicalTicks += ticksToAdd;
+                            if (pawn.health.hediffSet.hediffs is List<Hediff> hediffs)
+                            {
+                                hediffs.RemoveAll(x => x.IsOld() ||
+                                x.def == HediffDefOf.BadBack ||
+                                x.def == HediffDefOf.Frail ||
+                                x.def == HediffDefOf.Cataract ||
+                                x.def == HediffDef.Named("HearingLoss") ||
+                                x.def == HediffDef.Named("HeartArteryBlockage"));
+                            }
+                            //VampireGen.TryGiveVampirismHediff(pawn, generationRange.RandomInRange, def, null, false);
                         }
-                        //VampireGen.TryGiveVampirismHediff(pawn, generationRange.RandomInRange, def, null, false);
                     }
                 }
             }

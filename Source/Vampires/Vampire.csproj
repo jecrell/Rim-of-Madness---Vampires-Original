@@ -135,6 +135,7 @@
     <Compile Include="Hediffs\HediffVampirism_Pijavica.cs" />
     <Compile Include="Hediffs\HediffVampirism_Tremere.cs" />
     <Compile Include="Hediffs\HediffVampirism_Tzimisce.cs" />
+    <Compile Include="Hediffs\Hediff_AddedPart_Fangs.cs" />
     <Compile Include="UI\Alert_VampireInSunlight.cs" />
     <Compile Include="UI\Alert_VampireStarving.cs" />
     <Compile Include="Utilities\BloodFeedModeUtility.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Defs\DisciplineDef.cs" />
     <Compile Include="UI\VampireCardUtility.cs" />
     <Compile Include="Utilities\VampireGraphicUtility.cs" />
+    <Compile Include="Utilities\VampireWitnessUtility.cs" />
     <Compile Include="VampAbility.cs" />
     <Compile Include="Workers\EmbraceWorker.cs" />
     <Compile Include="HarmonyPatches\HarmonyPatches.cs" />

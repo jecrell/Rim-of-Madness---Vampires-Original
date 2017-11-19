@@ -30,7 +30,6 @@ namespace Vampire
         {
             this.BloodVictim.TransferBloodTo(1, BloodFeeder);
         }
-
         [DebuggerHidden]
         protected override IEnumerable<Toil> MakeNewToils()
         {
@@ -47,13 +46,13 @@ namespace Vampire
                 }
                 return JobCondition.Succeeded;
             });
-            foreach (Toil t in MakeFeedToils(this, this.pawn, this.TargetA, workLeft, DoEffect, ShouldContinueFeeding))
+            foreach (Toil t in MakeFeedToils(this.job.def, this, this.pawn, this.TargetA, VampDefOf.ROMV_IWasBittenByAVampire, VampDefOf.ROMV_IGaveTheKiss, workLeft, DoEffect, ShouldContinueFeeding))
             {
                 yield return t;
             }
         }
 
-        public static IEnumerable<Toil> MakeFeedToils(JobDriver thisDriver, Pawn actor, LocalTargetInfo TargetA, float workLeft, Action effect, Func<Pawn, Pawn, bool> stopCondition)
+        public static IEnumerable<Toil> MakeFeedToils(JobDef job, JobDriver thisDriver, Pawn actor, LocalTargetInfo TargetA, ThoughtDef victimThoughtDef, ThoughtDef actorThoughtDef, float workLeft, Action effect, Func<Pawn, Pawn, bool> stopCondition)
         {
             yield return Toils_Reserve.Reserve(TargetIndex.A, 1, -1, null);
             Toil gotoToil = Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch);
@@ -100,40 +99,56 @@ namespace Vampire
             {
                 tickAction = delegate
                 {
-                    Pawn victim = (Pawn)TargetA.Thing;
-                    if (victim == null || !victim.Spawned || victim.Dead)
-                        thisDriver.ReadyForNextToil();
-                    workLeft--;
-
-                    if (workLeft <= 0f)
+                    if (TargetA.Thing is Pawn victim && victim.Spawned && !victim.Dead)
                     {
-                        if (actor?.VampComp() is CompVampire v && v.IsVampire && actor.Faction == Faction.OfPlayer)
+                        workLeft--;
+                        VampireWitnessUtility.HandleWitnessesOf(job, actor, victim);
+
+                        Thought_Memory victimThought = null;
+                        if (victimThoughtDef != null) victimThought = (Thought_Memory)ThoughtMaker.MakeThought(victimThoughtDef);
+                        if (victimThought != null)
                         {
-                            MoteMaker.ThrowText(actor.DrawPos, actor.Map, "XP +" + 15, -1f);
-                            v.XP += 15;
+                            victim.needs.mood.thoughts.memories.TryGainMemory(victimThought, null);
                         }
-                        workLeft = BaseFeedTime;
-                        MoteMaker.MakeColonistActionOverlay(actor, ThingDefOf.Mote_ColonistAttacking);
-                        effect();
-                        if ((victim.HostileTo(actor.Faction) || victim.IsPrisoner) && !JecsTools.GrappleUtility.CanGrapple(actor, victim))
+                        Thought_Memory actorThought = null;
+                        if (actorThoughtDef != null) actorThought = (Thought_Memory)ThoughtMaker.MakeThought(actorThoughtDef);
+                        if (actorThought != null)
                         {
-                            thisDriver.EndJobWith(JobCondition.Incompletable);
+                            actor.needs.mood.thoughts.memories.TryGainMemory(actorThought, null);
                         }
 
-                        if (!stopCondition(actor, victim))
+                        if (workLeft <= 0f)
                         {
-                            thisDriver.ReadyForNextToil();
-                        }
-                        else
-                        {
-                            if (victim != null && !victim.Dead)
+                            if (actor?.VampComp() is CompVampire v && v.IsVampire && actor.Faction == Faction.OfPlayer)
                             {
-                                victim.stances.stunner.StunFor((int)BaseFeedTime);
-                                PawnUtility.ForceWait((Pawn)TargetA.Thing, (int)BaseFeedTime, actor);
+                                MoteMaker.ThrowText(actor.DrawPos, actor.Map, "XP +" + 15, -1f);
+                                v.XP += 15;
+                            }
+                            workLeft = BaseFeedTime;
+                            MoteMaker.MakeColonistActionOverlay(actor, ThingDefOf.Mote_ColonistAttacking);
+                            effect();
+                            if ((victim.HostileTo(actor.Faction) || victim.IsPrisoner) && !JecsTools.GrappleUtility.CanGrapple(actor, victim))
+                            {
+                                thisDriver.EndJobWith(JobCondition.Incompletable);
+                            }
 
+                            if (!stopCondition(actor, victim))
+                            {
+                                thisDriver.ReadyForNextToil();
+                            }
+                            else
+                            {
+                                if (victim != null && !victim.Dead)
+                                {
+                                    victim.stances.stunner.StunFor((int)BaseFeedTime);
+                                    PawnUtility.ForceWait((Pawn)TargetA.Thing, (int)BaseFeedTime, actor);
+
+                                }
                             }
                         }
                     }
+                    else
+                        thisDriver.ReadyForNextToil();
                 },
                 defaultCompleteMode = ToilCompleteMode.Never
             };

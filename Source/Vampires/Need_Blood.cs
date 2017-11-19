@@ -63,6 +63,15 @@ namespace Vampire
             }
             set => curBloodPoints = value;
         }
+        public int MaxBloodPointsForAnimal(Pawn p)
+        {
+            PawnKindDef def = p.kindDef;
+            int result = (def.RaceProps.baseBodySize < 1f) ? 1 : 2;
+            if (def == PawnKindDef.Named("Rat")) return 1;
+            if (def == PawnKindDefOf.Thrumbo) return 10;
+            return result;
+        }
+
         public int MaxBloodPoints
         {
             get
@@ -70,10 +79,7 @@ namespace Vampire
                 int result = 7;
                 if (IsAnimal)
                 {
-                    if (this.pawn.RaceProps.baseBodySize < 1f)
-                        result = 1;
-                    else
-                        result = 2;
+                    result = MaxBloodPointsForAnimal(this.pawn);
                 }
                 if (CompVampire != null && CompVampire.IsVampire)
                 {

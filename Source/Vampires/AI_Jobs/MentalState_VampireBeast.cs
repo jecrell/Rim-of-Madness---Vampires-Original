@@ -17,12 +17,14 @@ namespace Vampire
         {
             return true;
         }
-
+        
         public override void MentalStateTick()
         {
             base.MentalStateTick();
             if (vampComp != null)
             {
+                if (!vampComp.IsVampire)
+                    this.RecoverFromState();
                 if (vampBlood.IsFull)
                     this.RecoverFromState();
             }

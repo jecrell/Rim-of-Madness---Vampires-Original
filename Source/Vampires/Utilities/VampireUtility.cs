@@ -42,8 +42,19 @@ namespace Vampire
             return text.CapitalizeFirst();
         }
 
+        public static bool IsZero(IntVec3 loc)
+        {
+            return loc.x == 0 && loc.y == 0 && loc.z == 0;
+        }
 
-        //
+
+        public static IntVec3 FindCellSafeFromSunlight(Pawn pawn)
+        {
+            return CellFinderLoose.RandomCellWith(x => !IsZero(x) && x.IsValid && x.InBounds(pawn.MapHeld) && x.Roofed(pawn.MapHeld) && x.Walkable(pawn.MapHeld)
+                    && pawn.Map.reachability.CanReach(pawn.PositionHeld, x, PathEndMode.OnCell, TraverseMode.ByPawn, Danger.Deadly), pawn.MapHeld, 1000);
+        }
+
+ 
         public static void AdjustTimeTables(Pawn pawn)
         {
             if (pawn.IsVampire() && pawn.timetable is Pawn_TimetableTracker t)

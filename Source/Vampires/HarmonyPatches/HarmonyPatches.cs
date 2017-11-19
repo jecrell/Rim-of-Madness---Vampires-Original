@@ -800,7 +800,7 @@ namespace Vampire
                 bool flag = randomizeCallback != null;
                 if (!flag && pawn.IsColonist && !pawn.health.Dead)
                 {
-                    Rect rect7 = new Rect(CharacterCardUtility.PawnCardSize.x - 125f, 14f, 30f, 30f);
+                    Rect rect7 = new Rect(CharacterCardUtility.PawnCardSize.x - 140f, 14f, 30f, 30f);
                     TooltipHandler.TipRegion(rect7, new TipSignal("ROMV_VampireSheet".Translate()));
                     if (Widgets.ButtonImage(rect7, TexButton.ROMV_VampireIcon))
                     {

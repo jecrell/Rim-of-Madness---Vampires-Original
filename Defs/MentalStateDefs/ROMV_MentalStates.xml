@@ -53,8 +53,8 @@
       <beginLetterLabel>rotschreck</beginLetterLabel>
       <beginLetter>{0} is fleeing in terror of the light!</beginLetter>
       <beginLetterDef>ThreatBig</beginLetterDef>
-      <minTicksBeforeRecovery>10000</minTicksBeforeRecovery>
-      <recoveryMtbDays>0.3</recoveryMtbDays>
+      <minTicksBeforeRecovery>60000</minTicksBeforeRecovery>
+      <recoveryMtbDays>1.0</recoveryMtbDays>
       <maxTicksBeforeRecovery>60000</maxTicksBeforeRecovery>
       <recoveryMessage>{0}'s fears have subsided.</recoveryMessage>
       <baseInspectLine>Mental state: Rötschreck</baseInspectLine>
