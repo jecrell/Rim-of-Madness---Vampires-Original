@@ -56,7 +56,7 @@ namespace Vampire
 
         public override bool ShouldShowGizmo()
         {
-            if (Find.Selector.NumSelected == 1 && this.AbilityDef.MainVerb.hasStandardCommand)
+            if (Find.Selector.NumSelected == 1 && (this?.AbilityDef?.MainVerb?.hasStandardCommand ?? false) && (!this?.Pawn?.Downed ?? false) && (!this?.Pawn?.Dead ?? false))
                 return true;
             return false;
         }

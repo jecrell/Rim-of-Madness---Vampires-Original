@@ -228,18 +228,21 @@ namespace Vampire
                         {
                             if (predator.CanReach(pawn2, PathEndMode.ClosestTouch, Danger.Deadly, false, TraverseMode.ByPawn))
                             {
-                                if (!pawn2.IsForbidden(predator))
-                                {
+                                //if (!pawn2.IsForbidden(predator))
+                                //{
                                     if (!tutorialMode || pawn2.Faction != Faction.OfPlayer)
                                     {
-                                        float preyScoreFor = FoodUtility.GetPreyScoreFor(predator, pawn2);
-                                        if (preyScoreFor > num || pawn == null)
+                                    //Log.Message("Potential Prey: " + pawn2.Label);
+                                        float preyScoreFor = FoodUtility.GetPreyScoreFor(predator, pawn2) + ((pawn2.RaceProps.Humanlike) ? 200 : 0);
+                                    //Log.Message("Potential Prey Score: " + preyScoreFor);
+
+                                    if (preyScoreFor > num || pawn == null)
                                         {
                                             num = preyScoreFor;
                                             pawn = pawn2;
                                         }
                                     }
-                                }
+                                //}
                             }
                         }
                     }
@@ -285,6 +288,9 @@ namespace Vampire
 
                     if (!vampire.CanReserve(victim))
                         return false;
+
+                    if (vampire.MentalStateDef == HediffWithComps_BeastHunger.MentalState_VampireBeast)
+                        return true;
 
                     if (victim.RaceProps.Animal)
                     {

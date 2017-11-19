@@ -10,6 +10,7 @@ using System.Reflection;
 using UnityEngine;
 using RimWorld.Planet;
 using Verse.AI.Group;
+using AbilityUser;
 
 namespace Vampire
 {
@@ -213,6 +214,10 @@ namespace Vampire
             harmony.Patch(AccessTools.Method(typeof(ThoughtWorker_WantToSleepWithSpouseOrLover), "CurrentStateInternal"),
                 new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_FineSleepingAlone)), null);
 
+            //Vampire corpses can resurrect themselves.
+            harmony.Patch(AccessTools.Method(typeof(ThingWithComps), "GetGizmos"), null,
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_TheyNeverDie)), null);
+
             #region DubsBadHygiene
             {
                 try
@@ -229,6 +234,44 @@ namespace Vampire
                 catch (TypeLoadException ex) { /*Log.Message(ex.ToString());*/ }
             }
             #endregion
+        }
+
+
+        //ThingWithComps
+        public static void Vamp_TheyNeverDie(ThingWithComps __instance, ref IEnumerable<Gizmo> __result)
+        {
+
+            //Log.Message("4");
+            if (__instance is Corpse c && c.InnerPawn is Pawn p)
+            {
+                if (p.Faction == Faction.OfPlayer && p.IsVampire())
+                {
+                    __result = __result.Concat(GizmoGetter(p));
+                }
+            }
+
+        }
+
+        public static IEnumerable<Gizmo> GizmoGetter(Pawn AbilityUser)
+        {
+            Vampire.VitaeAbilityDef bloodResurrection = DefDatabase<Vampire.VitaeAbilityDef>.GetNamedSilentFail("ROMV_VampiricResurrection");
+            yield return new Command_Action()
+            {
+                defaultLabel = bloodResurrection.label,
+                defaultDesc = bloodResurrection.GetDescription(),
+                icon = bloodResurrection.uiIcon,
+                action = delegate
+                {
+                    AbilityUser.Drawer.Notify_DebugAffected();
+                    ResurrectionUtility.Resurrect(AbilityUser);
+                    MoteMaker.ThrowText(AbilityUser.PositionHeld.ToVector3(), AbilityUser.MapHeld, StringsToTranslate.AU_CastSuccess, -1f);
+                    AbilityUser.BloodNeed().AdjustBlood(-99999999);
+                    HealthUtility.AdjustSeverity(AbilityUser, VampDefOf.ROMV_TheBeast, 1.0f);
+                    MentalStateDef MentalState_VampireBeast = DefDatabase<MentalStateDef>.GetNamed("ROMV_VampireBeast");
+                    AbilityUser.mindState.mentalStateHandler.TryStartMentalState(MentalState_VampireBeast, null, true, false, null);
+                },
+                disabled = false
+            };
         }
 
         // RimWorld.ThoughtWorker_WantToSleepWithSpouseOrLover

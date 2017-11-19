@@ -279,7 +279,10 @@ namespace Vampire
 
         public void InitializeVampirism(Pawn newSire, BloodlineDef newBloodline = null, int newGeneration = -1, bool firstVampire = false)
         {
+            //Log.Message("Init");
             this.AbilityUser.health.hediffSet.hediffs.RemoveAll(x => x is HediffVampirism_VampGiver);
+            this.AbilityUser.health.hediffSet.hediffs.RemoveAll(x => x.def == HediffDefOf.Malnutrition);
+            this.AbilityUser.health.hediffSet.hediffs.RemoveAll(x => x is Hediff_Addiction);
             VampireGen.TryGiveVampirismHediff(this.AbilityUser, newGeneration, newBloodline, newSire, firstVampire);
             if (!firstVampire)
             {
@@ -406,7 +409,25 @@ namespace Vampire
             {
                 for (int i = 0; i < this.AbilityData.AllPowers.Count; i++)
                 {
-                    if (this.AbilityData.AllPowers[i] is VampAbility p && (p.AbilityDef.MainVerb.hasStandardCommand && p.AbilityDef.bloodCost != 0)) yield return p.GetGizmo();
+                    if (this.AbilityData.AllPowers[i] is VampAbility p && (p.ShouldShowGizmo() && p.AbilityDef.MainVerb.hasStandardCommand && p.AbilityDef.bloodCost != 0)) yield return p.GetGizmo();
+                }
+                if (AbilityUser.Downed && AbilityUser.IsVampire())
+                {
+                    Vampire.VitaeAbilityDef bloodHeal = DefDatabase<Vampire.VitaeAbilityDef>.GetNamedSilentFail("ROMV_VampiricHealing");
+                    yield return new Command_Action()
+                    {
+                        defaultLabel = bloodHeal.label,
+                        defaultDesc = bloodHeal.GetDescription(),
+                        icon = bloodHeal.uiIcon,
+                        action = delegate
+                        {
+                            AbilityUser.Drawer.Notify_DebugAffected();
+                            MoteMaker.ThrowText(AbilityUser.DrawPos, AbilityUser.Map, StringsToTranslate.AU_CastSuccess, -1f);
+                            this.BloodPool.AdjustBlood(bloodHeal.bloodCost);
+                            VampireUtility.Heal(this.AbilityUser);
+                        },
+                        disabled = this.BloodPool.CurBloodPoints <= 0
+                    };
                 }
             }
 

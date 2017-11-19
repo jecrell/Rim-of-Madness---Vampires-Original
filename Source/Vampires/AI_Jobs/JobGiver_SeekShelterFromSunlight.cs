@@ -37,6 +37,8 @@ namespace Vampire
 
         protected override Job TryGiveJob(Pawn pawn)
         {
+            if (!VampireUtility.IsDaylight(pawn))
+                return null;
             Room room = pawn.GetRoom(RegionType.Set_Passable);
             if (room != null)
             {
@@ -45,9 +47,9 @@ namespace Vampire
                     Area area = pawn.MapHeld.areaManager.Home;
                     if (area != null)
                     {
-                        if (area.ActiveCells.FirstOrDefault(x => x.Roofed(pawn.Map) && x.Walkable(pawn.Map)) is IntVec3 safePlace && safePlace.IsValid)
+                        if (area.ActiveCells.FirstOrDefault(x => x.Roofed(pawn.Map) && x.Walkable(pawn.Map)) is IntVec3 safePlace && safePlace.IsValid && safePlace.x > 0 && safePlace.z > 0)
                         {
-                            //Log.Message("Safe Place");
+                            Log.Message("Safe Place");
                             return new Job(JobDefOf.Goto, safePlace) { locomotionUrgency = LocomotionUrgency.Sprint };
                         }
 
@@ -57,7 +59,7 @@ namespace Vampire
                     Thing thing = GenClosest.ClosestThingReachable(pawn.PositionHeld, pawn.Map, ThingRequest.ForDef(ThingDefOf.Fire), PathEndMode.Touch, TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn, false), 23, null, null, 0, -1, false, RegionType.Set_Passable, false);
                     if (thing != null)
                     {
-                        //Log.Message("Flee Place");
+                        Log.Message("Flee Place");
 
                         IntVec3 fleeLoc = CellFinderLoose.GetFleeDest(pawn, new List<Thing>() { thing }, 23);
                         return new Job(JobDefOf.FleeAndCower, thing);
@@ -68,9 +70,9 @@ namespace Vampire
                     if (region != null)
                     {
                         IntVec3 result;
-                        if (region.TryFindRandomCellInRegion(x => x.IsValid && x.InBounds(pawn.MapHeld) && x.GetDoor(pawn.MapHeld) == null, out result))
+                        if (region.TryFindRandomCellInRegion(x => x.IsValid && x.x > 0 && x.z > 0 && x.InBounds(pawn.MapHeld) && x.GetDoor(pawn.MapHeld) == null, out result))
                         {
-                            //Log.Message("Region Place");
+                            Log.Message("Region Place");
 
                             return new Job(JobDefOf.Goto, result) { locomotionUrgency = LocomotionUrgency.Sprint };
                         }
@@ -79,7 +81,7 @@ namespace Vampire
                     cellResult = VampireUtility.FindCellSafeFromSunlight(pawn);
                     if (cellResult != null && cellResult.Value.IsValid)
                     {
-                        //Log.Message("Random Place");
+                        Log.Message("Random Place");
 
                         return new Job(JobDefOf.Goto, cellResult.Value) { locomotionUrgency = LocomotionUrgency.Sprint };
                     }
@@ -128,7 +130,7 @@ namespace Vampire
                     hideyHoleResult = VampireUtility.FindHideyHoleSpot(VampDefOf.ROMV_HideyHole, Rot4.Random, pawn.PositionHeld, pawn.MapHeld);
                     if (hideyHoleResult != null && hideyHoleResult.Value.IsValid)
                     {
-                        //Log.Message("Hidey Place");
+                        Log.Message("Hidey Place");
                         if (pawn.CurJob.def != VampDefOf.ROMV_DigAndHide)
                             return new Job(VampDefOf.ROMV_DigAndHide, hideyHoleResult.Value) { locomotionUrgency = LocomotionUrgency.Sprint };
 

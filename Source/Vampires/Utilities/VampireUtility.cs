@@ -48,6 +48,30 @@ namespace Vampire
         }
 
 
+        public static void Heal(Pawn target, int maxInjuries = 4, int maxInjuriesPerBodyPartInit = 2)
+        {
+            int maxInjuriesPerBodyPart;
+            foreach (BodyPartRecord rec in target.health.hediffSet.GetInjuredParts())
+            {
+                if (maxInjuries > 0)
+                {
+                    maxInjuriesPerBodyPart = maxInjuriesPerBodyPartInit;
+                    foreach (Hediff_Injury current in from injury in target.health.hediffSet.GetHediffs<Hediff_Injury>() where injury.Part == rec select injury)
+                    {
+                        if (maxInjuriesPerBodyPart > 0)
+                        {
+                            if (current.CanHealNaturally() && !current.IsOld()) // basically check for scars and old wounds
+                            {
+                                current.Heal((int)current.Severity + 1);
+                                maxInjuries--;
+                                maxInjuriesPerBodyPart--;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         public static IntVec3 FindCellSafeFromSunlight(Pawn pawn)
         {
             return CellFinderLoose.RandomCellWith(x => !IsZero(x) && x.IsValid && x.InBounds(pawn.MapHeld) && x.Roofed(pawn.MapHeld) && x.Walkable(pawn.MapHeld)
