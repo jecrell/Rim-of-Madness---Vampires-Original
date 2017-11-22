@@ -401,6 +401,8 @@ namespace Vampire
 
         }
 
+        public override float GrappleModifier => (IsVampire) ? 20 - this.generation : 0;
+
 
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
@@ -423,7 +425,7 @@ namespace Vampire
                         {
                             AbilityUser.Drawer.Notify_DebugAffected();
                             MoteMaker.ThrowText(AbilityUser.DrawPos, AbilityUser.Map, StringsToTranslate.AU_CastSuccess, -1f);
-                            this.BloodPool.AdjustBlood(bloodHeal.bloodCost);
+                            this.BloodPool.AdjustBlood(-bloodHeal.bloodCost);
                             VampireUtility.Heal(this.AbilityUser);
                         },
                         disabled = this.BloodPool.CurBloodPoints <= 0

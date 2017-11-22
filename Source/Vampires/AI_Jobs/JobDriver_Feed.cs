@@ -15,7 +15,7 @@ namespace Vampire
         private float workLeft = -1f;
         public static float BaseFeedTime = 320f;
         
-        protected Pawn Victim => (Pawn)base.job.targetA.Thing;
+        protected Pawn Victim => base.job.targetA.Thing as Pawn;
         protected CompVampire CompVictim => Victim.GetComp<CompVampire>();
         protected CompVampire CompFeeder => this.GetActor().GetComp<CompVampire>();
         protected Need_Blood BloodVictim => Victim.BloodNeed();
@@ -55,7 +55,7 @@ namespace Vampire
         public static IEnumerable<Toil> MakeFeedToils(JobDef job, JobDriver thisDriver, Pawn actor, LocalTargetInfo TargetA, ThoughtDef victimThoughtDef, ThoughtDef actorThoughtDef, float workLeft, Action effect, Func<Pawn, Pawn, bool> stopCondition)
         {
             yield return Toils_Reserve.Reserve(TargetIndex.A, 1, -1, null);
-            Toil gotoToil = Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch);
+            Toil gotoToil = Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.ClosestTouch);
             yield return gotoToil;
             Toil grappleToil = new Toil()
             {
@@ -64,15 +64,17 @@ namespace Vampire
                     MoteMaker.MakeColonistActionOverlay(actor, ThingDefOf.Mote_ColonistAttacking);
 
                     workLeft = JobDriver_Feed.BaseFeedTime;
-                    Pawn victim = (Pawn)TargetA.Thing; 
+                    Pawn victim = TargetA.Thing as Pawn; 
                     if (victim != null)
                     {
 
-                        if (victim.InAggroMentalState || victim.Faction != actor.Faction)
+                        if (actor.InAggroMentalState || victim.InAggroMentalState || victim.Faction != actor.Faction)
                         {
-                            if (!JecsTools.GrappleUtility.CanGrapple(actor, victim))
+                            if (!JecsTools.GrappleUtility.TryGrapple(actor, victim))
                             {
+                                PawnUtility.ForceWait(actor, (int)(BaseFeedTime * 0.15f));
                                 thisDriver.EndJobWith(JobCondition.Incompletable);
+                                return;
                             }
                         }
                         GenClamor.DoClamor(actor, 10f, ClamorType.Harm);
@@ -99,56 +101,67 @@ namespace Vampire
             {
                 tickAction = delegate
                 {
-                    if (TargetA.Thing is Pawn victim && victim.Spawned && !victim.Dead)
+                    try
                     {
-                        workLeft--;
-                        VampireWitnessUtility.HandleWitnessesOf(job, actor, victim);
 
-                        Thought_Memory victimThought = null;
-                        if (victimThoughtDef != null) victimThought = (Thought_Memory)ThoughtMaker.MakeThought(victimThoughtDef);
-                        if (victimThought != null)
+                        if (TargetA.Thing is Pawn victim && victim.Spawned && !victim.Dead)
                         {
-                            victim.needs.mood.thoughts.memories.TryGainMemory(victimThought, null);
-                        }
-                        Thought_Memory actorThought = null;
-                        if (actorThoughtDef != null) actorThought = (Thought_Memory)ThoughtMaker.MakeThought(actorThoughtDef);
-                        if (actorThought != null)
-                        {
-                            actor.needs.mood.thoughts.memories.TryGainMemory(actorThought, null);
-                        }
+                            workLeft--;
+                            VampireWitnessUtility.HandleWitnessesOf(job, actor, victim);
 
-                        if (workLeft <= 0f)
-                        {
-                            if (actor?.VampComp() is CompVampire v && v.IsVampire && actor.Faction == Faction.OfPlayer)
+                            if (victim?.needs?.mood?.thoughts?.memories != null)
                             {
-                                MoteMaker.ThrowText(actor.DrawPos, actor.Map, "XP +" + 15, -1f);
-                                v.XP += 15;
-                            }
-                            workLeft = BaseFeedTime;
-                            MoteMaker.MakeColonistActionOverlay(actor, ThingDefOf.Mote_ColonistAttacking);
-                            effect();
-                            if ((victim.HostileTo(actor.Faction) || victim.IsPrisoner) && !JecsTools.GrappleUtility.CanGrapple(actor, victim))
-                            {
-                                thisDriver.EndJobWith(JobCondition.Incompletable);
-                            }
-
-                            if (!stopCondition(actor, victim))
-                            {
-                                thisDriver.ReadyForNextToil();
-                            }
-                            else
-                            {
-                                if (victim != null && !victim.Dead)
+                                Thought_Memory victimThought = null;
+                                if (victimThoughtDef != null) victimThought = (Thought_Memory)ThoughtMaker.MakeThought(victimThoughtDef);
+                                if (victimThought != null)
                                 {
-                                    victim.stances.stunner.StunFor((int)BaseFeedTime);
-                                    PawnUtility.ForceWait((Pawn)TargetA.Thing, (int)BaseFeedTime, actor);
+                                    victim.needs.mood.thoughts.memories.TryGainMemory(victimThought, null);
+                                }
+                            }
+                            if (actor?.needs?.mood?.thoughts?.memories != null)
+                            {
+                                Thought_Memory actorThought = null;
+                                if (actorThoughtDef != null) actorThought = (Thought_Memory)ThoughtMaker.MakeThought(actorThoughtDef);
+                                if (actorThought != null)
+                                {
+                                    actor.needs.mood.thoughts.memories.TryGainMemory(actorThought, null);
+                                }
+                            }
 
+                            if (workLeft <= 0f)
+                            {
+                                if (actor?.VampComp() is CompVampire v && v.IsVampire && actor.Faction == Faction.OfPlayer)
+                                {
+                                    MoteMaker.ThrowText(actor.DrawPos, actor.Map, "XP +" + 15, -1f);
+                                    v.XP += 15;
+                                }
+                                workLeft = BaseFeedTime;
+                                MoteMaker.MakeColonistActionOverlay(actor, ThingDefOf.Mote_ColonistAttacking);
+                                effect();
+                                if (!JecsTools.GrappleUtility.TryGrapple(actor, victim))
+                                {
+                                    thisDriver.EndJobWith(JobCondition.Incompletable);
+                                }
+
+                                if (!stopCondition(actor, victim))
+                                {
+                                    thisDriver.ReadyForNextToil();
+                                }
+                                else
+                                {
+                                    if (victim != null && !victim.Dead)
+                                    {
+                                        victim.stances.stunner.StunFor((int)BaseFeedTime);
+                                        PawnUtility.ForceWait((Pawn)TargetA.Thing, (int)BaseFeedTime, actor);
+
+                                    }
                                 }
                             }
                         }
+                        else
+                            thisDriver.ReadyForNextToil();
                     }
-                    else
-                        thisDriver.ReadyForNextToil();
+                    catch { }
                 },
                 defaultCompleteMode = ToilCompleteMode.Never
             };

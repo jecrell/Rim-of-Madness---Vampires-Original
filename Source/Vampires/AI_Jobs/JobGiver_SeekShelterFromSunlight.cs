@@ -37,126 +37,140 @@ namespace Vampire
 
         protected override Job TryGiveJob(Pawn pawn)
         {
-            if (!VampireUtility.IsDaylight(pawn))
-                return null;
-            Room room = pawn.GetRoom(RegionType.Set_Passable);
-            if (room != null)
+            try
             {
-                if (room.PsychologicallyOutdoors)
+
+
+                if (!VampireUtility.IsDaylight(pawn))
+                    return null;
+                if (pawn.Drafted)
+                    return null;
+                Room room = pawn.GetRoom(RegionType.Set_Passable);
+                if (room != null)
                 {
-                    Area area = pawn.MapHeld.areaManager.Home;
-                    if (area != null)
+                    if (room.PsychologicallyOutdoors)
                     {
-                        if (area.ActiveCells.FirstOrDefault(x => x.Roofed(pawn.Map) && x.Walkable(pawn.Map)) is IntVec3 safePlace && safePlace.IsValid && safePlace.x > 0 && safePlace.z > 0)
+                        Area area = pawn.MapHeld.areaManager.Home;
+                        if (area != null)
                         {
-                            Log.Message("Safe Place");
-                            return new Job(JobDefOf.Goto, safePlace) { locomotionUrgency = LocomotionUrgency.Sprint };
-                        }
-
-                    }
-
-
-                    Thing thing = GenClosest.ClosestThingReachable(pawn.PositionHeld, pawn.Map, ThingRequest.ForDef(ThingDefOf.Fire), PathEndMode.Touch, TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn, false), 23, null, null, 0, -1, false, RegionType.Set_Passable, false);
-                    if (thing != null)
-                    {
-                        Log.Message("Flee Place");
-
-                        IntVec3 fleeLoc = CellFinderLoose.GetFleeDest(pawn, new List<Thing>() { thing }, 23);
-                        return new Job(JobDefOf.FleeAndCower, thing);
-                    }
-
-                    Region region;
-                    CellFinder.TryFindClosestRegionWith(pawn.GetRegion(RegionType.Set_Passable), TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn), (x => !x.Room.PsychologicallyOutdoors), 9999, out region, RegionType.Set_All);   //.ClosestRegionIndoors(pawn.Position, pawn.Map, TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn, false), RegionType.Set_Passable);
-                    if (region != null)
-                    {
-                        IntVec3 result;
-                        if (region.TryFindRandomCellInRegion(x => x.IsValid && x.x > 0 && x.z > 0 && x.InBounds(pawn.MapHeld) && x.GetDoor(pawn.MapHeld) == null, out result))
-                        {
-                            Log.Message("Region Place");
-
-                            return new Job(JobDefOf.Goto, result) { locomotionUrgency = LocomotionUrgency.Sprint };
-                        }
-                    }
-                    IntVec3? cellResult = null;
-                    cellResult = VampireUtility.FindCellSafeFromSunlight(pawn);
-                    if (cellResult != null && cellResult.Value.IsValid)
-                    {
-                        Log.Message("Random Place");
-
-                        return new Job(JobDefOf.Goto, cellResult.Value) { locomotionUrgency = LocomotionUrgency.Sprint };
-                    }
-                    
-                    if (pawn.Faction != pawn.Map.ParentFaction)
-                    {
-                        bool flag = false;
-                        if (pawn.mindState.duty != null && pawn.mindState.duty.canDig)
-                        {
-                            flag = true;
-                        }
-                        IntVec3 c;
-                        if (RCellFinder.TryFindBestExitSpot(pawn, out c, (!flag) ? TraverseMode.ByPawn : TraverseMode.PassAllDestroyableThings))
-                        {
-                            if (flag)
+                            if (area.ActiveCells.FirstOrDefault(x => x.Roofed(pawn.Map) && x.Walkable(pawn.Map)) is IntVec3 safePlace && safePlace.IsValid && safePlace.x > 0 && safePlace.z > 0)
                             {
-                                using (PawnPath pawnPath = pawn.Map.pathFinder.FindPath(pawn.Position, c, TraverseParms.For(pawn, Danger.Deadly, TraverseMode.PassAllDestroyableThings, false), PathEndMode.OnCell))
+                                //Log.Message("Safe Place");
+                                return new Job(JobDefOf.Goto, safePlace) { locomotionUrgency = LocomotionUrgency.Sprint };
+                            }
+
+                        }
+
+
+                        Thing thing = GenClosest.ClosestThingReachable(pawn.PositionHeld, pawn.Map, ThingRequest.ForDef(ThingDefOf.Fire), PathEndMode.Touch, TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn, false), 23, null, null, 0, -1, false, RegionType.Set_Passable, false);
+                        if (thing != null)
+                        {
+                            //Log.Message("Flee Place");
+
+                            IntVec3 fleeLoc = CellFinderLoose.GetFleeDest(pawn, new List<Thing>() { thing }, 23);
+                            return new Job(JobDefOf.FleeAndCower, thing);
+                        }
+
+                        Region region;
+                        CellFinder.TryFindClosestRegionWith(pawn.GetRegion(RegionType.Set_Passable), TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn), (x => !x.Room.PsychologicallyOutdoors), 9999, out region, RegionType.Set_All);   //.ClosestRegionIndoors(pawn.Position, pawn.Map, TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn, false), RegionType.Set_Passable);
+                        if (region != null)
+                        {
+                            IntVec3 result;
+                            if (region.TryFindRandomCellInRegion(x => x.IsValid && x.x > 0 && x.z > 0 && x.InBounds(pawn.MapHeld) && x.GetDoor(pawn.MapHeld) == null, out result))
+                            {
+                                //Log.Message("Region Place");
+
+                                return new Job(JobDefOf.Goto, result) { locomotionUrgency = LocomotionUrgency.Sprint };
+                            }
+                        }
+                        IntVec3? cellResult = null;
+                        cellResult = VampireUtility.FindCellSafeFromSunlight(pawn);
+                        if (cellResult != null && cellResult.Value.IsValid)
+                        {
+                            //Log.Message("Random Place");
+
+                            return new Job(JobDefOf.Goto, cellResult.Value) { locomotionUrgency = LocomotionUrgency.Sprint };
+                        }
+
+                        if (pawn.Faction != pawn.Map.ParentFaction)
+                        {
+                            bool flag = false;
+                            if (pawn.mindState.duty != null && pawn.mindState.duty.canDig)
+                            {
+                                flag = true;
+                            }
+                            IntVec3 c;
+                            if (RCellFinder.TryFindBestExitSpot(pawn, out c, (!flag) ? TraverseMode.ByPawn : TraverseMode.PassAllDestroyableThings))
+                            {
+                                if (flag)
                                 {
-                                    IntVec3 cellBeforeBlocker;
-                                    Thing thingY = pawnPath.FirstBlockingBuilding(out cellBeforeBlocker, pawn);
-                                    if (thingY != null)
+                                    using (PawnPath pawnPath = pawn.Map.pathFinder.FindPath(pawn.Position, c, TraverseParms.For(pawn, Danger.Deadly, TraverseMode.PassAllDestroyableThings, false), PathEndMode.OnCell))
                                     {
-                                        Job job = DigUtility.PassBlockerJob(pawn, thingY, cellBeforeBlocker, true, true);
-                                        if (job != null)
+                                        IntVec3 cellBeforeBlocker;
+                                        Thing thingY = pawnPath.FirstBlockingBuilding(out cellBeforeBlocker, pawn);
+                                        if (thingY != null)
                                         {
-                                            return job;
+                                            Job job = DigUtility.PassBlockerJob(pawn, thingY, cellBeforeBlocker, true, true);
+                                            if (job != null)
+                                            {
+                                                return job;
+                                            }
                                         }
                                     }
                                 }
+                                return new Job(JobDefOf.Goto, c)
+                                {
+                                    exitMapOnArrival = true,
+                                    locomotionUrgency = PawnUtility.ResolveLocomotion(pawn, LocomotionUrgency.Sprint, LocomotionUrgency.Jog),
+                                    expiryInterval = 400,
+                                    canBash = true
+                                };
                             }
-                            return new Job(JobDefOf.Goto, c)
-                            {
-                                exitMapOnArrival = true,
-                                locomotionUrgency = PawnUtility.ResolveLocomotion(pawn, LocomotionUrgency.Sprint, LocomotionUrgency.Jog),
-                                expiryInterval = 400,
-                                canBash = true
-                            };
                         }
-                    }
-                    else
-                    {
+                        else
+                        {
+
+                        }
+
+                        if (pawn?.health?.capacities?.CapableOf(PawnCapacityDefOf.Manipulation) ?? false)
+                        {
+                            IntVec3? hideyHoleResult = null;
+                            hideyHoleResult = VampireUtility.FindHideyHoleSpot(VampDefOf.ROMV_HideyHole, Rot4.Random, pawn.PositionHeld, pawn.MapHeld);
+                            if (hideyHoleResult != null && hideyHoleResult.Value.IsValid)
+                            {
+                                //Log.Message("Hidey Place");
+                                if (pawn.CurJob.def != VampDefOf.ROMV_DigAndHide)
+                                    return new Job(VampDefOf.ROMV_DigAndHide, hideyHoleResult.Value) { locomotionUrgency = LocomotionUrgency.Sprint };
+
+                            }
+                        }
 
                     }
-
-                    IntVec3? hideyHoleResult = null;
-                    hideyHoleResult = VampireUtility.FindHideyHoleSpot(VampDefOf.ROMV_HideyHole, Rot4.Random, pawn.PositionHeld, pawn.MapHeld);
-                    if (hideyHoleResult != null && hideyHoleResult.Value.IsValid)
-                    {
-                        Log.Message("Hidey Place");
-                        if (pawn.CurJob.def != VampDefOf.ROMV_DigAndHide)
-                            return new Job(VampDefOf.ROMV_DigAndHide, hideyHoleResult.Value) { locomotionUrgency = LocomotionUrgency.Sprint };
-
-                    }
-
+                    //bool nextMoveOrderIsWait = pawn.mindState.nextMoveOrderIsWait;
+                    //pawn.mindState.nextMoveOrderIsWait = !pawn.mindState.nextMoveOrderIsWait;
+                    //if (nextMoveOrderIsWait)
+                    //{
+                    //    return new Job(JobDefOf.WaitWander)
+                    //    {
+                    //        expiryInterval = this.ticksBetweenWandersRange.RandomInRange
+                    //    };
+                    //}
+                    //IntVec3 exactWanderDest = this.GetExactWanderDest(pawn);
+                    //if (!exactWanderDest.IsValid)
+                    //{
+                    //    pawn.mindState.nextMoveOrderIsWait = false;
+                    //    return null;
+                    //}
+                    //pawn.Map.pawnDestinationManager.ReserveDestinationFor(pawn, exactWanderDest);
+                    //return new Job(JobDefOf.GotoWander, exactWanderDest)
+                    //{
+                    //    locomotionUrgency = this.locomotionUrgency
+                    //};
                 }
-                //bool nextMoveOrderIsWait = pawn.mindState.nextMoveOrderIsWait;
-                //pawn.mindState.nextMoveOrderIsWait = !pawn.mindState.nextMoveOrderIsWait;
-                //if (nextMoveOrderIsWait)
-                //{
-                //    return new Job(JobDefOf.WaitWander)
-                //    {
-                //        expiryInterval = this.ticksBetweenWandersRange.RandomInRange
-                //    };
-                //}
-                //IntVec3 exactWanderDest = this.GetExactWanderDest(pawn);
-                //if (!exactWanderDest.IsValid)
-                //{
-                //    pawn.mindState.nextMoveOrderIsWait = false;
-                //    return null;
-                //}
-                //pawn.Map.pawnDestinationManager.ReserveDestinationFor(pawn, exactWanderDest);
-                //return new Job(JobDefOf.GotoWander, exactWanderDest)
-                //{
-                //    locomotionUrgency = this.locomotionUrgency
-                //};
+            }
+            catch
+            {
+
             }
             return null;
         }

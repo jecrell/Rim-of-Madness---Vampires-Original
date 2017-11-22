@@ -22,7 +22,7 @@ namespace Vampire
             {
                 if (this.pawn?.BloodNeed() is Need_Blood pB)
                 {
-                    if (this.CurStageIndex == 4 && this.pawn.MentalStateDef != MentalState_VampireBeast)
+                    if (this.CurStageIndex == 3 && this.pawn.MentalStateDef != MentalState_VampireBeast)
                     {
                         this.pawn.mindState.mentalStateHandler.TryStartMentalState(MentalState_VampireBeast, null, true, false, null);
                     }

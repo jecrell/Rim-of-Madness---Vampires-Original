@@ -95,7 +95,7 @@ namespace Vampire
         
         public static CrimeReaction GetReactionTo(this Pawn witness, Pawn criminal, JobDef crime)
         {
-            if (witness.Faction != criminal.Faction)
+            if (witness.Faction != null && witness.Faction != criminal.Faction)
             {
                 if (!witness.story.WorkTagIsDisabled(WorkTags.Violent))
                     return CrimeReaction.MoodVisitorFlee;
@@ -171,7 +171,7 @@ namespace Vampire
                             {
                                 IntVec3 fleeLoc = CellFinderLoose.GetFleeDest(witness, new List<Thing>() { criminal }, 23f);
                                 witness.jobs.TryTakeOrderedJob(new Verse.AI.Job(JobDefOf.FleeAndCower, fleeLoc));
-                                if (!witness.Faction.HostileTo(criminal.Faction))
+                                if (witness.Faction != null && !witness.Faction.HostileTo(criminal.Faction))
                                 {
                                     witness.Faction.SetHostileTo(criminal.Faction, true);
                                 }
@@ -184,7 +184,7 @@ namespace Vampire
                             if (witness.CurJob is Job k && k.def != JobDefOf.AttackMelee)
                             {
                                 witness.jobs.TryTakeOrderedJob(new Job(JobDefOf.AttackMelee, criminal));
-                                if (!witness.Faction.HostileTo(criminal.Faction))
+                                if (witness.Faction != null && !witness.Faction.HostileTo(criminal.Faction))
                                 {
                                     witness.Faction.SetHostileTo(criminal.Faction, true);
                                 }

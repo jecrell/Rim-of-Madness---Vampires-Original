@@ -63,7 +63,7 @@
 <ROMV_Caravan_WarningMixedWithVampires>Load vampires in caskets first or send an all-vampire caravan.</ROMV_Caravan_WarningMixedWithVampires>
 <ROMV_EmbracedSuccessfully>{0} has become a vampire, childe of {1} of {2} blood.</ROMV_EmbracedSuccessfully>
 <ROMV_DiablerieSuccessfully>{0} has consumed {1}'s soul.</ROMV_DiablerieSuccessfully>
-<ROMV_BloodDepletedVamp>{0}/'s vitae has run dry. Feed soon or the beast will surface.</ROMV_BloodDepletedVamp>
+<ROMV_BloodDepletedVamp>{0}'s vitae has nearly run dry. Feed soon or the beast will surface.</ROMV_BloodDepletedVamp>
 <ROMV_BloodDepleted>{0}/'s blood has run dry.</ROMV_BloodDepleted>
 <ROMV_DeadlyOperation>This operation will kill {0}</ROMV_DeadlyOperation>
 

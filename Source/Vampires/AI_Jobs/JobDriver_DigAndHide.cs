@@ -9,7 +9,7 @@ namespace Vampire
 {
     public class JobDriver_DigAndHide : JobDriver
     {
-        protected const int BaseWorkAmount = 1000;
+        protected const int BaseWorkAmount = 12000;
 
         private float workLeft = -1000f;
 
@@ -26,7 +26,12 @@ namespace Vampire
             };
             doWork.tickAction = delegate
             {
-                this.workLeft -= this.pawn.GetStatValue(StatDefOf.ConstructionSpeed, true);
+                if (GetActor().Downed || GetActor().Dead || GetActor().pather.MovingNow)
+                {
+                    this.EndJobWith(JobCondition.Incompletable);
+                    return;
+                }
+                this.workLeft -= this.pawn.skills.GetSkill(SkillDefOf.Melee).Level;// (StatDefOf.ConstructionSpeed, true);
                 if (this.workLeft <= 0f)
                 {
                     Thing thing = ThingMaker.MakeThing(VampDefOf.ROMV_HideyHole, null);

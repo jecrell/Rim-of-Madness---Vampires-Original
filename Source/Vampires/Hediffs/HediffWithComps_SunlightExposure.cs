@@ -12,7 +12,7 @@ namespace Vampire
     public class HediffWithComps_SunlightExposure : HediffWithComps, ISizeReporter
     {
         private int curSunDamage = 2;
-        private int checkRate = 160;
+        private int checkRate = 110;
         public int ticksRemaining = GenDate.TicksPerHour;
         private Sustainer sustainer = null;
         private Effecter sunBurningEffect = null;
