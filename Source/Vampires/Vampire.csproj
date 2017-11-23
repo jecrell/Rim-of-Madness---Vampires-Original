@@ -154,6 +154,7 @@
     <Compile Include="Components\CompVampire.cs" />
     <Compile Include="Defs\DisciplineDef.cs" />
     <Compile Include="UI\VampireCardUtility.cs" />
+    <Compile Include="Utilities\VampireBiteUtility.cs" />
     <Compile Include="Utilities\VampireGraphicUtility.cs" />
     <Compile Include="Utilities\VampireWitnessUtility.cs" />
     <Compile Include="VampAbility.cs" />

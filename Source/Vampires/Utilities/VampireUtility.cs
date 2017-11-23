@@ -48,6 +48,7 @@ namespace Vampire
         }
 
 
+
         public static void Heal(Pawn target, int maxInjuries = 4, int maxInjuriesPerBodyPartInit = 2)
         {
             int maxInjuriesPerBodyPart;

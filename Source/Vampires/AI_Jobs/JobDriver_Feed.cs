@@ -3,6 +3,7 @@ using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using UnityEngine;
 using Verse;
 using Verse.AI;
@@ -52,7 +53,8 @@ namespace Vampire
             }
         }
 
-        public static IEnumerable<Toil> MakeFeedToils(JobDef job, JobDriver thisDriver, Pawn actor, LocalTargetInfo TargetA, ThoughtDef victimThoughtDef, ThoughtDef actorThoughtDef, float workLeft, Action effect, Func<Pawn, Pawn, bool> stopCondition)
+
+        public static IEnumerable<Toil> MakeFeedToils(JobDef job, JobDriver thisDriver, Pawn actor, LocalTargetInfo TargetA, ThoughtDef victimThoughtDef, ThoughtDef actorThoughtDef, float workLeft, Action effect, Func<Pawn, Pawn, bool> stopCondition, bool needsGrapple = true, bool cleansWound = true)
         {
             yield return Toils_Reserve.Reserve(TargetIndex.A, 1, -1, null);
             Toil gotoToil = Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.ClosestTouch);
@@ -70,28 +72,21 @@ namespace Vampire
 
                         if (actor.InAggroMentalState || victim.InAggroMentalState || victim.Faction != actor.Faction)
                         {
-                            if (!JecsTools.GrappleUtility.TryGrapple(actor, victim))
+                            if (needsGrapple)
                             {
-                                PawnUtility.ForceWait(actor, (int)(BaseFeedTime * 0.15f));
-                                thisDriver.EndJobWith(JobCondition.Incompletable);
-                                return;
+                                if (!JecsTools.GrappleUtility.TryGrapple(actor, victim))
+                                {
+                                    thisDriver.EndJobWith(JobCondition.Incompletable);
+                                    PawnUtility.ForceWait(actor, (int)(BaseFeedTime * 0.15f));
+                                    return;
+                                }
                             }
                         }
-                        GenClamor.DoClamor(actor, 10f, ClamorType.Harm);
                         if (!AllowFeeding(actor, victim))
                         {
                             actor.jobs.EndCurrentJob(JobCondition.Incompletable, true);
                         }
-                        if (actor?.VampComp()?.Bloodline?.bloodlineHediff?.CompProps<HediffCompProperties_VerbGiver>()?.verbs is List<VerbProperties> verbProps)
-                        {
-                            if (actor?.VerbTracker?.AllVerbs is List<Verb> verbs)
-                            {
-                                if (verbs.Find(x => verbProps.Contains(x.verbProps)) is Verb_MeleeAttack v)
-                                {
-                                    victim.TakeDamage(new DamageInfo(v.verbProps.meleeDamageDef, v.verbProps.meleeDamageBaseAmount, -1, actor));
-                                }
-                            }
-                        }
+                        VampireBiteUtility.MakeNew(actor, victim);
                         victim.stances.stunner.StunFor((int)BaseFeedTime);
                     }
                 }
@@ -101,14 +96,12 @@ namespace Vampire
             {
                 tickAction = delegate
                 {
-                    try
-                    {
-
+                    //try
+                    //{
                         if (TargetA.Thing is Pawn victim && victim.Spawned && !victim.Dead)
                         {
                             workLeft--;
                             VampireWitnessUtility.HandleWitnessesOf(job, actor, victim);
-
                             if (victim?.needs?.mood?.thoughts?.memories != null)
                             {
                                 Thought_Memory victimThought = null;
@@ -127,6 +120,7 @@ namespace Vampire
                                     actor.needs.mood.thoughts.memories.TryGainMemory(actorThought, null);
                                 }
                             }
+                            
 
                             if (workLeft <= 0f)
                             {
@@ -138,14 +132,18 @@ namespace Vampire
                                 workLeft = BaseFeedTime;
                                 MoteMaker.MakeColonistActionOverlay(actor, ThingDefOf.Mote_ColonistAttacking);
                                 effect();
-                                if (!JecsTools.GrappleUtility.TryGrapple(actor, victim))
+                                if (victim != null && !victim.Dead && needsGrapple)
                                 {
-                                    thisDriver.EndJobWith(JobCondition.Incompletable);
+                                    if (!JecsTools.GrappleUtility.TryGrapple(actor, victim))
+                                    {
+                                        thisDriver.EndJobWith(JobCondition.Incompletable);
+                                    }
                                 }
 
                                 if (!stopCondition(actor, victim))
                                 {
                                     thisDriver.ReadyForNextToil();
+                                    if (cleansWound) VampireBiteUtility.CleanBite(actor, victim);
                                 }
                                 else
                                 {
@@ -160,8 +158,12 @@ namespace Vampire
                         }
                         else
                             thisDriver.ReadyForNextToil();
-                    }
-                    catch { }
+                    //}
+                    //catch(Exception e)
+                    //{
+                    //    Log.Message(e.ToString());
+                    //    thisDriver.ReadyForNextToil();
+                    //}
                 },
                 defaultCompleteMode = ToilCompleteMode.Never
             };
@@ -200,7 +202,7 @@ namespace Vampire
             {
                 return false;
             }
-            if (feeder?.health?.hediffSet?.GetFirstHediffOfDef(VampDefOf.ROMV_TheBeast)?.CurStageIndex != 4)
+            if (feeder?.health?.hediffSet?.GetFirstHediffOfDef(VampDefOf.ROMV_TheBeast)?.CurStageIndex != 3)
             {
                 if (victim?.BloodNeed()?.CurBloodPoints <= 2)
                 {

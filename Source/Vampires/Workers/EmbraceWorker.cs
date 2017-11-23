@@ -33,6 +33,8 @@ namespace Vampire
                     bloodOfVampToBe.TransferBloodTo(9999, bloodOfVampMaster);
                 }
                 ResurrectionUtility.Resurrect(vampToBe);
+                if (vampToBe.Faction != sireComp?.AbilityUser?.Faction)
+                    vampToBe.SetFaction(sireComp.AbilityUser.Faction, sireComp.AbilityUser);
                 //Pawn newPawn = ResurrectedPawnUtility.DoGeneratePawnFromSource(temp, false);
                 //if (!p.Dead) p.Kill(null);
                 //GenSpawn.Spawn(newPawn, tempLoc, tempMap);

@@ -222,6 +222,11 @@ namespace Vampire
             harmony.Patch(AccessTools.Method(typeof(ThoughtWorker_Dark), "CurrentStateInternal"), null,
                 new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_TheyDontDislikeDarkness)), null);
 
+
+            //Vampires should tire very much during the daylight hours.
+            harmony.Patch(AccessTools.Method(typeof(HediffSet), "get_RestFallFactor"), null,
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_SleepyDuringDaylight)), null);
+
             #region DubsBadHygiene
             {
                 try
@@ -240,8 +245,16 @@ namespace Vampire
             #endregion
         }
 
-        //ThoughtWorker_Dark
-        public static void Vamp_TheyDontDislikeDarkness(Pawn p, ref ThoughtState __result)
+        public static void Vamp_SleepyDuringDaylight(HediffSet __instance, ref float __result)
+        {
+            if (__instance.pawn is Pawn p && p.IsVampire() && VampireUtility.IsDaylight(p))
+            {
+                __result = Mathf.Max(15f, __result);
+            }
+        }
+
+                //ThoughtWorker_Dark
+                public static void Vamp_TheyDontDislikeDarkness(Pawn p, ref ThoughtState __result)
         {
             bool temp = __result.Active;
             __result = temp && !p.IsVampire();
