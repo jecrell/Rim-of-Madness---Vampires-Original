@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-  <ROMV_Flight.Label>Полёт</ROMV_Flight.Label>
+  <ROMV_Flight.label>Полёт</ROMV_Flight.label>
+
 
 </LanguageData>

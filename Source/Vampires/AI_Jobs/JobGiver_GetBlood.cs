@@ -19,25 +19,33 @@ namespace Vampire
 
         public override float GetPriority(Pawn pawn)
         {
-
+            //Log.Message("0");
             if (pawn.VampComp() == null)
             {
+                //Log.Message("0a");
                 return 0f;
+
             }
             if (!pawn.VampComp().IsVampire)
             {
+                //Log.Message("0b");
                 return 0f;
+
             }
             Need_Blood blood = pawn.needs.TryGetNeed<Need_Blood>();
             if (blood == null)
             {
+                //Log.Message("0c");
                 return 0f;
+
             }
             if (blood.preferredFeedMode == PreferredFeedMode.None)
             {
+                //Log.Message("0d");
                 return 0f;
+
             }
-             //HungerCategory.Starving && FoodUtility.ShouldBeFedBySomeone(pawn))
+            //HungerCategory.Starving && FoodUtility.ShouldBeFedBySomeone(pawn))
             //{
             //    return 0f;
             //}
@@ -47,12 +55,19 @@ namespace Vampire
             //}
             if (blood.CurLevelPercentage < blood.ShouldFeedPerc)
             {
+                //Log.Message("0e");
                 return 9.5f;
             }
+                //Log.Message("0f");
             return 0f;
         }
 
         protected override Job TryGiveJob(Pawn pawn)
+        {
+            return FeedJob(pawn);
+        }
+
+        public static Job FeedJob(Pawn pawn)
         {
             Need_Blood blood = pawn.needs.TryGetNeed<Need_Blood>();
             if (blood == null)
@@ -85,7 +100,6 @@ namespace Vampire
             }
             return null;
         }
-
 
 
     }

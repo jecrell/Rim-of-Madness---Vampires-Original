@@ -88,6 +88,7 @@
     <Compile Include="Disciplines\Thaumaturgy\Projectile_BloodStealer.cs" />
     <Compile Include="Disciplines\Vampirism\DisciplineEffect_VampiricHealing.cs" />
     <Compile Include="FlyingObject.cs" />
+    <Compile Include="HarmonyPatches\VampHumanlikeOrders.cs" />
     <Compile Include="Hediffs\Gizmo_HediffShieldStatus.cs" />
     <Compile Include="Hediffs\HediffComp_ReadMind.cs" />
     <Compile Include="Disciplines\Blood\DisciplineEffect_UnstoppableTide.cs" />

@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-  <ROMV_PotenceI.Label>Могущество I</ROMV_PotenceI.Label>
-  <ROMV_PotenceI.Description>Пассивно повышает умение в ближнем бою на 3 уровня и манипуляцию на 10% за уровень.</ROMV_PotenceI.Description>
+  <ROMV_PotenceI.label>Могущество I</ROMV_PotenceI.label>
+  <ROMV_PotenceI.description>Пассивно повышает умение в ближнем бою на 3 уровня и манипуляцию на 10% за уровень.</ROMV_PotenceI.description>
 
-  <ROMV_PotenceII.Label>Могущество II</ROMV_PotenceII.Label>
-  <ROMV_PotenceII.Description>Пассивно повышает умение в ближнем бою на 3 уровня и манипуляцию на 10% за уровень.</ROMV_PotenceII.Description>
+  <ROMV_PotenceII.label>Могущество II</ROMV_PotenceII.label>
+  <ROMV_PotenceII.description>Пассивно повышает умение в ближнем бою на 3 уровня и манипуляцию на 10% за уровень.</ROMV_PotenceII.description>
 
-  <ROMV_PotenceIII.Label>Могущество III</ROMV_PotenceIII.Label>
-  <ROMV_PotenceIII.Description>Пассивно повышает умение в ближнем бою на 3 уровня и манипуляцию на 10% за уровень.</ROMV_PotenceIII.Description>
+  <ROMV_PotenceIII.label>Могущество III</ROMV_PotenceIII.label>
+  <ROMV_PotenceIII.description>Пассивно повышает умение в ближнем бою на 3 уровня и манипуляцию на 10% за уровень.</ROMV_PotenceIII.description>
 
-  <ROMV_PotenceIV.Label>Могущество IV</ROMV_PotenceIV.Label>
-  <ROMV_PotenceIV.Description>Пассивно повышает умение в ближнем бою на 3 уровня и манипуляцию на 10% за уровень.</ROMV_PotenceIV.Description>
+  <ROMV_PotenceIV.label>Могущество IV</ROMV_PotenceIV.label>
+  <ROMV_PotenceIV.description>Пассивно повышает умение в ближнем бою на 3 уровня и манипуляцию на 10% за уровень.</ROMV_PotenceIV.description>
+
 
 </LanguageData>

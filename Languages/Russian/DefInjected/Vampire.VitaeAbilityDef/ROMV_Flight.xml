@@ -1,17 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-  <ROMV_Flight_LightWeight.Label>Легкий вес</ROMV_Flight_LightWeight.Label>
-  <ROMV_Flight_LightWeight.Description>Пассивно повышает грузоподъемность и снижает вес заклинателя, позволяя летать.</ROMV_Flight_LightWeight.Description>
+  <ROMV_Flight_LightWeight.label>Легкий вес</ROMV_Flight_LightWeight.label>
+  <ROMV_Flight_LightWeight.description>Пассивно повышает грузоподъемность и снижает вес заклинателя, позволяя летать.</ROMV_Flight_LightWeight.description>
 
-  <ROMV_Flight_WingBuffet.Label>Удар крылом</ROMV_Flight_WingBuffet.Label>
-  <ROMV_Flight_WingBuffet.Description>Попытаться временно сразить (оглушить) цель, используя крыло с полной силой взмахнув в цель.</ROMV_Flight_WingBuffet.Description>
+  <ROMV_Flight_WingBuffet.label>Удар крылом</ROMV_Flight_WingBuffet.label>
+  <ROMV_Flight_WingBuffet.description>Попытаться временно сразить (оглушить) цель, используя крыло с полной силой взмахнув в цель.</ROMV_Flight_WingBuffet.description>
 
-  <ROMV_Flight_ShortFlight.Label>Короткий полет</ROMV_Flight_ShortFlight.Label>
-  <ROMV_Flight_ShortFlight.Description>Позволяет вашему персонажу пролететь по карте, в выбранный пункт назначения.</ROMV_Flight_ShortFlight.Description>
+  <ROMV_Flight_ShortFlight.label>Короткий полет</ROMV_Flight_ShortFlight.label>
+  <ROMV_Flight_ShortFlight.description>Позволяет вашему персонажу пролететь по карте, в выбранный пункт назначения.</ROMV_Flight_ShortFlight.description>
 
-  <ROMV_Flight_SkyFall.Label>Небесное падение</ROMV_Flight_SkyFall.Label>
-  <ROMV_Flight_SkyFall.Description>Поднимает и несет персонажа высоко в небо, и бросает его на землю для нанесения массивного количества тупого урона.</ROMV_Flight_SkyFall.Description>
+  <ROMV_Flight_SkyFall.label>Небесное падение</ROMV_Flight_SkyFall.label>
+  <ROMV_Flight_SkyFall.description>Поднимает и несет персонажа высоко в небо, и бросает его на землю для нанесения массивного количества тупого урона.</ROMV_Flight_SkyFall.description>
+
+  <ROMV_Flight_LongFlight.label>длительный полет</ROMV_Flight_LongFlight.label>
+  <ROMV_Flight_LongFlight.description>Позволяет заклинателю лететь в место на карте мира.</ROMV_Flight_LongFlight.description>
+
 
 </LanguageData>

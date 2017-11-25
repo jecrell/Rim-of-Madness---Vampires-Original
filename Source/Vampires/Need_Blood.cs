@@ -4,6 +4,7 @@ using UnityEngine;
 using Verse;
 using RimWorld;
 using Verse.Sound;
+using Verse.AI;
 
 namespace Vampire
 {
@@ -204,6 +205,18 @@ namespace Vampire
             {
                 bloodFixer = true;
                 this.nextBloodChangeTick = -1;
+            }
+            
+            if (pawn.RaceProps != null && pawn.RaceProps.Humanlike && pawn.Faction != null && pawn.Faction == Faction.OfPlayer &&
+                !pawn.Drafted && (pawn?.IsVampire() ?? false) && (CurLevelPercentage < ShouldFeedPerc) &&
+                (pawn.CurJob.def != VampDefOf.ROMV_ConsumeBlood && 
+                pawn.CurJob.def != VampDefOf.ROMV_Feed && 
+                pawn.CurJob.def != VampDefOf.ROMV_Sip))
+            {
+                if (JobGiver_GetBlood.FeedJob(pawn) is Job j)
+                {
+                    this.pawn.jobs.StartJob(j, JobCondition.InterruptForced, null, false, true, null, new JobTag?(JobTag.SatisfyingNeeds), false);
+                }
             }
 
             //if (Find.TickManager.TicksGame % 250 == 0)

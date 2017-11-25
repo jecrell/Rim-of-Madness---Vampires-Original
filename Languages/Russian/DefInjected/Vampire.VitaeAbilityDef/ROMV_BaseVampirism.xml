@@ -1,11 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-  <ROMV_VampiricHealing.Label>Вампирическое исцеление</ROMV_VampiricHealing.Label>
-  <ROMV_VampiricHealing.Description>Восстанавливает поврежденную плоть, используя витэ.</ROMV_VampiricHealing.Description>
+  <ROMV_VampiricResurrection.label>воскрешение</ROMV_VampiricResurrection.label>
+  <ROMV_VampiricResurrection.description>Отдаёт все оставшиеся витэ, чтобы реанимировать мертвую ткань, восстанавливая вампира до нежити. Осторожно! Это выпустит их внутреннее животное, пока они не насытятся кровью.</ROMV_VampiricResurrection.description>
 
-  <ROMV_RegenerateLimb.Label>Регенерировать конечность</ROMV_RegenerateLimb.Label>
-  <ROMV_RegenerateLimb.Description>Восстанавливает конечность или часть тела, потерянную в бою.</ROMV_RegenerateLimb.Description>
+  <ROMV_VampiricHealing.label>Вампирическое исцеление</ROMV_VampiricHealing.label>
+  <ROMV_VampiricHealing.description>Восстанавливает поврежденную плоть, используя витэ.</ROMV_VampiricHealing.description>
+
+  <ROMV_RegenerateLimb.label>Регенерировать конечность</ROMV_RegenerateLimb.label>
+  <ROMV_RegenerateLimb.description>Восстанавливает конечность или часть тела, потерянную в бою.</ROMV_RegenerateLimb.description>
+
 
 </LanguageData>

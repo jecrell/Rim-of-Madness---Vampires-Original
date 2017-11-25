@@ -23,6 +23,28 @@ namespace Vampire
             return false;
         }
 
+        public void RemoveColonistDiedThoughts(Pawn vampToBe, bool wasColonist)
+        {
+            if (vampToBe.MapHeld.mapPawns.FreeColonistsAndPrisonersSpawned is List<Pawn> thoughtHavers && !thoughtHavers.NullOrEmpty())
+            {
+                foreach (Pawn thoughtHaver in thoughtHavers)
+                {
+                    if (wasColonist)
+                    {
+                        MemoryThoughtHandler memories = thoughtHaver.needs.mood.thoughts.memories;
+                        if (memories.Memories.FirstOrDefault(x => x.def == ThoughtDefOf.KnowColonistDied) is Thought_Memory mem)
+                            memories.RemoveMemory(mem);
+                    }
+                    else
+                    {
+                        MemoryThoughtHandler memories = thoughtHaver.needs.mood.thoughts.memories;
+                        if (memories.Memories.FirstOrDefault(x => x.def == ThoughtDefOf.KnowPrisonerDiedInnocent) is Thought_Memory mem)
+                            memories.RemoveMemory(mem);
+                    }
+                }
+            }
+        }
+
         public virtual void DoEffect(CompVampire sireComp, CompVampire childeComp)
         {
             if (childeComp.AbilityUser is Pawn p)
@@ -32,15 +54,12 @@ namespace Vampire
                 {
                     bloodOfVampToBe.TransferBloodTo(9999, bloodOfVampMaster);
                 }
+                bool wasColonist = p.Faction == Faction.OfPlayer;
                 ResurrectionUtility.Resurrect(vampToBe);
                 if (vampToBe.Faction != sireComp?.AbilityUser?.Faction)
                     vampToBe.SetFaction(sireComp.AbilityUser.Faction, sireComp.AbilityUser);
-                //Pawn newPawn = ResurrectedPawnUtility.DoGeneratePawnFromSource(temp, false);
-                //if (!p.Dead) p.Kill(null);
-                //GenSpawn.Spawn(newPawn, tempLoc, tempMap);
-                //newPawn.workSettings.EnableAndInitialize();
 
-                //if (p.Corpse != null) p.Corpse.DeSpawn();
+                RemoveColonistDiedThoughts(vampToBe, wasColonist);
 
                 if (sireComp?.BloodPool is Need_Blood sB && vampToBe?.BloodNeed() is Need_Blood cB)
                 {

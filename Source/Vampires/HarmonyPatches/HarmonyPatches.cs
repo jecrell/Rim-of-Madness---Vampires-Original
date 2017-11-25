@@ -223,9 +223,16 @@ namespace Vampire
                 new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_TheyDontDislikeDarkness)), null);
 
 
+            //Fixes random red errors relating to food need checks in this method (WillIngestStackCountOf).
+            harmony.Patch(AccessTools.Method(typeof(FoodUtility), "WillIngestStackCountOf"),
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_WillIngestStackCountOf)), null);
+
+
             //Vampires should tire very much during the daylight hours.
-            harmony.Patch(AccessTools.Method(typeof(HediffSet), "get_RestFallFactor"), null,
+            harmony.Patch(AccessTools.Method(typeof(Need_Rest), "NeedInterval"), null,
                 new HarmonyMethod(typeof(HarmonyPatches), nameof(Vamp_SleepyDuringDaylight)), null);
+
+
 
             #region DubsBadHygiene
             {
@@ -245,12 +252,33 @@ namespace Vampire
             #endregion
         }
 
-        public static void Vamp_SleepyDuringDaylight(HediffSet __instance, ref float __result)
+        // RimWorld.Need_Rest
+        public static void Vamp_SleepyDuringDaylight(Need_Rest __instance)
         {
-            if (__instance.pawn is Pawn p && p.IsVampire() && VampireUtility.IsDaylight(p))
+            Pawn pawn = (Pawn)AccessTools.Field(typeof(Need_Rest), "pawn").GetValue(__instance);
+            if (pawn != null && pawn.IsVampire())
             {
-                __result = Mathf.Max(15f, __result);
+                if (VampireUtility.IsDaylight(pawn))
+                {
+                    __instance.CurLevel = Mathf.Max(0.1f, __instance.CurLevel);
+                }
+                else
+                {
+                    __instance.CurLevel = 1.0f;
+                }
             }
+        }
+
+
+        // RimWorld.FoodUtility
+        public static bool Vamp_WillIngestStackCountOf(Pawn ingester, ThingDef def, ref int __result)
+        {
+            if (ingester.IsVampire())
+            {
+                __result = Mathf.Min(def.ingestible.maxNumToIngestAtOnce, 1);
+                return false;
+            }
+            return true;
         }
 
                 //ThoughtWorker_Dark
@@ -1229,94 +1257,94 @@ namespace Vampire
                     opts.Add(item5);
                 }
                 
-                ///////////////////////////////////////////////////////////////////////////////////////////
-                //Pawn VICTIM
-                //////////////
-                Pawn victim = c.GetThingList(pawn.Map).FirstOrDefault(t => t != pawn && t is Pawn) as Pawn;
-                if (victim != null && victim.BloodNeed() is Need_Blood n)
-                {
-                    bool victimIsVampire = victim.IsVampire();
-                    // FEED //////////////////////////
-                    if (!victimIsVampire || (selVampComp?.Bloodline?.canFeedOnVampires ?? false))
-                    {
-                        Action action = delegate
-                        {
-                            Job job = new Job(VampDefOf.ROMV_Feed, victim);
-                            job.count = 1;
-                            pawn.jobs.TryTakeOrderedJob(job);
-                        };
-                        opts.Add(new FloatMenuOption("ROMV_Feed".Translate(new object[]
-                        {
-                                victim.LabelCap
-                        }) + ((n.CurBloodPoints == 1) ? " " + "ROMV_LethalWarning".Translate() : ""), action, MenuOptionPriority.High, null, victim, 0f, null, null));
-                    }
-                    // SIP //////////////////////////
-                    if (victim?.BloodNeed()?.CurBloodPoints > 1)
-                    {
-                        Action action2 = delegate
-                        {
-                            Job job = new Job(VampDefOf.ROMV_Sip, victim);
-                            job.count = 1;
-                            pawn.jobs.TryTakeOrderedJob(job);
-                        };
-                        opts.Add(new FloatMenuOption("ROMV_Sip".Translate(new object[]
-                        {
-                            victim.LabelCap
-                        }), action2, MenuOptionPriority.High, null, victim, 0f, null, null));
-                    }
-                    // EMBRACE /////////////////////
-                    if (victim?.RaceProps?.Humanlike ?? false)
-                    {
-                        if (selVampComp.Thinblooded)
-                        {
-                            opts.Add(new FloatMenuOption("ROMV_CannotEmbrace".Translate(new object[]
-                            {
-                            victim.LabelCap
-                            } + " (" + "ROMV_Thinblooded".Translate() + ")"), null, MenuOptionPriority.High, null, victim, 0f, null, null));
-                        }
-                        else
-                        {
-                            Action actionTwo = delegate
-                            {
-                                Job job = new Job(VampDefOf.ROMV_Embrace, victim);
-                                job.count = 1;
-                                pawn.jobs.TryTakeOrderedJob(job);
-                            };
-                            opts.Add(new FloatMenuOption("ROMV_Embrace".Translate(new object[]
-                            {
-                            victim.LabelCap
-                            }), actionTwo, MenuOptionPriority.High, null, victim, 0f, null, null));
-                        }
-                    }
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                ////Pawn VICTIM
+                ////////////////
+                //Pawn victim = c.GetThingList(pawn.Map).FirstOrDefault(t => t != pawn && t is Pawn) as Pawn;
+                //if (victim != null && victim.BloodNeed() is Need_Blood n)
+                //{
+                //    bool victimIsVampire = victim.IsVampire();
+                //    // FEED //////////////////////////
+                //    if (!victimIsVampire || (selVampComp?.Bloodline?.canFeedOnVampires ?? false))
+                //    {
+                //        Action action = delegate
+                //        {
+                //            Job job = new Job(VampDefOf.ROMV_Feed, victim);
+                //            job.count = 1;
+                //            pawn.jobs.TryTakeOrderedJob(job);
+                //        };
+                //        opts.Add(new FloatMenuOption("ROMV_Feed".Translate(new object[]
+                //        {
+                //                victim.LabelCap
+                //        }) + ((n.CurBloodPoints == 1) ? " " + "ROMV_LethalWarning".Translate() : ""), action, MenuOptionPriority.High, null, victim, 0f, null, null));
+                //    }
+                //    // SIP //////////////////////////
+                //    if (victim?.BloodNeed()?.CurBloodPoints > 1)
+                //    {
+                //        Action action2 = delegate
+                //        {
+                //            Job job = new Job(VampDefOf.ROMV_Sip, victim);
+                //            job.count = 1;
+                //            pawn.jobs.TryTakeOrderedJob(job);
+                //        };
+                //        opts.Add(new FloatMenuOption("ROMV_Sip".Translate(new object[]
+                //        {
+                //            victim.LabelCap
+                //        }), action2, MenuOptionPriority.High, null, victim, 0f, null, null));
+                //    }
+                //    // EMBRACE /////////////////////
+                //    if (victim?.RaceProps?.Humanlike ?? false)
+                //    {
+                //        if (selVampComp.Thinblooded)
+                //        {
+                //            opts.Add(new FloatMenuOption("ROMV_CannotEmbrace".Translate(new object[]
+                //            {
+                //            victim.LabelCap
+                //            } + " (" + "ROMV_Thinblooded".Translate() + ")"), null, MenuOptionPriority.High, null, victim, 0f, null, null));
+                //        }
+                //        else
+                //        {
+                //            Action actionTwo = delegate
+                //            {
+                //                Job job = new Job(VampDefOf.ROMV_Embrace, victim);
+                //                job.count = 1;
+                //                pawn.jobs.TryTakeOrderedJob(job);
+                //            };
+                //            opts.Add(new FloatMenuOption("ROMV_Embrace".Translate(new object[]
+                //            {
+                //            victim.LabelCap
+                //            }), actionTwo, MenuOptionPriority.High, null, victim, 0f, null, null));
+                //        }
+                //    }
 
-                    // Diablerie /////////////////////
-                    if (pawnIsVampire && victimIsVampire)
-                    {
-                        //Action action = delegate
-                        //{
-                        //    Job job = new Job(VampDefOf.ROMV_FeedVampire, victim);
-                        //    job.count = 1;
-                        //    job.playerForced = true;
-                        //    pawn.jobs.TryTakeOrderedJob(job);
-                        //};
-                        //opts.Add(new FloatMenuOption("ROMV_FeedVampire".Translate(new object[]
-                        //{
-                        //        victim.LabelCap
-                        //}), action, MenuOptionPriority.High, null, victim, 0f, null, null));
-                        Action action2 = delegate
-                        {
-                            Job job = new Job(VampDefOf.ROMV_Diablerie, victim);
-                            job.count = 1;
-                            job.playerForced = true;
-                            pawn.jobs.TryTakeOrderedJob(job);
-                        };
-                        string benefitWarning = (selVampComp.Generation < victim.VampComp().Generation) ? " " + "ROMV_DiablerieNoBenefit".Translate() : "";
-                        opts.Add(new FloatMenuOption("ROMV_Diablerie".Translate(new object[]
-                        {
-                                victim.LabelCap
-                        }) + benefitWarning, action2, MenuOptionPriority.High, null, victim, 0f, null, null));
-                    }
-                }
+                //    // Diablerie /////////////////////
+                //    if (pawnIsVampire && victimIsVampire)
+                //    {
+                //        //Action action = delegate
+                //        //{
+                //        //    Job job = new Job(VampDefOf.ROMV_FeedVampire, victim);
+                //        //    job.count = 1;
+                //        //    job.playerForced = true;
+                //        //    pawn.jobs.TryTakeOrderedJob(job);
+                //        //};
+                //        //opts.Add(new FloatMenuOption("ROMV_FeedVampire".Translate(new object[]
+                //        //{
+                //        //        victim.LabelCap
+                //        //}), action, MenuOptionPriority.High, null, victim, 0f, null, null));
+                //        Action action2 = delegate
+                //        {
+                //            Job job = new Job(VampDefOf.ROMV_Diablerie, victim);
+                //            job.count = 1;
+                //            job.playerForced = true;
+                //            pawn.jobs.TryTakeOrderedJob(job);
+                //        };
+                //        string benefitWarning = (selVampComp.Generation < victim.VampComp().Generation) ? " " + "ROMV_DiablerieNoBenefit".Translate() : "";
+                //        opts.Add(new FloatMenuOption("ROMV_Diablerie".Translate(new object[]
+                //        {
+                //                victim.LabelCap
+                //        }) + benefitWarning, action2, MenuOptionPriority.High, null, victim, 0f, null, null));
+                //    }
+                //}
             }
         }
 

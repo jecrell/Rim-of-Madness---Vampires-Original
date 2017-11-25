@@ -1,15 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-  <ROMV_FlyingObject.Label>Летающий объект</ROMV_FlyingObject.Label>
+  <ROMV_FlyingObject.label>Летающий объект</ROMV_FlyingObject.label>
+  <ROMV_DominateProjectile.label>Псионический взрыв</ROMV_DominateProjectile.label>
+  <ROMV_BloodProjectile_BloodBoil.label>Снаряд кипящей крови</ROMV_BloodProjectile_BloodBoil.label>
+  <ROMV_BloodProjectile.label>Снаряд крови</ROMV_BloodProjectile.label>
+  <ROMV_BloodProjectile_Returner.label>Снаряд крови</ROMV_BloodProjectile_Returner.label>
 
-  <ROMV_DominateProjectile.Label>Псионический взрыв</ROMV_DominateProjectile.Label>
-
-  <ROMV_BloodProjectile_BloodBoil.Label>Снаряд кипящей крови</ROMV_BloodProjectile_BloodBoil.Label>
-
-  <ROMV_BloodProjectile.Label>Снаряд крови</ROMV_BloodProjectile.Label>
-
-  <ROMV_BloodProjectile_Returner.Label>Снаряд крови</ROMV_BloodProjectile_Returner.Label>
 
 </LanguageData>
